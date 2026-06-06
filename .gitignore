@@ -1,0 +1,47 @@
+# Logs
+logs
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Build folders
+dist
+build
+.out
+.cache
+
+# Node.js
+node_modules/
+pnpm-lock.yaml
+.nuxt
+.nuxt-state.json
+.nuxt-gen
+.next
+.cache
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Temporary files
+tmp/
+temp/
+
+# OS generated files
+._*
+~*
+
+# TypeScript build output
+*.d.ts
+
+# Turbo cache
+.turbo/
