@@ -16,30 +16,34 @@ Create a first navigable placeholder of the Catálogo Premium v2 — with mock d
 ## Deliverables
 
 ### Types (`src/types/catalog.ts`)
+
 - `ProductCategory`: `'vinos' | 'aceites' | 'mieles' | 'gourmet' | 'packs'`
 - `ProductStatus`: `'draft' | 'preview' | 'active' | 'discontinued'`
 - `ProductPremium`: full interface with 24 fields (basic info, specs, media, pricing, story, pairing, meta)
 - `CategoryInfo`: name, slug, description, icon, gradient, heroGradient
 
 ### Mock Data (`src/data/catalog/`)
+
 - `categories.ts`: 5 categories with emoji icons + gradient pairs
 - `products.ts`: 11 products (3 vinos, 2 aceites, 2 mieles, 2 gourmet, 2 packs) with complete mock data
 - `index.ts`: barrel export + helpers: `getProductsByCategory()`, `getProductBySlug()`, `getFeaturedProducts()`
 
 ### Components (`src/components/catalog/`)
-| Component | Purpose |
-|---|---|
-| `CategoryHero.astro` | Gradient hero per category with name, icon, description |
-| `ProductCardPremium.astro` | Product card with gradient, hover scale, spec badges, story preview |
-| `ProductCategoryNav.astro` | Nav pills (Todos + each category), highlights current |
-| `ProductGallery.astro` | Image grid with main + thumbnails (mock images) |
-| `ProductSpecs.astro` | Specs grid (year, origin, grape, aging, alcohol) |
-| `ProductStory.astro` | Story section with large pull quote |
-| `ProductPairing.astro` | Pairing tags in gradient card |
+
+| Component                  | Purpose                                                              |
+| -------------------------- | -------------------------------------------------------------------- |
+| `CategoryHero.astro`       | Gradient hero per category with name, icon, description              |
+| `ProductCardPremium.astro` | Product card with gradient, hover scale, spec badges, story preview  |
+| `ProductCategoryNav.astro` | Nav pills (Todos + each category), highlights current                |
+| `ProductGallery.astro`     | Image grid with main + thumbnails (mock images)                      |
+| `ProductSpecs.astro`       | Specs grid (year, origin, grape, aging, alcohol)                     |
+| `ProductStory.astro`       | Story section with large pull quote                                  |
+| `ProductPairing.astro`     | Pairing tags in gradient card                                        |
 | `ProductTrustBadges.astro` | Trust badges (premium quality, lab tested, sostenible, envío seguro) |
-| `ProductAIHints.astro` | Sommelier AI hint card with sparkling gradient border |
+| `ProductAIHints.astro`     | Sommelier AI hint card with sparkling gradient border                |
 
 ### Pages
+
 - `/catalogo/` — landing with featured products + 5 category cards + AI hint
 - `/catalogo/[categoria]` — dynamic category listing with ProductCategoryNav + product grid
 - `/catalogo/[categoria]/[slug]` — dynamic product detail with 2-column hero, specs, story, pairing, AI hints
@@ -47,6 +51,7 @@ Create a first navigable placeholder of the Catálogo Premium v2 — with mock d
 All routes use Astro `getStaticPaths()` for static generation.
 
 ### Navigation
+
 - Desktop nav: Catálogo added between Inicio and Ecosistema
 - Mobile nav: same order
 - Footer: Catálogo added first
@@ -55,22 +60,22 @@ All routes use Astro `getStaticPaths()` for static generation.
 
 ## Validation
 
-| Check | Result |
-|---|---|
-| `pnpm format` | ✅ All files formatted |
-| `pnpm lint` | ✅ Prettier check passed |
-| `pnpm typecheck` | ✅ All 5 packages pass |
-| `pnpm build` | ✅ 21 pages (11 product, 5 category, 5 static) in 2.03s |
+| Check            | Result                                                                                                                                                                                            |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm format`    | ✅ All files formatted                                                                                                                                                                            |
+| `pnpm lint`      | ✅ Prettier check passed                                                                                                                                                                          |
+| `pnpm typecheck` | ✅ All 5 packages pass                                                                                                                                                                            |
+| `pnpm build`     | ✅ 21 pages (11 product, 5 category, 5 static) in 2.03s                                                                                                                                           |
 | Generated routes | /, /404, /about, /docs, /catalogo, /catalogo/vinos/...3 products, /catalogo/aceites/...2 products, /catalogo/mieles/...2 products, /catalogo/gourmet/...2 products, /catalogo/packs/...2 products |
 
 ---
 
 ## Deviations from Plan
 
-| Expected | Actual | Reason |
-|---|---|---|
-| Individual category files (`vinos.astro`, etc.) | Single `[categoria].astro` with `getStaticPaths()` | DRYer, fewer files, same output |
-| — | Bug: `ReferenceError: current is not defined` in ProductCategoryNav | Missing `const { current } = Astro.props` — fixed before commit |
+| Expected                                        | Actual                                                              | Reason                                                          |
+| ----------------------------------------------- | ------------------------------------------------------------------- | --------------------------------------------------------------- |
+| Individual category files (`vinos.astro`, etc.) | Single `[categoria].astro` with `getStaticPaths()`                  | DRYer, fewer files, same output                                 |
+| —                                               | Bug: `ReferenceError: current is not defined` in ProductCategoryNav | Missing `const { current } = Astro.props` — fixed before commit |
 
 ---
 

@@ -1,0 +1,107 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Card from '../../components/ui/Card.astro';
+import Badge from '../../components/ui/Badge.astro';
+---
+
+<Layout
+  title="Sommelier AI v2 — Asistente Inteligente | LabrazaHome Labs"
+  description="Sommelier AI v2 es el asistente inteligente conversacional de LabrazaHome Labs. Recomendaciones, maridajes y explicaciones basadas en el Catálogo Premium v2."
+  canonical="/sommelier"
+>
+  <Section>
+    <Container width="narrow">
+      <div class="flex flex-col items-center text-center">
+        <Badge variant="warning">En diseño</Badge>
+        <h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">
+          Sommelier AI <span class="gradient-text">v2</span>
+        </h1>
+        <p class="mt-4 max-w-2xl text-lg text-muted">
+          Asistente inteligente para recomendar, explicar y maridar productos del Catálogo Premium v2.
+          Actualmente en fase de arquitectura.
+        </p>
+      </div>
+    </Container>
+  </Section>
+
+  <Section background="muted">
+    <Container>
+      <div class="grid gap-8 md:grid-cols-3">
+        <Card>
+          <div class="mb-4 text-4xl">🍷</div>
+          <h3 class="text-lg font-semibold">Maridaje Inteligente</h3>
+          <p class="mt-2 text-sm text-muted">
+            Recomendaciones de vino según tu comida, con explicaciones de por qué cada
+            variedad armoniza con cada plato.
+          </p>
+        </Card>
+
+        <Card>
+          <div class="mb-4 text-4xl">🎯</div>
+          <h3 class="text-lg font-semibold">Recomendación Personalizada</h3>
+          <p class="mt-2 text-sm text-muted">
+            Encuentra el producto ideal para cada ocasión: cena romántica, regalo
+            corporativo, celebración familiar.
+          </p>
+        </Card>
+
+        <Card>
+          <div class="mb-4 text-4xl">📖</div>
+          <h3 class="text-lg font-semibold">Explicación de Producto</h3>
+          <p class="mt-2 text-sm text-muted">
+            Conoce la historia, las notas de cata, los maridajes y el origen de cada
+            producto con profundidad editorial.
+          </p>
+        </Card>
+      </div>
+    </Container>
+  </Section>
+
+  <Section>
+    <Container width="narrow">
+      <div class="rounded-xl border border-border bg-card p-8 dark:border-border-dark dark:bg-card-dark">
+        <h2 class="text-2xl font-bold">¿Cómo funciona?</h2>
+        <p class="mt-4 text-muted">
+          Sommelier AI v2 consume los datos del Catálogo Premium v2 —sus fichas técnicas,
+          historias, maridajes y etiquetas— para ofrecer respuestas inteligentes adaptadas a tu perfil.
+        </p>
+        <div class="mt-6 space-y-4 text-sm text-muted">
+          <div class="flex items-start gap-3">
+            <span class="mt-0.5 text-primary">1.</span>
+            <span>Seleccionas tu perfil: cliente privado, B2B, proveedor o admin</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="mt-0.5 text-primary">2.</span>
+            <span>Haces una pregunta en lenguaje natural sobre productos, maridajes o recomendaciones</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="mt-0.5 text-primary">3.</span>
+            <span>El asistente consulta el catálogo y adapta la respuesta a tu perfil</span>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="mt-0.5 text-primary">4.</span>
+            <span>Recibes una respuesta con productos recomendados, maridajes y contexto editorial</span>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section background="muted">
+    <Container width="narrow">
+      <div class="rounded-xl border border-border bg-card p-8 text-center dark:border-border-dark dark:bg-card-dark">
+        <Badge variant="warning">Modo laboratorio</Badge>
+        <p class="mt-4 text-sm text-muted">
+          Esta página es un placeholder visual. Sommelier AI v2 está en fase de
+          arquitectura y diseño. El chat funcional, el backend y la IA real llegarán
+          en fases posteriores.
+        </p>
+        <p class="mt-2 text-sm text-muted">
+          Mientras tanto, puedes explorar el <a href="/catalogo" class="text-primary underline">Catálogo Premium v2</a>.
+        </p>
+      </div>
+    </Container>
+  </Section>
+</Layout>
