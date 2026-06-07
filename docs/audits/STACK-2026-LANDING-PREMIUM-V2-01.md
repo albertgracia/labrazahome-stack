@@ -18,21 +18,21 @@ Transform the LabrazaHome Labs landing into a premium v2 with clearer messaging,
 
 ### New Components Created (`src/components/landing/`)
 
-| Component | Purpose |
-|-----------|---------|
-| `PremiumHero.astro` | Hero with gradient title, extended subtitle, microcopy, 4 glassmorphism metric cards (5 módulos, 100% stack, AI-ready, V+G pipeline) |
-| `EcosystemGrid.astro` | Dynamic grid of product cards with status badges (base/development/design), Rioja Marketplace highlighted as first card |
-| `ArchitecturePreview.astro` | Visual tech stack in 5 cards with badge clusters (Frontend, Backend, Datos, Deploy, IA) |
-| `RoadmapTimeline.astro` | Timeline component with 4 states (completed/in-progress/next/future), 8 phases from base to marketplace integration |
-| `VisionSection.astro` | Vision statement with 4 pillars: laboratorio primero, validación, integración controlada, foco premium |
-| `FinalCTA.astro` | Closing CTA with two buttons (Ver roadmap, Explorar tecnología) |
+| Component                   | Purpose                                                                                                                              |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `PremiumHero.astro`         | Hero with gradient title, extended subtitle, microcopy, 4 glassmorphism metric cards (5 módulos, 100% stack, AI-ready, V+G pipeline) |
+| `EcosystemGrid.astro`       | Dynamic grid of product cards with status badges (base/development/design), Rioja Marketplace highlighted as first card              |
+| `ArchitecturePreview.astro` | Visual tech stack in 5 cards with badge clusters (Frontend, Backend, Datos, Deploy, IA)                                              |
+| `RoadmapTimeline.astro`     | Timeline component with 4 states (completed/in-progress/next/future), 8 phases from base to marketplace integration                  |
+| `VisionSection.astro`       | Vision statement with 4 pillars: laboratorio primero, validación, integración controlada, foco premium                               |
+| `FinalCTA.astro`            | Closing CTA with two buttons (Ver roadmap, Explorar tecnología)                                                                      |
 
 ### Modified Files
 
-| File | Change |
-|------|--------|
-| `src/pages/index.astro` | Full rewrite: imports landing components, passes data arrays (products, roadmap items) |
-| `src/layouts/Layout.astro` | Added "Roadmap" link to desktop nav, mobile nav, and footer |
+| File                       | Change                                                                                 |
+| -------------------------- | -------------------------------------------------------------------------------------- |
+| `src/pages/index.astro`    | Full rewrite: imports landing components, passes data arrays (products, roadmap items) |
+| `src/layouts/Layout.astro` | Added "Roadmap" link to desktop nav, mobile nav, and footer                            |
 
 ### SEO Updated
 
@@ -43,19 +43,19 @@ Transform the LabrazaHome Labs landing into a premium v2 with clearer messaging,
 
 ### Copy (Spanish)
 
-- **Hero subtitle:** *"Un laboratorio digital para construir la próxima generación de comercio, inteligencia artificial y operaciones para el sector agroalimentario premium."*
-- **Hero microcopy:** *"Desde Rioja Marketplace hasta Sommelier AI, estamos diseñando una plataforma modular para conectar productores, distribuidores y clientes con experiencias digitales de alto nivel."*
-- **Vision lead:** *"LabrazaHome Labs nace para probar, validar y madurar nuevas experiencias digitales antes de llevarlas al ecosistema real de LabrazaHome y Rioja Marketplace."*
-- **CTA title:** *"El ecosistema LabrazaHome está en construcción."*
+- **Hero subtitle:** _"Un laboratorio digital para construir la próxima generación de comercio, inteligencia artificial y operaciones para el sector agroalimentario premium."_
+- **Hero microcopy:** _"Desde Rioja Marketplace hasta Sommelier AI, estamos diseñando una plataforma modular para conectar productores, distribuidores y clientes con experiencias digitales de alto nivel."_
+- **Vision lead:** _"LabrazaHome Labs nace para probar, validar y madurar nuevas experiencias digitales antes de llevarlas al ecosistema real de LabrazaHome y Rioja Marketplace."_
+- **CTA title:** _"El ecosistema LabrazaHome está en construcción."_
 
 ### Roadmap Phases
 
-| Phase | Items | Status |
-|-------|-------|--------|
-| Fase 1 | Base técnica, Landing, Design System | Completado |
+| Phase  | Items                                | Status             |
+| ------ | ------------------------------------ | ------------------ |
+| Fase 1 | Base técnica, Landing, Design System | Completado         |
 | Fase 2 | Catálogo Premium v2, Sommelier AI v2 | En curso / Próximo |
-| Fase 3 | Portal B2B v2, Backoffice Admin v2 | Futuro |
-| Fase 4 | Integración Rioja Marketplace | Futuro |
+| Fase 3 | Portal B2B v2, Backoffice Admin v2   | Futuro             |
+| Fase 4 | Integración Rioja Marketplace        | Futuro             |
 
 ## Validation
 
