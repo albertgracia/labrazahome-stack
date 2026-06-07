@@ -3,55 +3,52 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
-  title="Stack 2026 — Sobre el proyecto"
-  description="Conoce el propósito, stack tecnológico y enfoque de arquitectura de Stack 2026."
+  title="LabrazaHome Labs — Sobre el laboratorio"
+  description="Conoce LabrazaHome Labs, el laboratorio de innovación digital para el sector agroalimentario premium."
   canonical="/about/"
 >
   <section class="section-padding">
-    <div class="container-default">
-      <div class="mx-auto max-w-3xl">
-        <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Sobre el proyecto</h1>
-        <p class="mt-6 text-lg leading-relaxed text-gray-600 dark:text-gray-400">
-          Stack 2026 es un entorno de desarrollo web moderno diseñado para construir aplicaciones
-          escalables con tecnologías punteras. Nace de la necesidad de tener una base sólida,
-          reproducible y bien documentada que permita a equipos de desarrollo arrancar proyectos
-          sin fricción.
-        </p>
+    <div class="container-narrow">
+      <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Sobre nosotros</p>
+      <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">LabrazaHome Labs</h1>
+      <p class="mt-6 text-lg leading-relaxed text-muted dark:text-muted-dark">
+        LabrazaHome Labs es el laboratorio de innovación digital donde se diseñan y construyen
+        las plataformas que están transformando el sector agroalimentario premium.
+      </p>
 
-        <h2 class="mt-12 text-2xl font-bold tracking-tight">Stack tecnológico</h2>
-        <div class="mt-6 space-y-4">
-          <div class="rounded-lg border border-gray-200 p-4 dark:border-gray-800">
-            <h3 class="font-semibold">Frontend</h3>
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Astro 6 con React 19 y Tailwind CSS v4 para interfaces rápidas, reactivas y con excelente DX.</p>
-          </div>
-          <div class="rounded-lg border border-gray-200 p-4 dark:border-gray-800">
-            <h3 class="font-semibold">Backend</h3>
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Fastify 5 con TypeScript, validación Zod y arquitectura modular para APIs eficientes y tipadas.</p>
-          </div>
-          <div class="rounded-lg border border-gray-200 p-4 dark:border-gray-800">
-            <h3 class="font-semibold">Base de datos</h3>
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">PostgreSQL 17 con Prisma 6 ORM para acceso a datos type-safe con migraciones y seed.</p>
-          </div>
-          <div class="rounded-lg border border-gray-200 p-4 dark:border-gray-800">
-            <h3 class="font-semibold">Infraestructura</h3>
-            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Monorepo pnpm workspaces, Docker Compose para desarrollo local, TypeScript strict en toda la base.</p>
-          </div>
+      <h2 class="mt-12 text-2xl font-bold tracking-tight">Qué hacemos</h2>
+      <p class="mt-4 leading-relaxed text-muted dark:text-muted-dark">
+        Creamos experiencias digitales que conectan a productores, distribuidores, profesionales
+        y clientes finales en un ecosistema integrado. Cada producto nace de un profundo
+        conocimiento del sector y de las últimas tecnologías disponibles.
+      </p>
+
+      <h2 class="mt-12 text-2xl font-bold tracking-tight">Stack tecnológico</h2>
+      <div class="mt-6 space-y-4">
+        <div class="rounded-lg border border-border bg-card p-5 dark:border-border-dark dark:bg-card-dark">
+          <h3 class="font-semibold">Frontend</h3>
+          <p class="mt-1 text-sm text-muted dark:text-muted-dark">Astro 6 con React 19 y Tailwind CSS v4 para interfaces rápidas, reactivas y con excelente experiencia de desarrollo.</p>
         </div>
-
-        <h2 class="mt-12 text-2xl font-bold tracking-tight">Arquitectura limpia</h2>
-        <p class="mt-4 leading-relaxed text-gray-600 dark:text-gray-400">
-          El proyecto sigue principios de arquitectura limpia: separación clara de responsabilidades
-          entre frontend, backend, base de datos y paquetes compartidos. Cada capa es independiente
-          y testeable. Las dependencias apuntan hacia adentro: el dominio no depende de la
-          infraestructura.
-        </p>
-
-        <h2 class="mt-12 text-2xl font-bold tracking-tight">Estado actual</h2>
-        <p class="mt-4 leading-relaxed text-gray-600 dark:text-gray-400">
-          Stack 2026 se encuentra en fase de construcción de base. El scaffold inicial está completo
-          y validado. Actualmente se están añadiendo capas de contenido, SEO e integración continua.
-        </p>
+        <div class="rounded-lg border border-border bg-card p-5 dark:border-border-dark dark:bg-card-dark">
+          <h3 class="font-semibold">Backend</h3>
+          <p class="mt-1 text-sm text-muted dark:text-muted-dark">Fastify 5 con TypeScript, validación Zod y arquitectura modular para APIs eficientes y tipadas.</p>
+        </div>
+        <div class="rounded-lg border border-border bg-card p-5 dark:border-border-dark dark:bg-card-dark">
+          <h3 class="font-semibold">Base de datos</h3>
+          <p class="mt-1 text-sm text-muted dark:text-muted-dark">PostgreSQL 17 con Prisma 6 ORM para acceso a datos type-safe con migraciones y seed.</p>
+        </div>
+        <div class="rounded-lg border border-border bg-card p-5 dark:border-border-dark dark:bg-card-dark">
+          <h3 class="font-semibold">Infraestructura</h3>
+          <p class="mt-1 text-sm text-muted dark:text-muted-dark">Monorepo pnpm workspaces, Docker Compose para desarrollo local, TypeScript strict en toda la base.</p>
+        </div>
       </div>
+
+      <h2 class="mt-12 text-2xl font-bold tracking-tight">Estado actual</h2>
+      <p class="mt-4 leading-relaxed text-muted dark:text-muted-dark">
+        LabrazaHome Labs se encuentra en fase de construcción activa. La plataforma base está
+        operativa y los primeros productos se encuentran en desarrollo. Esta landing es el primer
+        paso de nuestra presencia digital.
+      </p>
     </div>
   </section>
 </Layout>

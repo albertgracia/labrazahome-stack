@@ -14,16 +14,16 @@ Fix all LOW-severity issues found during the first Vercel visual review:
 
 ## Changes Made
 
-| File | Change |
-|------|--------|
-| `apps/web/astro.config.mjs` | Changed fallback site URL from `https://stack-2026.vercel.app` to `https://labrazahome-stack.vercel.app` |
-| `apps/web/public/robots.txt` | Changed sitemap URL from `http://localhost:4321/sitemap-index.xml` to `https://labrazahome-stack.vercel.app/sitemap-index.xml` |
-| `apps/web/src/layouts/Layout.astro` | Added `canonical` prop support + `og:url` meta tag using `Astro.url`; builds absolute canonical URL from relative path via `Astro.site` |
-| `apps/web/src/pages/index.astro` | Passed `canonical="/"` |
-| `apps/web/src/pages/about.astro` | Passed `canonical="/about/"` |
-| `apps/web/src/pages/docs/index.astro` | Passed `canonical="/docs/"` |
-| `apps/web/src/pages/404.astro` | Passed `canonical="/404"` |
-| `docs/deployment-vercel.md` | Updated `PUBLIC_SITE_URL` example from `stack-2026.vercel.app` to `labrazahome-stack.vercel.app`; updated domain placeholder text |
+| File                                  | Change                                                                                                                                  |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `apps/web/astro.config.mjs`           | Changed fallback site URL from `https://stack-2026.vercel.app` to `https://labrazahome-stack.vercel.app`                                |
+| `apps/web/public/robots.txt`          | Changed sitemap URL from `http://localhost:4321/sitemap-index.xml` to `https://labrazahome-stack.vercel.app/sitemap-index.xml`          |
+| `apps/web/src/layouts/Layout.astro`   | Added `canonical` prop support + `og:url` meta tag using `Astro.url`; builds absolute canonical URL from relative path via `Astro.site` |
+| `apps/web/src/pages/index.astro`      | Passed `canonical="/"`                                                                                                                  |
+| `apps/web/src/pages/about.astro`      | Passed `canonical="/about/"`                                                                                                            |
+| `apps/web/src/pages/docs/index.astro` | Passed `canonical="/docs/"`                                                                                                             |
+| `apps/web/src/pages/404.astro`        | Passed `canonical="/404"`                                                                                                               |
+| `docs/deployment-vercel.md`           | Updated `PUBLIC_SITE_URL` example from `stack-2026.vercel.app` to `labrazahome-stack.vercel.app`; updated domain placeholder text       |
 
 ## Validation
 
