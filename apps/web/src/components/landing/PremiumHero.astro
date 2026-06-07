@@ -1,0 +1,52 @@
+---
+import Button from '../ui/Button.astro';
+---
+
+<div class="section-padding relative overflow-hidden">
+  <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--color-primary)_0%,_transparent_60%)] opacity-10 dark:opacity-20" />
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="relative mx-auto max-w-4xl text-center">
+      <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Laboratorio de innovación</p>
+      <h1 class="mt-8 text-5xl font-extrabold tracking-tight sm:text-7xl lg:text-8xl">
+        LabrazaHome<br />
+        <span class="bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent">Labs</span>
+      </h1>
+      <p class="mx-auto mt-8 max-w-3xl text-lg leading-relaxed text-balance text-muted dark:text-muted-dark">
+        Un laboratorio digital para construir la próxima generación de comercio,
+        inteligencia artificial y operaciones para el sector agroalimentario premium.
+      </p>
+      <p class="mx-auto mt-6 max-w-3xl text-sm leading-relaxed text-balance text-muted dark:text-muted-dark">
+        Desde Rioja Marketplace hasta Sommelier AI, estamos diseñando una plataforma
+        modular para conectar productores, distribuidores y clientes con experiencias
+        digitales de alto nivel.
+      </p>
+      <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Button href="#ecosistema" size="lg">Explorar ecosistema</Button>
+        <Button href="#roadmap" variant="secondary" size="lg">Ver roadmap</Button>
+      </div>
+    </div>
+
+    <div class="mt-20 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="rounded-xl border border-border/50 bg-white/60 p-6 backdrop-blur-xl dark:border-border-dark/50 dark:bg-surface-dark/60">
+        <p class="text-3xl font-bold text-primary">5</p>
+        <p class="mt-1 text-sm font-semibold text-zinc-900 dark:text-zinc-100">Módulos en desarrollo</p>
+        <p class="mt-1 text-xs text-muted dark:text-muted-dark">Productos activos en el laboratorio</p>
+      </div>
+      <div class="rounded-xl border border-border/50 bg-white/60 p-6 backdrop-blur-xl dark:border-border-dark/50 dark:bg-surface-dark/60">
+        <p class="text-3xl font-bold text-primary">100%</p>
+        <p class="mt-1 text-sm font-semibold text-zinc-900 dark:text-zinc-100">Stack moderno</p>
+        <p class="mt-1 text-xs text-muted dark:text-muted-dark">Astro, React, Fastify, Prisma, PostgreSQL</p>
+      </div>
+      <div class="rounded-xl border border-border/50 bg-white/60 p-6 backdrop-blur-xl dark:border-border-dark/50 dark:bg-surface-dark/60">
+        <p class="text-3xl font-bold text-primary">AI</p>
+        <p class="mt-1 text-sm font-semibold text-zinc-900 dark:text-zinc-100">AI-ready</p>
+        <p class="mt-1 text-xs text-muted dark:text-muted-dark">Modelos open source + AI-LAB</p>
+      </div>
+      <div class="rounded-xl border border-border/50 bg-white/60 p-6 backdrop-blur-xl dark:border-border-dark/50 dark:bg-surface-dark/60">
+        <p class="text-3xl font-bold text-primary">V+G</p>
+        <p class="mt-1 text-sm font-semibold text-zinc-900 dark:text-zinc-100">Pipeline integrado</p>
+        <p class="mt-1 text-xs text-muted dark:text-muted-dark">Vercel + GitHub CI/CD</p>
+      </div>
+    </div>
+  </div>
+</div>

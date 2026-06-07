@@ -1,0 +1,79 @@
+---
+import Card from '../ui/Card.astro';
+import Badge from '../ui/Badge.astro';
+---
+
+<div class="mx-auto max-w-2xl text-center">
+  <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Arquitectura</p>
+  <h2 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Tecnología del laboratorio</h2>
+  <p class="mt-4 text-lg text-balance text-muted dark:text-muted-dark">
+    Un stack moderno y coherente que nos permite prototipar rápido y escalar con confianza.
+  </p>
+</div>
+
+<div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+  <Card>
+    <div class="flex items-center gap-3">
+      <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">F</span>
+      <h3 class="font-semibold">Frontend</h3>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-2">
+      <Badge variant="default">Astro 6</Badge>
+      <Badge variant="default">React 19</Badge>
+      <Badge variant="default">Tailwind 4</Badge>
+      <Badge variant="default">TypeScript 5</Badge>
+    </div>
+    <p class="mt-3 text-xs text-muted dark:text-muted-dark">Interfaces rápidas, reactivas y con excelente DX.</p>
+  </Card>
+
+  <Card>
+    <div class="flex items-center gap-3">
+      <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">B</span>
+      <h3 class="font-semibold">Backend</h3>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-2">
+      <Badge variant="default">Fastify 5</Badge>
+      <Badge variant="default">Prisma 6</Badge>
+      <Badge variant="default">Zod</Badge>
+    </div>
+    <p class="mt-3 text-xs text-muted dark:text-muted-dark">APIs eficientes, tipadas y modularmente organizadas.</p>
+  </Card>
+
+  <Card>
+    <div class="flex items-center gap-3">
+      <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">D</span>
+      <h3 class="font-semibold">Datos</h3>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-2">
+      <Badge variant="default">PostgreSQL 17</Badge>
+      <Badge variant="default">Docker Compose</Badge>
+    </div>
+    <p class="mt-3 text-xs text-muted dark:text-muted-dark">Base de datos relacional avanzada con entorno aislado.</p>
+  </Card>
+
+  <Card>
+    <div class="flex items-center gap-3">
+      <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">D</span>
+      <h3 class="font-semibold">Deploy</h3>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-2">
+      <Badge variant="default">Vercel</Badge>
+      <Badge variant="default">GitHub</Badge>
+      <Badge variant="default">pnpm</Badge>
+    </div>
+    <p class="mt-3 text-xs text-muted dark:text-muted-dark">Despliegue continuo, control de versiones y monorepo.</p>
+  </Card>
+
+  <Card class="sm:col-span-2 lg:col-span-2">
+    <div class="flex items-center gap-3">
+      <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">I</span>
+      <h3 class="font-semibold">IA</h3>
+    </div>
+    <div class="mt-4 flex flex-wrap gap-2">
+      <Badge variant="default">AI-LAB</Badge>
+      <Badge variant="default">LM Studio</Badge>
+      <Badge variant="default">Modelos open source</Badge>
+    </div>
+    <p class="mt-3 text-xs text-muted dark:text-muted-dark">Infraestructura de inteligencia artificial para experimentación y prototipado de modelos locales.</p>
+  </Card>
+</div>

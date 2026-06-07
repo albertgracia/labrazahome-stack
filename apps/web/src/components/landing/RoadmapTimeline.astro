@@ -1,0 +1,75 @@
+---
+export interface RoadmapItem {
+  phase: string;
+  title: string;
+  description: string;
+  status: 'completed' | 'in-progress' | 'next' | 'future';
+}
+
+export interface Props {
+  items: RoadmapItem[];
+}
+
+const statusStyle = {
+  completed: {
+    dot: 'bg-emerald-500',
+    line: 'bg-emerald-500/30',
+    badge: 'text-emerald-600 dark:text-emerald-400',
+    label: 'Completado',
+  },
+  'in-progress': {
+    dot: 'bg-primary',
+    line: 'bg-primary/30',
+    badge: 'text-primary',
+    label: 'En curso',
+  },
+  next: {
+    dot: 'bg-muted dark:bg-muted-dark',
+    line: 'bg-border dark:bg-border-dark',
+    badge: 'text-muted dark:text-muted-dark',
+    label: 'Próximo',
+  },
+  future: {
+    dot: 'bg-border dark:bg-border-dark',
+    line: 'bg-border/50 dark:bg-border-dark/50',
+    badge: 'text-muted/60 dark:text-muted-dark/60',
+    label: 'Futuro',
+  },
+};
+
+const { items } = Astro.props;
+---
+
+<div class="mx-auto max-w-2xl text-center">
+  <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Roadmap</p>
+  <h2 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Hoja de ruta</h2>
+  <p class="mt-4 text-lg text-balance text-muted dark:text-muted-dark">
+    El camino del laboratorio hacia el ecosistema completo.
+  </p>
+</div>
+
+<div class="mt-16 mx-auto max-w-3xl">
+  <div class="relative space-y-0">
+    <div class="absolute left-[7px] top-3 h-[calc(100%-24px)] w-0.5 bg-border dark:bg-border-dark" />
+    {
+      items.map((item) => {
+        const style = statusStyle[item.status];
+        return (
+          <div class="relative flex gap-6 pb-12 last:pb-0">
+            <div class="relative flex shrink-0 flex-col items-center pt-2">
+              <div class={`z-10 h-4 w-4 rounded-full border-2 border-surface ${style.dot} dark:border-surface-dark`} />
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="flex flex-wrap items-center gap-3">
+                <span class="text-xs font-medium uppercase tracking-wider text-muted dark:text-muted-dark">{item.phase}</span>
+                <span class={`text-xs font-medium ${style.badge}`}>{style.label}</span>
+              </div>
+              <h3 class="mt-1 text-base font-semibold text-zinc-900 dark:text-zinc-100">{item.title}</h3>
+              <p class="mt-1 text-sm text-muted dark:text-muted-dark">{item.description}</p>
+            </div>
+          </div>
+        );
+      })
+    }
+  </div>
+</div>
