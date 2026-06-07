@@ -7,6 +7,17 @@ export type ProductCategory =
 
 export type ProductStatus = "concept" | "design" | "prototype" | "future";
 
+export type WineRatingSource = "Parker" | "Peñín" | "Decanter" | "Proensa" | "Otro";
+
+export interface WineRating {
+  source: WineRatingSource;
+  score: number;
+  maxScore: 100;
+  year?: number;
+  note?: string;
+  isMock?: boolean;
+}
+
 export interface ProductPremium {
   id: string;
   slug: string;
@@ -24,6 +35,7 @@ export interface ProductPremium {
   story: string;
   imageGradient: string;
   featured: boolean;
+  ratings?: WineRating[];
 }
 
 export interface CategoryInfo {

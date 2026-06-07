@@ -11,6 +11,7 @@ import ProductStory from '../../../components/catalog/ProductStory.astro';
 import ProductPairing from '../../../components/catalog/ProductPairing.astro';
 import ProductTrustBadges from '../../../components/catalog/ProductTrustBadges.astro';
 import ProductAIHints from '../../../components/catalog/ProductAIHints.astro';
+import ProductRatings from '../../../components/catalog/ProductRatings.astro';
 import { products } from '../../../data/catalog';
 
 export async function getStaticPaths() {
@@ -80,6 +81,14 @@ const statusLabels = {
       </div>
     </Container>
   </Section>
+
+  {product.category === 'vinos' && product.ratings && product.ratings.length > 0 && (
+    <Section>
+      <Container>
+        <ProductRatings ratings={product.ratings} />
+      </Container>
+    </Section>
+  )}
 
   <Section background="muted">
     <Container class="max-w-3xl">

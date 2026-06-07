@@ -38,6 +38,16 @@ export const products: ProductPremium[] = [
       "Las viñas que dan vida a este reserva fueron plantadas por la familia Labraza en 1921. Situadas a 600 metros de altitud en la Rioja Alta, los suelos arcillo-calcáreos y el microclima atlántico-mediterráneo crean las condiciones ideales para un Tempranillo de excepción. Cada botella representa más de un siglo de dedicación a la viticultura.",
     imageGradient: "from-purple-900/40 via-red-800/20 to-amber-900/40",
     featured: true,
+    ratings: [
+      {
+        source: "Parker",
+        score: 92,
+        maxScore: 100,
+        year: 2025,
+        note: "Puntuación mock de laboratorio para validar UX.",
+        isMock: true,
+      },
+    ],
   },
   {
     id: "blanco-de-viura-seleccion",
@@ -76,6 +86,15 @@ export const products: ProductPremium[] = [
       "La Viura es la variedad blanca tradicional de Rioja, pero durante décadas fue infravalorada. En Bodegas Labraza Heritage apostamos por recuperar su prestigio mediante una vinificación cuidadosa que respeta la fruta pero aporta complejidad gracias a la barrica.",
     imageGradient: "from-amber-800/30 via-yellow-600/20 to-stone-800/30",
     featured: true,
+    ratings: [
+      {
+        source: "Peñín",
+        score: 90,
+        maxScore: 100,
+        year: 2025,
+        isMock: true,
+      },
+    ],
   },
   {
     id: "garnacha-de-altura",
@@ -109,6 +128,15 @@ export const products: ProductPremium[] = [
       "A 700 metros de altitud, los inviernos son largos y los veranos cortos. La Garnacha madura lentamente, desarrollando una concentración y frescura únicas. Este vino es la expresión más pura de un terruño extremo y de una viticultura heroica.",
     imageGradient: "from-red-950/40 via-rose-900/20 to-slate-900/40",
     featured: false,
+    ratings: [
+      {
+        source: "Decanter",
+        score: 91,
+        maxScore: 100,
+        year: 2025,
+        isMock: true,
+      },
+    ],
   },
   {
     id: "arbequina-temprana",

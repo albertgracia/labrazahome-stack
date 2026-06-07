@@ -1,0 +1,50 @@
+---
+import type { WineRating } from '../../../types/catalog';
+import Badge from '../ui/Badge.astro';
+import Card from '../ui/Card.astro';
+
+interface Props {
+  ratings: WineRating[];
+}
+
+const { ratings } = Astro.props;
+
+if (!ratings || ratings.length === 0) {
+  // No render anything
+}
+
+const hasMock = ratings.some(r => r.isMock);
+---
+
+<Card variant="highlight" class="border-primary/20">
+  <div class="flex items-center justify-between mb-4">
+    <h3 class="text-lg font-semibold text-primary">Puntuaciones Críticas</h3>
+    {hasMock && (
+      <Badge variant="warning" class="text-xs">Mock laboratorio</Badge>
+    )}
+  </div>
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {ratings.map(rating => (
+      <div class="rounded-lg bg-card border border-border p-4 dark:border-border-dark dark:bg-card-dark">
+        <div class="flex items-baseline justify-between gap-2">
+          <span class="text-sm font-medium text-muted dark:text-muted-dark">{rating.source}</span>
+          {rating.year && (
+            <span class="text-xs text-muted dark:text-muted-dark">{rating.year}</span>
+          )}
+        </div>
+        <div class="mt-2 flex items-baseline gap-1">
+          <span class="text-3xl font-bold text-zinc-900 dark:text-zinc-100">{rating.score}</span>
+          <span class="text-lg text-muted dark:text-muted-dark">/ {rating.maxScore}</span>
+        </div>
+        {rating.note && (
+          <p class="mt-3 text-xs text-muted dark:text-muted-dark">{rating.note}</p>
+        )}
+      </div>
+    ))}
+  </div>
+  {hasMock && (
+    <p class="mt-4 text-xs text-muted dark:text-muted-dark">
+      Puntuaciones de laboratorio para validación de experiencia. No representan datos comerciales reales.
+    </p>
+  )}
+</Card>
