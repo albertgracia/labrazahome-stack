@@ -1,56 +1,76 @@
-# Stack 2026
+# Stack 2026 - Development Environment
 
-A modern, scalable development stack for next-generation applications.
+## Technologies Used
 
-## Overview
+- **Frontend**: Astro, React (v19), Tailwind CSS (v4), TypeScript
+- **Backend**: Node.js (v22 LTS), Fastify (v5), TypeScript
+- **Database**: PostgreSQL 17, Prisma ORM (v6)
+- **Monorepo**: pnpm workspaces
+- **Tooling**: ESLint, Prettier, TypeScript strict mode
 
-Stack 2026 is a comprehensive development environment designed to provide the best developer experience with cutting-edge technologies. It features:
-- Monorepo structure using pnpm workspaces
-- TypeScript-first development
-- Modern build tools and optimization
-- Scalable architecture for enterprise-level applications
+## Architecture Overview
 
-## Features
+The project follows a monorepo structure with distinct modules for frontend and backend:
 
-- **Monorepo Architecture**: Organized into apps, packages, infra, and docs directories
-- **TypeScript Support**: Full TypeScript integration with strict typing
-- **PNPM Workspaces**: Efficient package management across the monorepo
-- **Modern Tooling**: Built-in tooling for development, testing, and deployment
+### Frontend (`apps/web`)
 
-## Getting Started
+- Built using Astro with React
+- Tailwind CSS for styling
 
-1. Make sure you have Node.js 22 installed (using nvm: `nvm install 22`)
-2. Install pnpm if needed: `npm install -g pnpm`
-3. Install dependencies: `pnpm install`
+### Backend (`apps/api`)
 
-## Project Structure
+- API layer powered by Fastify
+- TypeScript for type safety and robustness
 
-- `/apps` - Application code
-- `/packages` - Shared libraries and packages  
-- `/infra` - Infrastructure as code
-- `/docs` - Documentation
-- `/.github` - GitHub workflows and configurations
+### Database Layer (`packages/db`)
 
-## Available Scripts
+- Prisma ORM for database interaction
+- PostgreSQL as the primary data store
 
-```bash
-# Development server
-npm run dev
+### Shared Packages
 
-# Build all packages
-npm run build
+- `packages/shared`: Contains shared types, utilities, and Zod validations
+- `packages/ui`: For UI components that can be reused across projects
 
-# Lint all files
-npm run lint
+### Infrastructure
 
-# Run tests
-npm run test
-```
+- Docker Compose for local development environment setup (`infra/docker-compose.yml`)
 
-## Technology Stack
+## Development Commands
 
-- Node.js 22
-- TypeScript
-- PNPM Workspaces
-- Turbo for build optimization
-- Turborepo for monorepo management
+| Command            | Description                   |
+| ------------------ | ----------------------------- |
+| `pnpm dev`         | Start all services            |
+| `pnpm dev:web`     | Start frontend (port 4321)    |
+| `pnpm dev:api`     | Start backend API (port 8080) |
+| `pnpm db:up`       | Start PostgreSQL container    |
+| `pnpm db:down`     | Stop PostgreSQL container     |
+| `pnpm db:migrate`  | Run database migrations       |
+| `pnpm db:generate` | Generate Prisma client        |
+| `pnpm build`       | Build all packages            |
+| `pnpm lint`        | Lint code with ESLint         |
+| `pnpm typecheck`   | Check TypeScript types        |
+| `pnpm format`      | Format code with Prettier     |
+
+## Development Ports
+
+- **Frontend**: 4321
+- **Backend API**: 8080
+- **PostgreSQL**: 5432 (via Docker)
+
+## Documentation
+
+This project includes documentation in the `/docs/` directory:
+
+- `architecture.md`: Describes the overall architecture of this environment.
+- `development.md`: Provides guidance on how to set up and run the development environment.
+
+## Notes for Future Development
+
+Please note that:
+
+1. This is a base scaffolding for Stack 2026.
+2. Further features like authentication, Stripe integration, or business logic should be added separately in future phases.
+3. The Docker Compose configuration is designed for local development and is not meant for production deployment.
+
+This setup allows for a clean separation of concerns while maintaining the flexibility to scale and evolve as needed.

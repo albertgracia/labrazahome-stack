@@ -1,16 +1,29 @@
 {
   "name": "stack-2026",
-  "version": "1.0.0",
-  "description": "Stack 2026 - Next Generation Development Stack",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Modern web development environment for 2026",
   "engines": {
-    "node": "22",
-    "pnpm": "^9.0.0"
+    "node": ">=22.0.0",
+    "pnpm": ">=10.0.0"
   },
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "test": "turbo test"
+    "dev": "concurrently -n web,api -c cyan,green \"pnpm dev:web\" \"pnpm dev:api\"",
+    "dev:web": "pnpm --filter web dev",
+    "dev:api": "pnpm --filter api dev",
+    "db:up": "docker compose -f infra/docker-compose.yml up -d",
+    "db:down": "docker compose -f infra/docker-compose.yml down",
+    "db:migrate": "prisma migrate dev --schema=packages/db/schema.prisma",
+    "db:generate": "prisma generate --schema=packages/db/schema.prisma",
+    "build": "pnpm -r build",
+    "lint": "prettier --check .",
+    "typecheck": "pnpm -r typecheck",
+    "check": "pnpm lint && pnpm typecheck && pnpm build",
+    "format": "prettier --write ."
   },
-  "packageManager": "pnpm@9.12.3"
+  "devDependencies": {
+    "concurrently": "^9.1.0",
+    "prettier": "^3.4.0",
+    "prisma": "^6.19.3"
+  }
 }

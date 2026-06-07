@@ -1,106 +1,30 @@
-# Stack 2026 Architecture
+# Architecture Overview
 
-## Overview
+This document provides a high-level architectural overview of the Stack 2026 development environment.
 
-Stack 2026 is a modern monorepo-based development environment designed for scalability and developer experience. It follows best practices in software architecture to support enterprise-level applications while maintaining simplicity.
+## System Components
 
-## Project Structure
+The system is composed of several key modules, each serving specific roles:
 
-```
-stack-2026/
-├── apps/              # Application code
-│   ├── web/         # Web application
-│   └── mobile/        # Mobile application (React Native)
-├── packages/        # Shared libraries and components
-│   ├── ui/          # UI component library
-│   ├── core/          # Core business logic
-│   └── utils/         # Utility functions
-├── infra/           # Infrastructure as code
-│   ├── terraform/       # Terraform configurations
-│   └── docker/      # Docker and container configurations
-├── docs/              # Documentation
-│   ├── architecture.md  # Architecture documentation
-│   ├── development.md # Development guidelines
-│   └── api.md       # API documentation  
-└── .github/         # GitHub configuration
-    ├── workflows/     # CI/CD pipelines
-    └── dependabot.yml   # Dependency updates
-```
-
-## Core Technologies
-
-### Backend Services
-- Node.js 22 with TypeScript
-- Express or Fastify for microservices
-- PostgreSQL + Redis for data storage
-
-### Frontend Applications  
-- React 18 with TypeScript
-- Next.js for server-side rendering
-- Tailwind CSS for styling
-
-### Infrastructure
-- Terraform for infrastructure provisioning
-- Docker and Kubernetes for container orchestration
-- GitHub Actions for CI/CD
-
-## Architecture Principles
-
-1. **Modularity**: Each package has a single responsibility and is independently deployable
-2. **Separation of Concerns**: Clear distinction between frontend, backend, and infrastructure  
-3. **Scalability**: Microservices architecture allows independent scaling
-4. **Developer Experience**: Tooling optimized for productivity
-5. **Infrastructure as Code**: All infrastructure managed via code
-
-## Deployment Architecture
-
-```
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│   GitHub      │    │  Docker Hub │    │  Kubernetes   │
-│     CI/CD     │───▶│  Registry │───▶│   Cluster   │
-└───────────────┘    └───────────────┘    └───────────────┘
-       │                   │               │
-       ▼                   ▼               ▼
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│  Build      │    │   Container   │    │  Deploy   │
-│  Environment│    │   Registry     │    │  Services   │
-└───────────────┘    └───────────────┘    └───────────────┘
-```
+- **Frontend (`apps/web`)**: Built with Astro and React, utilizing Tailwind CSS for styling.
+- **Backend (`apps/api`)**: Powered by Fastify to handle API requests.
+- **Database Layer (`packages/db`)**: Uses Prisma ORM to manage interactions with PostgreSQL.
+- **Shared Packages (`packages/shared`, `packages/ui`)**: Containing shared utilities and components for reuse.
 
 ## Data Flow
 
-1. **Frontend**: React applications consume services via REST/GraphQL APIs
-2. **Backend**: Node.js microservices with clear separation of concerns  
-3. **Database**: PostgreSQL for relational data, Redis for caching and sessions
-4. **Infrastructure**: Kubernetes-managed containers with auto-scaling
+### Frontend → Backend → Database
 
-## Security Architecture
+1. The frontend, hosted at [http://localhost:4321](http://localhost:4321), interacts with the backend API.
+2. All backend endpoints are exposed on port 8080 (`http://localhost:8080`).
+3. The backend communicates with the PostgreSQL database via Prisma ORM.
 
-- HTTPS by default in all environments
-- Authentication via JWT tokens or OAuth 2.0
-- Environment-specific configuration management 
-- Regular security scanning of dependencies
+## Technology Stack
 
-## Monitoring & Observability
+- **Frontend**: Astro + React + Tailwind CSS + TypeScript
+- **Backend**: Fastify + TypeScript
+- **Database**: PostgreSQL (via Prisma ORM)
+- **Monorepo**: pnpm workspaces
+- **Development Environment**: Docker Compose for local database setup
 
-- Centralized logging system
-- Real-time metrics and alerts
-- Distributed tracing for debugging complex flows
-- Health checks on all services
-
-## CI/CD Pipeline
-
-The development process follows these steps:
-1. Code commit triggers GitHub Actions workflow
-2. Automated linting, testing, and security scanning  
-3. Build verification of Docker images
-4. Deployment to staging environment (automated)
-5. Manual approval for production deployment
-6. Rollback capability in case of failures
-
-## Scalability Considerations
-
-- Horizontal scaling via Kubernetes
-- Microservices architecture for independent development 
-- Caching strategies with Redis
-- Database read replicas and sharding where needed
+This architecture supports scalability and maintainability while providing a modern development experience.

@@ -1,229 +1,76 @@
-# Development Guidelines
+# Stack 2026 - Development Environment
 
-## Overview
+## Technologies Used
 
-This document outlines the development practices, coding standards, and workflows for Stack 2026 projects.
+- **Frontend**: Astro, React (v19), Tailwind CSS (v4), TypeScript
+- **Backend**: Node.js (v22 LTS), Fastify (v5), TypeScript
+- **Database**: PostgreSQL 17, Prisma ORM (v6)
+- **Monorepo**: pnpm workspaces
+- **Tooling**: ESLint, Prettier, TypeScript strict mode
 
-## Getting Started
+## Architecture Overview
 
-1. Ensure Node.js 22 is installed (use `nvm` to manage versions)
-2. Install pnpm globally: `npm install -g pnpm`
-3. Clone the repository
-4. Run `pnpm install` in the root directory
+The project follows a monorepo structure with distinct modules for frontend and backend:
 
-## Project Structure
+### Frontend (`apps/web`)
 
-```
-stack-2026/
-├── apps/              # Application code
-│   ├── web/           # Web application (Next.js)
-│   └── mobile/        # Mobile application (React Native)
-├── packages/        # Shared libraries and components  
-│   ├── ui/            # UI component library
-│   ├── core/          # Core business logic
-│   └── utils/         # Utility functions
-├── infra/               # Infrastructure as code
-├── docs/              # Documentation
-└── .github/           # GitHub configuration
-```
+- Built using Astro with React
+- Tailwind CSS for styling
 
-## Code Standards
+### Backend (`apps/api`)
 
-### TypeScript Usage
+- API layer powered by Fastify
+- TypeScript for type safety and robustness
 
-1. Always use TypeScript for type safety:
-```typescript
-// Good
-interface User {
-  id: number;
-  name: string;
-}
+### Database Layer (`packages/db`)
 
-function processUser(user: User): void {
-  // implementation
-}
+- Prisma ORM for database interaction
+- PostgreSQL as the primary data store
 
-// Avoid
-const user = { id, name } // No explicit typing
-```
+### Shared Packages
 
-2. Use strict mode in all files:
-```typescript
-"use strict";
-```
+- `packages/shared`: Contains shared types, utilities, and Zod validations
+- `packages/ui`: For UI components that can be reused across projects
 
-### Component Structure
+### Infrastructure
 
-All components should follow this structure:
+- Docker Compose for local development environment setup (`infra/docker-compose.yml`)
 
-1. **TypeScript interfaces** for props and state
-2. **Clear separation of concerns**
-3. **Component documentation with JSDoc**
+## Development Commands
 
-Example component:
-```tsx
-/**
- * A reusable button component 
- */
-interface ButtonProps {
-  label: string;
-  onClick?: () => void;
-  variant?: 'primary' | 'secondary';
-}
+| Command            | Description                   |
+| ------------------ | ----------------------------- |
+| `pnpm dev`         | Start all services            |
+| `pnpm dev:web`     | Start frontend (port 4321)    |
+| `pnpm dev:api`     | Start backend API (port 8080) |
+| `pnpm db:up`       | Start PostgreSQL container    |
+| `pnpm db:down`     | Stop PostgreSQL container     |
+| `pnpm db:migrate`  | Run database migrations       |
+| `pnpm db:generate` | Generate Prisma client        |
+| `pnpm build`       | Build all packages            |
+| `pnpm lint`        | Lint code with ESLint         |
+| `pnpm typecheck`   | Check TypeScript types        |
+| `pnpm format`      | Format code with Prettier     |
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, variant = 'primary' }) => {
-  return (
-    <button className={`btn btn-${variant}`} onClick={onClick}>
-      {label}
-    </button>
-  );
-};
-```
+## Development Ports
 
-## Package Structure
+- **Frontend**: 4321
+- **Backend API**: 8080
+- **PostgreSQL**: 5432 (via Docker)
 
-Each package should have:
-1. `package.json` with correct dependencies and scripts
-2. TypeScript configuration (`tsconfig.json`)
-3. README.md with usage instructions
-4. Tests using Jest or Vitest
-5. Documentation in the `/docs` directory
+## Documentation
 
-### Example Package Structure
-```
-packages/
-  └── ui/
-      ├── src/
-      │   └── components/
-      ├── package.json
-      ├── tsconfig.json  
-      └── README.md
-```
+This project includes documentation in the `/docs/` directory:
 
-## Development Workflow
+- `architecture.md`: Describes the overall architecture of this environment.
+- `development.md`: Provides guidance on how to set up and run the development environment.
 
-1. **Create feature branches**: `feature/issue-number-description` 
-2. **Run tests before committing**: `pnpm test`
-3. **Lint code**: `pnpm lint`
-4. **Format code**: `pnpm format`
-5. **Commit with conventional commits**: https://www.conventionalcommits.org/
+## Notes for Future Development
 
-## Testing
+Please note that:
 
-### Unit Tests
-- Use Jest for unit testing components and utilities
-- Place tests alongside source files in `__tests__` directory
-- Aim for 100% test coverage of critical business logic
+1. This is a base scaffolding for Stack 2026.
+2. Further features like authentication, Stripe integration, or business logic should be added separately in future phases.
+3. The Docker Compose configuration is designed for local development and is not meant for production deployment.
 
-Example:
-```typescript
-import { sum } from './math';
-
-test('should add numbers correctly', () => {
-  expect(sum(2, 3)).toBe(5);
-});
-```
-
-### Integration Tests
-- Test interactions between multiple components or services  
-- Use tools like Playwright for end-to-end testing of web applications
-
-## Code Quality Tools
-
-### ESLint Configuration
-```json
-{
-  "extends": [
-    "@typescript-eslint/recommended",
-    "eslint:recommended"
-  ],
-  "rules": {
-    "@typescript-eslint/no-unused-vars": "error",
-    "@typescript-eslint/strict-boolean-expressions": "error"
-  }
-}
-```
-
-### Prettier Configuration  
-```json
-{
-  "semi": true,
-  "singleQuote": true,
-  "trailingComma": "es5",
-  "printWidth": 80,
-  "tabWidth": 2
-}
-```
-
-## Git Hooks
-
-1. Husky is configured to run linting and tests before each commit
-2. Pre-commit hooks enforce code quality standards
-3. Commit message convention: [type]: description (e.g., feat: add user authentication)
-
-## Documentation Standards  
-
-### API Documentation
-All APIs should include:
-- Clear endpoint descriptions  
-- Request/response schema examples
-- Error handling documentation
-
-### Component Documentation  
-Each component should have JSDoc comments:
-
-```typescript
-/**
- * A reusable navigation menu component 
- * @param {string} title - The heading text for the menu
- * @param {Array<{text: string, url: string}>} items - Menu items with labels and links
- */
-```
-
-## Environment Variables
-
-All environment variables should be:
-1. Defined in `.env` files (not committed to repository)
-2. Documented in `README.md`
-3. Managed through a secrets management system in production environments
-
-Example `.env` file:
-```bash
-# Database credentials
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=myapp
-
-# API keys  
-API_KEY=your-secret-key-here
-```
-
-## Performance Guidelines  
-
-1. **Lazy loading**: Load components only when needed
-2. **Code splitting**: Split bundles for better performance 
-3. **Efficient state management**: Use React Context or Zustand appropriately
-4. **Optimized image loading**: Use modern formats and lazy loading
-
-## Security Best Practices  
-
-1. Never expose sensitive information in the frontend
-2. Always validate inputs on both client and server-side  
-3. Implement rate limiting for API endpoints
-4. Use HTTPS in all environments
-5. Sanitize user input to prevent XSS attacks
-
-## Contributing
-
-1. Create a fork of this repository
-2. Make your changes in a feature branch 
-3. Run tests locally before submitting pull request
-4. Update documentation if necessary  
-5. Submit a pull request with clear description and links to issues addressed
-
-## Release Process  
-
-1. Tag releases using semantic versioning (v1.0.0, v1.1.0, etc.)
-2. Generate changelogs automatically from commits 
-3. Publish packages to npm registry when needed
-4. Update documentation for new versions
+This setup allows for a clean separation of concerns while maintaining the flexibility to scale and evolve as needed.

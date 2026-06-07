@@ -1,0 +1,16 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Counter from '../components/Counter.tsx';
+---
+
+<Layout title="Stack 2026 — Home">
+  <section class="flex min-h-[calc(100vh-8rem)] flex-col items-center justify-center px-4">
+    <h1 class="text-5xl font-bold tracking-tight sm:text-6xl">Stack 2026</h1>
+    <p class="mt-4 max-w-md text-center text-lg text-gray-600">
+      Modern web development environment for building production-grade applications.
+    </p>
+    <div class="mt-8">
+      <Counter client:load />
+    </div>
+  </section>
+</Layout>
