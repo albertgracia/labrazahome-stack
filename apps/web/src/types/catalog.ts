@@ -7,7 +7,12 @@ export type ProductCategory =
 
 export type ProductStatus = "concept" | "design" | "prototype" | "future";
 
-export type WineRatingSource = "Parker" | "Peñín" | "Decanter" | "Proensa" | "Otro";
+export type WineRatingSource =
+  | "Parker"
+  | "Peñín"
+  | "Decanter"
+  | "Proensa"
+  | "Otro";
 
 export interface WineRating {
   source: WineRatingSource;

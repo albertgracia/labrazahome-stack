@@ -206,36 +206,36 @@ Estrategia SEO por producto:
 - JSON-LD para cada tipo de producto
 - Sitemap generado con @astrojs/sitemap
 - Imágenes con alt text descriptivo
- 
+
 ## Puntuaciones Críticas para Vinos
- 
+
 El Catálogo Premium v2 incluye soporte opcional para puntuaciones de guías críticas (Parker, Peñín, Decanter, Proensa, etc.) exclusivamente para productos de categoría **vino**.
- 
+
 ### Características
- 
+
 - **Opcional**: No todos los vinos deben tener puntuaciones
 - **Solo vinos**: No se aplica a aceites, mieles, gourmet ni packs
 - **Fuentes permitidas**: Parker, Peñín, Decanter, Proensa, Otro
 - **Estructura**: fuente, puntuación, maxScore (100), año opcional, nota opcional, flag isMock
 - **Mock data**: En laboratorio, todas las puntuaciones llevan `isMock: true` y se muestran con badge "Mock laboratorio"
- 
+
 ### Guardrails
- 
-| Regla | Descripción |
-|-------|-------------|
-| Solo vinos | Categoría `vinos` exclusivamente |
-| Opcional | `ratings` es array opcional en ProductPremium |
-| No inventar | No generar puntuaciones que no existan en datos |
-| Mock visible | Badge "Mock laboratorio" + texto disclaimer en UI |
-| Producción | En producción, `isMock: false` y fuente verificada |
+
+| Regla        | Descripción                                            |
+| ------------ | ------------------------------------------------------ |
+| Solo vinos   | Categoría `vinos` exclusivamente                       |
+| Opcional     | `ratings` es array opcional en ProductPremium          |
+| No inventar  | No generar puntuaciones que no existan en datos        |
+| Mock visible | Badge "Mock laboratorio" + texto disclaimer en UI      |
+| Producción   | En producción, `isMock: false` y fuente verificada     |
 | Sommelier AI | No mencionar puntuaciones si no existen en el producto |
- 
+
 ### Componente Visual
- 
+
 `ProductRatings.astro` — Card con grid de puntuaciones, badge mock si aplica, y texto de guardrail visible.
- 
+
 ---
- 
+
 ## Integración con Sommelier AI v2
 
 El catálogo será la fuente de datos principal para Sommelier AI v2:

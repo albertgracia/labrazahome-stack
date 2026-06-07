@@ -460,15 +460,15 @@ Toda respuesta de Sommelier AI debe incluir al menos uno de estos indicadores:
 
 Sommellier AI v2 debe seguir estas reglas estrictas al manejar puntuaciones críticas (Parker, Peñín, Decanter, etc.) del Catálogo Premium v2:
 
-| Regla | Descripción |
-|-------|-------------|
-| No mencionar si no existen | Si `product.ratings` no existe o está vacío, no mencionar puntuaciones |
-| No inventar fuentes | Nunca afirmar "Parker lo puntuó 95" si no está en los datos del catálogo |
-| No mezclar con disponibilidad/precio | Las puntuaciones son datos de calidad, no de disponibilidad comercial |
-| Indicar mock si aplica | Si `rating.isMock === true`, incluir "Puntuación de laboratorio" en la respuesta |
-| Solo vinos | Solo productos con `category === "vinos"` pueden tener ratings |
-| Citar fuente exacta | Si se menciona puntuación, citar la fuente exacta del catálogo (ej: "Según Parker (2025): 92/100") |
-| No extrapolar | Una puntuación de una añada no implica la misma para otras añadas |
+| Regla                                | Descripción                                                                                        |
+| ------------------------------------ | -------------------------------------------------------------------------------------------------- |
+| No mencionar si no existen           | Si `product.ratings` no existe o está vacío, no mencionar puntuaciones                             |
+| No inventar fuentes                  | Nunca afirmar "Parker lo puntuó 95" si no está en los datos del catálogo                           |
+| No mezclar con disponibilidad/precio | Las puntuaciones son datos de calidad, no de disponibilidad comercial                              |
+| Indicar mock si aplica               | Si `rating.isMock === true`, incluir "Puntuación de laboratorio" en la respuesta                   |
+| Solo vinos                           | Solo productos con `category === "vinos"` pueden tener ratings                                     |
+| Citar fuente exacta                  | Si se menciona puntuación, citar la fuente exacta del catálogo (ej: "Según Parker (2025): 92/100") |
+| No extrapolar                        | Una puntuación de una añada no implica la misma para otras añadas                                  |
 
 ### Ejemplo de Comportamiento Correcto
 
@@ -476,8 +476,8 @@ Sommellier AI v2 debe seguir estas reglas estrictas al manejar puntuaciones crí
 Usuario: "¿Qué puntuación tiene el Reserva del Alto Ebro?"
 
 Respuesta correcta (con ratings en catálogo):
-"El Reserva del Alto Ebro tiene una puntuación de 92/100 según Parker (2025). 
-Nota: Puntuación de laboratorio para validación de experiencia. 
+"El Reserva del Alto Ebro tiene una puntuación de 92/100 según Parker (2025).
+Nota: Puntuación de laboratorio para validación de experiencia.
 No representa un dato comercial real."
 
 Respuesta correcta (sin ratings en catálogo):
