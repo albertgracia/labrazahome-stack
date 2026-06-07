@@ -1,5 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
 ---
 
 <Layout
@@ -7,8 +9,8 @@ import Layout from '../../layouts/Layout.astro';
   description="Documentación técnica del ecosistema LabrazaHome Labs: comandos, estructura del monorepo y guías de desarrollo."
   canonical="/docs/"
 >
-  <section class="section-padding">
-    <div class="container-narrow">
+  <Section>
+    <Container width="narrow">
       <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Documentación</p>
       <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Guía de desarrollo</h1>
 
@@ -81,6 +83,6 @@ docs/           # Documentación y auditorías</code></pre>
           <li>Mantener Docker corriendo para desarrollo con base de datos</li>
         </ul>
       </section>
-    </div>
-  </section>
+    </Container>
+  </Section>
 </Layout>

@@ -32,14 +32,14 @@ Transform the generic "Stack 2026" landing into the official corporate landing f
 
 Complete rewrite with 6 sections:
 
-| Section | ID | Content |
-|---------|----|---------|
-| Hero | — | "LabrazaHome Labs" with gradient text, subtitle, two CTAs ("Explorar ecosistema" → #ecosistema, "Conocer la visión" → #vision) |
-| Ecosistema | `#ecosistema` | 5 product cards: Rioja Marketplace (base), Sommelier AI v2 (en desarrollo), Portal B2B v2, Backoffice Admin v2, Catálogo Premium v2 |
+| Section    | ID            | Content                                                                                                                                           |
+| ---------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hero       | —             | "LabrazaHome Labs" with gradient text, subtitle, two CTAs ("Explorar ecosistema" → #ecosistema, "Conocer la visión" → #vision)                    |
+| Ecosistema | `#ecosistema` | 5 product cards: Rioja Marketplace (base), Sommelier AI v2 (en desarrollo), Portal B2B v2, Backoffice Admin v2, Catálogo Premium v2               |
 | Tecnología | `#tecnologia` | 4-column grid: Frontend (Astro/React/TS), Backend (Fastify/Prisma), Infraestructura (PostgreSQL/GitHub/Vercel), IA (AI-LAB/LM Studio/open source) |
-| Visión | `#vision` | Vision statement with 4 pillars: Productores, Distribuidores, Profesionales, Clientes finales |
-| Roadmap | `#roadmap` | 8 cards: 4 completed (✓, green) + 4 upcoming (◯, neutral) |
-| CTA Final | `#contacto` | "El futuro de LabrazaHome ya está en construcción" with "Seguir evolución" button |
+| Visión     | `#vision`     | Vision statement with 4 pillars: Productores, Distribuidores, Profesionales, Clientes finales                                                     |
+| Roadmap    | `#roadmap`    | 8 cards: 4 completed (✓, green) + 4 upcoming (◯, neutral)                                                                                         |
+| CTA Final  | `#contacto`   | "El futuro de LabrazaHome ya está en construcción" with "Seguir evolución" button                                                                 |
 
 ### Supporting Pages
 
@@ -55,25 +55,26 @@ Complete rewrite with 6 sections:
 ### SEO
 
 All pages updated:
+
 - Title: `LabrazaHome Labs — ...`
 - Description: references to "innovación digital agroalimentaria"
 - Canonical paths preserved on all pages
 
 ## Files Modified
 
-| File | Action |
-|------|--------|
-| `apps/web/src/styles/global.css` | Modified — premium tokens, utilities, Inter font |
-| `apps/web/src/layouts/Layout.astro` | Modified — full rewrite with LabrazaHome branding |
-| `apps/web/src/pages/index.astro` | Modified — full rewrite with 6 sections |
-| `apps/web/src/pages/about.astro` | Modified — LabrazaHome Labs content |
-| `apps/web/src/pages/docs/index.astro` | Modified — updated branding and tokens |
-| `apps/web/src/pages/404.astro` | Modified — updated branding |
-| `apps/web/src/components/Hero.astro` | Deleted |
-| `apps/web/src/components/FeatureGrid.astro` | Deleted |
-| `apps/web/src/components/TechStack.astro` | Deleted |
-| `apps/web/src/components/Steps.astro` | Deleted |
-| `apps/web/src/components/CTA.astro` | Deleted |
+| File                                        | Action                                            |
+| ------------------------------------------- | ------------------------------------------------- |
+| `apps/web/src/styles/global.css`            | Modified — premium tokens, utilities, Inter font  |
+| `apps/web/src/layouts/Layout.astro`         | Modified — full rewrite with LabrazaHome branding |
+| `apps/web/src/pages/index.astro`            | Modified — full rewrite with 6 sections           |
+| `apps/web/src/pages/about.astro`            | Modified — LabrazaHome Labs content               |
+| `apps/web/src/pages/docs/index.astro`       | Modified — updated branding and tokens            |
+| `apps/web/src/pages/404.astro`              | Modified — updated branding                       |
+| `apps/web/src/components/Hero.astro`        | Deleted                                           |
+| `apps/web/src/components/FeatureGrid.astro` | Deleted                                           |
+| `apps/web/src/components/TechStack.astro`   | Deleted                                           |
+| `apps/web/src/components/Steps.astro`       | Deleted                                           |
+| `apps/web/src/components/CTA.astro`         | Deleted                                           |
 
 ## Validation
 

@@ -1,0 +1,17 @@
+---
+export interface Props {
+  width?: 'default' | 'narrow';
+  class?: string;
+}
+
+const { width = 'default', class: className } = Astro.props;
+
+const widths = {
+  default: 'container-default',
+  narrow: 'container-narrow',
+};
+---
+
+<div class={`${widths[width]} ${className ?? ''}`}>
+  <slot />
+</div>

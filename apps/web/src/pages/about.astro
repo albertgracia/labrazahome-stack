@@ -1,5 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import Card from '../components/ui/Card.astro';
 ---
 
 <Layout
@@ -7,8 +10,8 @@ import Layout from '../layouts/Layout.astro';
   description="Conoce LabrazaHome Labs, el laboratorio de innovación digital para el sector agroalimentario premium."
   canonical="/about/"
 >
-  <section class="section-padding">
-    <div class="container-narrow">
+  <Section>
+    <Container width="narrow">
       <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Sobre nosotros</p>
       <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">LabrazaHome Labs</h1>
       <p class="mt-6 text-lg leading-relaxed text-muted dark:text-muted-dark">
@@ -25,22 +28,22 @@ import Layout from '../layouts/Layout.astro';
 
       <h2 class="mt-12 text-2xl font-bold tracking-tight">Stack tecnológico</h2>
       <div class="mt-6 space-y-4">
-        <div class="rounded-lg border border-border bg-card p-5 dark:border-border-dark dark:bg-card-dark">
+        <Card>
           <h3 class="font-semibold">Frontend</h3>
           <p class="mt-1 text-sm text-muted dark:text-muted-dark">Astro 6 con React 19 y Tailwind CSS v4 para interfaces rápidas, reactivas y con excelente experiencia de desarrollo.</p>
-        </div>
-        <div class="rounded-lg border border-border bg-card p-5 dark:border-border-dark dark:bg-card-dark">
+        </Card>
+        <Card>
           <h3 class="font-semibold">Backend</h3>
           <p class="mt-1 text-sm text-muted dark:text-muted-dark">Fastify 5 con TypeScript, validación Zod y arquitectura modular para APIs eficientes y tipadas.</p>
-        </div>
-        <div class="rounded-lg border border-border bg-card p-5 dark:border-border-dark dark:bg-card-dark">
+        </Card>
+        <Card>
           <h3 class="font-semibold">Base de datos</h3>
           <p class="mt-1 text-sm text-muted dark:text-muted-dark">PostgreSQL 17 con Prisma 6 ORM para acceso a datos type-safe con migraciones y seed.</p>
-        </div>
-        <div class="rounded-lg border border-border bg-card p-5 dark:border-border-dark dark:bg-card-dark">
+        </Card>
+        <Card>
           <h3 class="font-semibold">Infraestructura</h3>
           <p class="mt-1 text-sm text-muted dark:text-muted-dark">Monorepo pnpm workspaces, Docker Compose para desarrollo local, TypeScript strict en toda la base.</p>
-        </div>
+        </Card>
       </div>
 
       <h2 class="mt-12 text-2xl font-bold tracking-tight">Estado actual</h2>
@@ -49,6 +52,6 @@ import Layout from '../layouts/Layout.astro';
         operativa y los primeros productos se encuentran en desarrollo. Esta landing es el primer
         paso de nuestra presencia digital.
       </p>
-    </div>
-  </section>
+    </Container>
+  </Section>
 </Layout>

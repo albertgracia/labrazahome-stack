@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Container from '../components/ui/Container.astro';
 
 export interface Props {
   title?: string;
@@ -36,40 +37,44 @@ const canonicalUrl = canonical ? new URL(canonical, siteUrl).href : Astro.url.hr
   </head>
   <body class="min-h-screen bg-surface text-zinc-900 antialiased dark:bg-surface-dark dark:text-zinc-100">
     <header class="fixed top-0 z-50 w-full border-b border-border bg-white/80 backdrop-blur-lg dark:border-border-dark dark:bg-surface-dark/80">
-      <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <a href="/" class="text-lg font-bold tracking-tight text-primary">LabrazaHome<span class="text-zinc-900 dark:text-zinc-100"> Labs</span></a>
-        <nav class="hidden items-center gap-8 text-sm font-medium text-muted md:flex" role="navigation" aria-label="Navegación principal">
-          <a href="/" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Inicio</a>
-          <a href="/#ecosistema" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Ecosistema</a>
-          <a href="/#tecnologia" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Tecnología</a>
-          <a href="/#vision" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Visión</a>
-          <a href="/#contacto" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Contacto</a>
-        </nav>
-        <div class="flex items-center gap-3">
-          <button id="theme-toggle" type="button" class="rounded-lg p-2 text-muted hover:bg-zinc-100 dark:hover:bg-zinc-800" aria-label="Cambiar tema">
-            <svg class="block h-5 w-5 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
-            <svg class="hidden h-5 w-5 dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/></svg>
-          </button>
-          <button id="menu-toggle" type="button" class="rounded-lg p-2 text-muted hover:bg-zinc-100 md:hidden dark:hover:bg-zinc-800" aria-label="Abrir menú">
-            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-          </button>
+      <Container>
+        <div class="flex h-16 items-center justify-between">
+          <a href="/" class="text-lg font-bold tracking-tight text-primary">LabrazaHome<span class="text-zinc-900 dark:text-zinc-100"> Labs</span></a>
+          <nav class="hidden items-center gap-8 text-sm font-medium text-muted md:flex" role="navigation" aria-label="Navegación principal">
+            <a href="/" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Inicio</a>
+            <a href="/#ecosistema" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Ecosistema</a>
+            <a href="/#tecnologia" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Tecnología</a>
+            <a href="/#vision" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Visión</a>
+            <a href="/#contacto" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Contacto</a>
+          </nav>
+          <div class="flex items-center gap-3">
+            <button id="theme-toggle" type="button" class="rounded-lg p-2 text-muted hover:bg-zinc-100 dark:hover:bg-zinc-800" aria-label="Cambiar tema">
+              <svg class="block h-5 w-5 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+              <svg class="hidden h-5 w-5 dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707"/></svg>
+            </button>
+            <button id="menu-toggle" type="button" class="rounded-lg p-2 text-muted hover:bg-zinc-100 md:hidden dark:hover:bg-zinc-800" aria-label="Abrir menú">
+              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+          </div>
         </div>
-      </div>
+      </Container>
       <div id="mobile-menu" class="hidden border-t border-border bg-white px-4 pb-6 pt-4 dark:border-border-dark dark:bg-surface-dark">
-        <nav class="flex flex-col gap-4 text-sm font-medium text-muted" role="navigation" aria-label="Navegación móvil">
-          <a href="/" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Inicio</a>
-          <a href="/#ecosistema" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Ecosistema</a>
-          <a href="/#tecnologia" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Tecnología</a>
-          <a href="/#vision" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Visión</a>
-          <a href="/#contacto" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Contacto</a>
-        </nav>
+        <Container>
+          <nav class="flex flex-col gap-4 text-sm font-medium text-muted" role="navigation" aria-label="Navegación móvil">
+            <a href="/" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Inicio</a>
+            <a href="/#ecosistema" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Ecosistema</a>
+            <a href="/#tecnologia" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Tecnología</a>
+            <a href="/#vision" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Visión</a>
+            <a href="/#contacto" class="transition hover:text-zinc-900 dark:hover:text-zinc-100">Contacto</a>
+          </nav>
+        </Container>
       </div>
     </header>
     <main class="pt-16">
       <slot />
     </main>
     <footer class="border-t border-border bg-white py-16 dark:border-border-dark dark:bg-surface-dark">
-      <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <Container>
         <div class="flex flex-col items-center justify-between gap-8 sm:flex-row">
           <div>
             <p class="text-lg font-bold tracking-tight text-primary">LabrazaHome<span class="text-zinc-900 dark:text-zinc-100"> Labs</span></p>
@@ -85,7 +90,7 @@ const canonicalUrl = canonical ? new URL(canonical, siteUrl).href : Astro.url.hr
         <div class="mt-12 border-t border-border pt-8 text-center text-sm text-muted dark:border-border-dark">
           <p>&copy; {new Date().getFullYear()} LabrazaHome Labs. Todos los derechos reservados.</p>
         </div>
-      </div>
+      </Container>
     </footer>
     <script>
       const themeToggle = document.getElementById('theme-toggle');

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Container from '../components/ui/Container.astro';
 ---
 
 <Layout
@@ -8,11 +9,13 @@ import Layout from '../layouts/Layout.astro';
   canonical="/404"
 >
   <section class="flex min-h-[calc(100vh-12rem)] flex-col items-center justify-center px-4 text-center">
-    <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Error 404</p>
-    <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Página no encontrada</h1>
-    <p class="mt-4 max-w-md text-muted dark:text-muted-dark">La página que buscas no existe o ha sido movida.</p>
-    <a href="/" class="mt-8 inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-sm font-semibold text-white transition hover:bg-primary-dark">
-      Volver al inicio
-    </a>
+    <Container width="narrow">
+      <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Error 404</p>
+      <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Página no encontrada</h1>
+      <p class="mt-4 text-muted dark:text-muted-dark">La página que buscas no existe o ha sido movida.</p>
+      <a href="/" class="mt-8 inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition hover:bg-primary-dark">
+        Volver al inicio
+      </a>
+    </Container>
   </section>
 </Layout>

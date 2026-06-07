@@ -1,5 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Section from '../components/ui/Section.astro';
+import Container from '../components/ui/Container.astro';
+import Card from '../components/ui/Card.astro';
+import Badge from '../components/ui/Badge.astro';
+import Button from '../components/ui/Button.astro';
 ---
 
 <Layout
@@ -8,124 +13,120 @@ import Layout from '../layouts/Layout.astro';
   canonical="/"
 >
   <!-- HERO -->
-  <section class="section-padding relative overflow-hidden">
+  <Section class="relative overflow-hidden">
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--color-primary)_0%,_transparent_60%)] opacity-10 dark:opacity-20" />
-    <div class="container-narrow relative text-center">
+    <Container width="narrow" class="relative text-center">
       <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Laboratorio de innovación</p>
       <h1 class="mt-8 text-5xl font-extrabold tracking-tight sm:text-7xl lg:text-8xl">
         LabrazaHome<br />
         <span class="gradient-text">Labs</span>
       </h1>
-      <p class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted dark:text-muted-dark">
+      <p class="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-balance text-muted dark:text-muted-dark">
         Diseñando la próxima generación de experiencias digitales
         para el sector agroalimentario premium.
       </p>
       <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-        <a href="#ecosistema" class="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition hover:bg-primary-dark">
-          Explorar ecosistema
-        </a>
-        <a href="#vision" class="inline-flex h-12 items-center justify-center rounded-lg border border-border bg-white px-8 text-sm font-semibold text-zinc-900 transition hover:bg-zinc-50 dark:border-border-dark dark:bg-transparent dark:text-zinc-100 dark:hover:bg-zinc-800">
-          Conocer la visión
-        </a>
+        <Button href="#ecosistema" size="lg">Explorar ecosistema</Button>
+        <Button href="#vision" variant="secondary" size="lg">Conocer la visión</Button>
       </div>
-    </div>
-  </section>
+    </Container>
+  </Section>
 
   <!-- ECOSISTEMA -->
-  <section id="ecosistema" class="section-padding bg-zinc-50 dark:bg-white/[.02]">
-    <div class="container-default">
+  <Section id="ecosistema" background="muted">
+    <Container>
       <div class="mx-auto max-w-2xl text-center">
         <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Ecosistema</p>
         <h2 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Productos en desarrollo</h2>
-        <p class="mt-4 text-lg text-muted dark:text-muted-dark">
+        <p class="mt-4 text-lg text-balance text-muted dark:text-muted-dark">
           Un conjunto de plataformas digitales diseñadas para transformar
           la industria agroalimentaria.
         </p>
       </div>
       <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        <div class="group relative rounded-xl border border-border bg-card p-8 transition hover:border-primary/30 hover:shadow-lg dark:border-border-dark dark:bg-card-dark">
+        <Card>
           <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-xl">🍷</div>
           <h3 class="text-lg font-semibold">Sommelier AI v2</h3>
           <p class="mt-2 text-sm leading-relaxed text-muted dark:text-muted-dark">Asistente inteligente para recomendación y maridaje de vinos premium.</p>
-          <span class="mt-4 inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">En desarrollo</span>
-        </div>
-        <div class="group relative rounded-xl border border-border bg-card p-8 transition hover:border-primary/30 hover:shadow-lg dark:border-border-dark dark:bg-card-dark">
+          <Badge variant="warning" class="mt-4">En desarrollo</Badge>
+        </Card>
+        <Card>
           <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-xl">🏢</div>
           <h3 class="text-lg font-semibold">Portal B2B v2</h3>
           <p class="mt-2 text-sm leading-relaxed text-muted dark:text-muted-dark">Plataforma de gestión comercial para distribuidores y profesionales del sector.</p>
-          <span class="mt-4 inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">En desarrollo</span>
-        </div>
-        <div class="group relative rounded-xl border border-border bg-card p-8 transition hover:border-primary/30 hover:shadow-lg dark:border-border-dark dark:bg-card-dark">
+          <Badge variant="warning" class="mt-4">En desarrollo</Badge>
+        </Card>
+        <Card>
           <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-xl">🛠️</div>
           <h3 class="text-lg font-semibold">Backoffice Admin v2</h3>
           <p class="mt-2 text-sm leading-relaxed text-muted dark:text-muted-dark">Panel de administración centralizado para la gestión del ecosistema digital.</p>
-          <span class="mt-4 inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">En desarrollo</span>
-        </div>
-        <div class="group relative rounded-xl border border-border bg-card p-8 transition hover:border-primary/30 hover:shadow-lg dark:border-border-dark dark:bg-card-dark sm:col-span-2 lg:col-span-1">
+          <Badge variant="warning" class="mt-4">En desarrollo</Badge>
+        </Card>
+        <Card class="sm:col-span-2 lg:col-span-1">
           <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-xl">📦</div>
           <h3 class="text-lg font-semibold">Catálogo Premium v2</h3>
           <p class="mt-2 text-sm leading-relaxed text-muted dark:text-muted-dark">Escaparate digital de alta gama para productos agroalimentarios selectos.</p>
-          <span class="mt-4 inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-800 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">En desarrollo</span>
-        </div>
-        <div class="group relative col-span-full rounded-xl border border-primary/20 bg-gradient-to-br from-primary/[0.03] to-primary/[0.08] p-8 transition hover:shadow-lg dark:from-primary/[0.05] dark:to-primary/[0.12] sm:col-span-2 lg:col-span-2">
+          <Badge variant="warning" class="mt-4">En desarrollo</Badge>
+        </Card>
+        <Card variant="highlight" class="col-span-full sm:col-span-2 lg:col-span-2">
           <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/15 text-xl">🏠</div>
           <h3 class="text-lg font-semibold">Rioja Marketplace</h3>
           <p class="mt-2 text-sm leading-relaxed text-muted dark:text-muted-dark">Plataforma principal de comercio electrónico para la Denominación de Origen Calificada Rioja. Conectando bodegas, distribuidores y clientes finales.</p>
-          <span class="mt-4 inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary dark:text-primary-light">Plataforma base</span>
-        </div>
+          <Badge class="mt-4">Plataforma base</Badge>
+        </Card>
       </div>
-    </div>
-  </section>
+    </Container>
+  </Section>
 
   <!-- TECNOLOGÍA -->
-  <section id="tecnologia" class="section-padding">
-    <div class="container-default">
+  <Section id="tecnologia">
+    <Container>
       <div class="mx-auto max-w-2xl text-center">
         <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Tecnología</p>
         <h2 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Stack moderno</h2>
-        <p class="mt-4 text-lg text-muted dark:text-muted-dark">
+        <p class="mt-4 text-lg text-balance text-muted dark:text-muted-dark">
           Tecnologías punteras que forman la base de nuestro ecosistema digital.
         </p>
       </div>
       <div class="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        <div class="rounded-xl border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark">
+        <Card>
           <h3 class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-primary">Frontend</h3>
           <ul class="mt-4 space-y-3">
             <li class="flex items-center gap-3 text-sm"><span class="flex h-6 w-6 items-center justify-center rounded bg-zinc-100 text-xs font-bold dark:bg-zinc-800">A</span>Astro 6</li>
             <li class="flex items-center gap-3 text-sm"><span class="flex h-6 w-6 items-center justify-center rounded bg-zinc-100 text-xs font-bold dark:bg-zinc-800">R</span>React 19</li>
             <li class="flex items-center gap-3 text-sm"><span class="flex h-6 w-6 items-center justify-center rounded bg-zinc-100 text-xs font-bold dark:bg-zinc-800">T</span>TypeScript 5</li>
           </ul>
-        </div>
-        <div class="rounded-xl border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark">
+        </Card>
+        <Card>
           <h3 class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-primary">Backend</h3>
           <ul class="mt-4 space-y-3">
             <li class="flex items-center gap-3 text-sm"><span class="flex h-6 w-6 items-center justify-center rounded bg-zinc-100 text-xs font-bold dark:bg-zinc-800">F</span>Fastify 5</li>
             <li class="flex items-center gap-3 text-sm"><span class="flex h-6 w-6 items-center justify-center rounded bg-zinc-100 text-xs font-bold dark:bg-zinc-800">P</span>Prisma 6</li>
           </ul>
-        </div>
-        <div class="rounded-xl border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark">
+        </Card>
+        <Card>
           <h3 class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-primary">Infraestructura</h3>
           <ul class="mt-4 space-y-3">
             <li class="flex items-center gap-3 text-sm"><span class="flex h-6 w-6 items-center justify-center rounded bg-zinc-100 text-xs font-bold dark:bg-zinc-800">P</span>PostgreSQL 17</li>
             <li class="flex items-center gap-3 text-sm"><span class="flex h-6 w-6 items-center justify-center rounded bg-zinc-100 text-xs font-bold dark:bg-zinc-800">G</span>GitHub</li>
             <li class="flex items-center gap-3 text-sm"><span class="flex h-6 w-6 items-center justify-center rounded bg-zinc-100 text-xs font-bold dark:bg-zinc-800">V</span>Vercel</li>
           </ul>
-        </div>
-        <div class="rounded-xl border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark">
+        </Card>
+        <Card>
           <h3 class="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-primary">IA</h3>
           <ul class="mt-4 space-y-3">
             <li class="flex items-center gap-3 text-sm"><span class="flex h-6 w-6 items-center justify-center rounded bg-zinc-100 text-xs font-bold dark:bg-zinc-800">A</span>AI-LAB</li>
             <li class="flex items-center gap-3 text-sm"><span class="flex h-6 w-6 items-center justify-center rounded bg-zinc-100 text-xs font-bold dark:bg-zinc-800">L</span>LM Studio</li>
             <li class="flex items-center gap-3 text-sm"><span class="flex h-6 w-6 items-center justify-center rounded bg-zinc-100 text-xs font-bold dark:bg-zinc-800">O</span>Modelos open source</li>
           </ul>
-        </div>
+        </Card>
       </div>
-    </div>
-  </section>
+    </Container>
+  </Section>
 
   <!-- VISIÓN -->
-  <section id="vision" class="section-padding bg-zinc-50 dark:bg-white/[.02]">
-    <div class="container-narrow text-center">
+  <Section id="vision" background="muted">
+    <Container width="narrow" class="text-center">
       <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Visión</p>
       <h2 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Nuestra visión</h2>
       <div class="mt-12 space-y-6 text-left text-base leading-relaxed text-muted dark:text-muted-dark">
@@ -133,96 +134,94 @@ import Layout from '../layouts/Layout.astro';
           LabrazaHome Labs nace con el propósito de <strong class="text-zinc-900 dark:text-zinc-100">construir una plataforma digital moderna</strong> que conecte a todos los actores del sector agroalimentario premium.
         </p>
         <div class="grid gap-6 sm:grid-cols-2">
-          <div class="rounded-lg border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark">
+          <Card>
             <p class="text-2xl font-bold text-primary">01</p>
             <h3 class="mt-2 font-semibold text-zinc-900 dark:text-zinc-100">Productores</h3>
-            <p class="mt-1 text-sm">Herramientas digitales para visibilizar y comercializar su producción con alcance global.</p>
-          </div>
-          <div class="rounded-lg border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark">
+            <p class="mt-1 text-sm text-muted dark:text-muted-dark">Herramientas digitales para visibilizar y comercializar su producción con alcance global.</p>
+          </Card>
+          <Card>
             <p class="text-2xl font-bold text-primary">02</p>
             <h3 class="mt-2 font-semibold text-zinc-900 dark:text-zinc-100">Distribuidores</h3>
-            <p class="mt-1 text-sm">Canales eficientes de aprovisionamiento y gestión comercial B2B.</p>
-          </div>
-          <div class="rounded-lg border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark">
+            <p class="mt-1 text-sm text-muted dark:text-muted-dark">Canales eficientes de aprovisionamiento y gestión comercial B2B.</p>
+          </Card>
+          <Card>
             <p class="text-2xl font-bold text-primary">03</p>
             <h3 class="mt-2 font-semibold text-zinc-900 dark:text-zinc-100">Profesionales</h3>
-            <p class="mt-1 text-sm">Datos e inteligencia artificial para la toma de decisiones informadas.</p>
-          </div>
-          <div class="rounded-lg border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark">
+            <p class="mt-1 text-sm text-muted dark:text-muted-dark">Datos e inteligencia artificial para la toma de decisiones informadas.</p>
+          </Card>
+          <Card>
             <p class="text-2xl font-bold text-primary">04</p>
             <h3 class="mt-2 font-semibold text-zinc-900 dark:text-zinc-100">Clientes finales</h3>
-            <p class="mt-1 text-sm">Experiencias de compra premium con acceso a productos selectos de la D.O.Ca Rioja.</p>
-          </div>
+            <p class="mt-1 text-sm text-muted dark:text-muted-dark">Experiencias de compra premium con acceso a productos selectos de la D.O.Ca Rioja.</p>
+          </Card>
         </div>
       </div>
-    </div>
-  </section>
+    </Container>
+  </Section>
 
   <!-- ROADMAP -->
-  <section id="roadmap" class="section-padding">
-    <div class="container-default">
+  <Section id="roadmap">
+    <Container>
       <div class="mx-auto max-w-2xl text-center">
         <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Roadmap</p>
         <h2 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Hoja de ruta</h2>
-        <p class="mt-4 text-lg text-muted dark:text-muted-dark">Estado actual del ecosistema LabrazaHome.</p>
+        <p class="mt-4 text-lg text-balance text-muted dark:text-muted-dark">Estado actual del ecosistema LabrazaHome.</p>
       </div>
       <div class="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-6 dark:border-emerald-900 dark:bg-emerald-950">
+        <Card class="border-emerald-200 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-950!">
           <p class="text-2xl text-emerald-600 dark:text-emerald-400">✓</p>
           <h3 class="mt-2 font-semibold text-zinc-900 dark:text-zinc-100">Plataforma base</h3>
           <p class="mt-1 text-xs text-muted dark:text-muted-dark">Infraestructura fundamental operativa</p>
-        </div>
-        <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-6 dark:border-emerald-900 dark:bg-emerald-950">
+        </Card>
+        <Card class="border-emerald-200 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-950!">
           <p class="text-2xl text-emerald-600 dark:text-emerald-400">✓</p>
           <h3 class="mt-2 font-semibold text-zinc-900 dark:text-zinc-100">GitHub</h3>
           <p class="mt-1 text-xs text-muted dark:text-muted-dark">Control de versiones y CI/CD</p>
-        </div>
-        <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-6 dark:border-emerald-900 dark:bg-emerald-950">
+        </Card>
+        <Card class="border-emerald-200 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-950!">
           <p class="text-2xl text-emerald-600 dark:text-emerald-400">✓</p>
           <h3 class="mt-2 font-semibold text-zinc-900 dark:text-zinc-100">Vercel</h3>
           <p class="mt-1 text-xs text-muted dark:text-muted-dark">Despliegue continuo y hosting</p>
-        </div>
-        <div class="rounded-xl border border-emerald-200 bg-emerald-50 p-6 dark:border-emerald-900 dark:bg-emerald-950">
+        </Card>
+        <Card class="border-emerald-200 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-950!">
           <p class="text-2xl text-emerald-600 dark:text-emerald-400">✓</p>
           <h3 class="mt-2 font-semibold text-zinc-900 dark:text-zinc-100">Infraestructura</h3>
           <p class="mt-1 text-xs text-muted dark:text-muted-dark">PostgreSQL y Docker Compose</p>
-        </div>
-        <div class="rounded-xl border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark">
+        </Card>
+        <Card>
           <p class="text-2xl text-muted dark:text-muted-dark">◯</p>
           <h3 class="mt-2 font-semibold text-zinc-900 dark:text-zinc-100">Sommelier AI v2</h3>
           <p class="mt-1 text-xs text-muted dark:text-muted-dark">Próximo lanzamiento</p>
-        </div>
-        <div class="rounded-xl border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark">
+        </Card>
+        <Card>
           <p class="text-2xl text-muted dark:text-muted-dark">◯</p>
           <h3 class="mt-2 font-semibold text-zinc-900 dark:text-zinc-100">Portal B2B v2</h3>
           <p class="mt-1 text-xs text-muted dark:text-muted-dark">Próximo lanzamiento</p>
-        </div>
-        <div class="rounded-xl border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark">
+        </Card>
+        <Card>
           <p class="text-2xl text-muted dark:text-muted-dark">◯</p>
           <h3 class="mt-2 font-semibold text-zinc-900 dark:text-zinc-100">Backoffice Admin v2</h3>
           <p class="mt-1 text-xs text-muted dark:text-muted-dark">Próximo lanzamiento</p>
-        </div>
-        <div class="rounded-xl border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark">
+        </Card>
+        <Card>
           <p class="text-2xl text-muted dark:text-muted-dark">◯</p>
           <h3 class="mt-2 font-semibold text-zinc-900 dark:text-zinc-100">Catálogo Premium v2</h3>
           <p class="mt-1 text-xs text-muted dark:text-muted-dark">Próximo lanzamiento</p>
-        </div>
+        </Card>
       </div>
-    </div>
-  </section>
+    </Container>
+  </Section>
 
   <!-- CTA FINAL -->
-  <section id="contacto" class="section-padding relative overflow-hidden bg-zinc-50 dark:bg-white/[.02]">
+  <Section id="contacto" background="muted" class="relative overflow-hidden">
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--color-primary)_0%,_transparent_60%)] opacity-5 dark:opacity-10" />
-    <div class="container-narrow relative text-center">
-      <h2 class="text-4xl font-bold tracking-tight sm:text-5xl">El futuro de LabrazaHome<br />ya está en construcción.</h2>
-      <p class="mx-auto mt-6 max-w-lg text-lg text-muted dark:text-muted-dark">
+    <Container width="narrow" class="relative text-center">
+      <h2 class="text-4xl font-bold tracking-tight text-balance sm:text-5xl">El futuro de LabrazaHome<br />ya está en construcción.</h2>
+      <p class="mx-auto mt-6 max-w-lg text-lg text-balance text-muted dark:text-muted-dark">
         Estamos construyendo el ecosistema digital más avanzado para el sector agroalimentario premium.
         Síguenos en este viaje.
       </p>
-      <a href="/#ecosistema" class="mt-10 inline-flex h-12 items-center justify-center rounded-lg bg-primary px-8 text-sm font-semibold text-white shadow-lg shadow-primary/25 transition hover:bg-primary-dark">
-        Seguir evolución
-      </a>
-    </div>
-  </section>
+      <Button href="/#ecosistema" size="lg" class="mt-10">Seguir evolución</Button>
+    </Container>
+  </Section>
 </Layout>

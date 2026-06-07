@@ -1,0 +1,32 @@
+---
+export interface Props {
+  label: string;
+  value: string;
+  icon?: string;
+  trend?: 'up' | 'down' | 'neutral';
+  class?: string;
+}
+
+const { label, value, icon, trend, class: className } = Astro.props;
+
+const trendColors = {
+  up: 'text-emerald-600 dark:text-emerald-400',
+  down: 'text-red-600 dark:text-red-400',
+  neutral: 'text-muted dark:text-muted-dark',
+};
+---
+
+<div class={`rounded-xl border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark ${className ?? ''}`}>
+  <div class="flex items-center justify-between">
+    <p class="text-sm font-medium text-muted dark:text-muted-dark">{label}</p>
+    {icon && <span class="text-xl">{icon}</span>}
+  </div>
+  <p class="mt-2 text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">{value}</p>
+  {trend && (
+    <p class={`mt-1 text-sm font-medium ${trendColors[trend]}`}>
+      {trend === 'up' && '↑ '}
+      {trend === 'down' && '↓ '}
+      <slot name="trend" />
+    </p>
+  )}
+</div>
