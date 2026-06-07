@@ -1,0 +1,47 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Badge from '../../components/ui/Badge.astro';
+import CategoryHero from '../../components/catalog/CategoryHero.astro';
+import ProductCategoryNav from '../../components/catalog/ProductCategoryNav.astro';
+import ProductCardPremium from '../../components/catalog/ProductCardPremium.astro';
+import { categories } from '../../data/catalog';
+import { getProductsByCategory } from '../../data/catalog';
+
+export async function getStaticPaths() {
+  return categories.map(cat => ({
+    params: { categoria: cat.slug },
+    props: { category: cat },
+  }));
+}
+
+const { category } = Astro.props;
+const products = getProductsByCategory(category.slug);
+---
+
+<Layout
+  title={`${category.name} premium — LabrazaHome Labs`}
+  description={`Catálogo premium de ${category.name.toLowerCase()} de LabrazaHome Labs. ${category.description}`}
+  canonical={`/catalogo/${category.slug}/`}
+>
+  <CategoryHero category={category} productCount={products.length} />
+
+  <Section background="muted" class="pt-0!">
+    <Container>
+      <ProductCategoryNav current={category.slug} />
+    </Container>
+  </Section>
+
+  <Section background="muted">
+    <Container>
+      <div class="mb-8 flex items-center justify-between">
+        <p class="text-sm text-muted dark:text-muted-dark">{products.length} productos en laboratorio</p>
+        <Badge variant="warning">Datos mock</Badge>
+      </div>
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {products.map(p => <ProductCardPremium product={p} />)}
+      </div>
+    </Container>
+  </Section>
+</Layout>

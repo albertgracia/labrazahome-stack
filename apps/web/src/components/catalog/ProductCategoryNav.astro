@@ -1,0 +1,30 @@
+---
+import { categories } from '../../data/catalog';
+
+export interface Props {
+  current?: string;
+}
+
+const { current } = Astro.props;
+---
+
+<nav class="flex flex-wrap items-center justify-center gap-2">
+  <a
+    href="/catalogo"
+    class={`rounded-lg px-4 py-2 text-sm font-medium transition ${
+      !current ? 'bg-primary text-white' : 'text-muted hover:text-zinc-900 dark:hover:text-zinc-100'
+    }`}
+  >
+    Todos
+  </a>
+  {categories.map(cat => (
+    <a
+      href={`/catalogo/${cat.slug}`}
+      class={`rounded-lg px-4 py-2 text-sm font-medium transition ${
+        current === cat.slug ? 'bg-primary text-white' : 'text-muted hover:text-zinc-900 dark:hover:text-zinc-100'
+      }`}
+    >
+      {cat.icon} {cat.name}
+    </a>
+  ))}
+</nav>

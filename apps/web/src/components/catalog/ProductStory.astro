@@ -1,0 +1,17 @@
+---
+export interface Props {
+  story: string;
+  producer: string;
+}
+
+const { story, producer } = Astro.props;
+---
+
+<div class="rounded-xl border border-border bg-card p-8 dark:border-border-dark dark:bg-card-dark">
+  <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Historia</p>
+  <h3 class="mt-2 text-xl font-semibold text-zinc-900 dark:text-zinc-100">Sobre este producto</h3>
+  <div class="mt-4 border-l-2 border-primary pl-5">
+    <p class="text-base leading-relaxed text-muted dark:text-muted-dark">{story}</p>
+  </div>
+  <p class="mt-4 text-sm text-muted dark:text-muted-dark">— {producer}</p>
+</div>

@@ -1,0 +1,20 @@
+---
+export interface Props {
+  specs: Record<string, string>;
+}
+
+const { specs } = Astro.props;
+---
+
+<div class="overflow-hidden rounded-xl border border-border dark:border-border-dark">
+  <table class="w-full text-sm">
+    <tbody>
+      {Object.entries(specs).map(([key, value], i) => (
+        <tr class={`${i % 2 === 0 ? 'bg-zinc-50 dark:bg-white/[.02]' : ''} border-b border-border last:border-0 dark:border-border-dark`}>
+          <td class="px-5 py-3 font-medium text-zinc-900 dark:text-zinc-100">{key}</td>
+          <td class="px-5 py-3 text-muted dark:text-muted-dark">{value}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>

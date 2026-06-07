@@ -4,69 +4,81 @@ import Section from '../../components/ui/Section.astro';
 import Container from '../../components/ui/Container.astro';
 import Card from '../../components/ui/Card.astro';
 import Badge from '../../components/ui/Badge.astro';
-
-const categories = [
-  { icon: '🍷', title: 'Vinos', description: 'Tintos, blancos y rosados de la D.O.Ca Rioja y otras denominaciones premium.', status: 'En diseño' },
-  { icon: '🫒', title: 'Aceites', description: 'AOVE selectos con denominación de origen y perfiles sensoriales únicos.', status: 'En diseño' },
-  { icon: '🍯', title: 'Mieles', description: 'Mieles monoflorales y multiflorales de productores artesanales.', status: 'En diseño' },
-  { icon: '🧀', title: 'Gourmet', description: 'Conservas, foies, trufas y productos de alta gastronomía.', status: 'En diseño' },
-  { icon: '🎁', title: 'Packs', description: 'Selecciones, experiencias y cestas premium para regalo y degustación.', status: 'En diseño' },
-];
+import Button from '../../components/ui/Button.astro';
+import ProductCategoryNav from '../../components/catalog/ProductCategoryNav.astro';
+import ProductCardPremium from '../../components/catalog/ProductCardPremium.astro';
+import { categories } from '../../data/catalog';
+import { getFeaturedProducts, getProductsByCategory } from '../../data/catalog';
 ---
 
 <Layout
-  title="LabrazaHome Labs — Catálogo Premium v2"
-  description="Catálogo Premium v2 de LabrazaHome Labs. Experiencia editorial y visual para vinos, aceites, mieles y productos gourmet premium."
+  title="Catálogo Premium v2 — LabrazaHome Labs"
+  description="Catálogo Premium v2 de LabrazaHome Labs. Vinos, aceites, mieles y productos gourmet premium en fase de laboratorio."
   canonical="/catalogo/"
 >
   <Section class="relative overflow-hidden">
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--color-primary)_0%,_transparent_60%)] opacity-5 dark:opacity-10" />
-    <Container width="narrow" class="relative text-center">
-      <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Próximamente</p>
+    <Container class="relative text-center">
+      <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Laboratorio</p>
       <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Catálogo Premium v2</h1>
-      <p class="mt-4 text-lg text-balance text-muted dark:text-muted-dark">
-        Experiencia editorial y visual para productos agroalimentarios premium.
-        Esta sección se encuentra en fase de diseño y arquitectura.
+      <p class="mx-auto mt-4 max-w-2xl text-balance text-muted dark:text-muted-dark">
+        Catálogo editorial y visual de productos agroalimentarios premium en desarrollo dentro de LabrazaHome Labs.
+        Esta es una versión de laboratorio con datos de muestra.
       </p>
+      <div class="mt-6 flex items-center justify-center gap-3">
+        <Badge variant="warning">Datos mock de laboratorio</Badge>
+        <Badge variant="default">Sin conexión con producción</Badge>
+      </div>
+    </Container>
+  </Section>
+
+  <Section background="muted" class="pt-0!">
+    <Container>
+      <ProductCategoryNav />
     </Container>
   </Section>
 
   <Section background="muted">
     <Container>
       <div class="mx-auto max-w-2xl text-center">
-        <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Categorías</p>
-        <h2 class="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">Tipos de producto</h2>
-        <p class="mt-4 text-balance text-muted dark:text-muted-dark">
-          El catálogo albergará cinco grandes familias de productos agroalimentarios premium.
-        </p>
+        <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Destacados</p>
+        <h2 class="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">Productos destacados</h2>
       </div>
-      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {categories.map((cat) => (
-          <Card>
-            <div class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-primary/10 text-2xl">{cat.icon}</div>
-            <div class="flex items-center gap-3">
-              <h3 class="text-lg font-semibold">{cat.title}</h3>
-              <Badge variant="default">{cat.status}</Badge>
-            </div>
-            <p class="mt-2 text-sm leading-relaxed text-muted dark:text-muted-dark">{cat.description}</p>
-          </Card>
-        ))}
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {getFeaturedProducts().map(p => <ProductCardPremium product={p} />)}
       </div>
     </Container>
   </Section>
 
   <Section>
     <Container>
-      <div class="mx-auto max-w-2xl text-center">
-        <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Arquitectura</p>
-        <h2 class="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">Documentación técnica</h2>
-        <p class="mt-4 text-balance text-muted dark:text-muted-dark">
-          La arquitectura completa del Catálogo Premium v2 está documentada en el repositorio.
-        </p>
-        <a href="/docs" class="mt-8 inline-flex h-11 items-center justify-center rounded-lg bg-primary px-6 text-sm font-semibold text-white transition hover:bg-primary-dark">
-          Ver documentación
-        </a>
+      <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {categories.map(cat => {
+          const count = getProductsByCategory(cat.slug).length;
+          return (
+            <a href={`/catalogo/${cat.slug}`} class="group block">
+              <Card class="text-center transition hover:shadow-lg">
+                <span class="text-4xl">{cat.icon}</span>
+                <h3 class="mt-4 text-lg font-semibold group-hover:text-primary transition">{cat.name}</h3>
+                <p class="mt-2 text-sm text-muted dark:text-muted-dark">{cat.description}</p>
+                <p class="mt-3 text-xs text-muted dark:text-muted-dark">{count} productos</p>
+              </Card>
+            </a>
+          );
+        })}
       </div>
+    </Container>
+  </Section>
+
+  <Section background="muted">
+    <Container class="text-center">
+      <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Próximamente</p>
+      <h2 class="mt-4 text-3xl font-bold tracking-tight text-balance sm:text-4xl">Integración con Sommelier AI</h2>
+      <p class="mx-auto mt-4 max-w-lg text-balance text-muted dark:text-muted-dark">
+        Próximamente este catálogo se conectará con Sommelier AI v2 para ofrecer recomendaciones
+        personalizadas y experiencias de compra guiada.
+      </p>
+      <Button variant="secondary" size="lg" href="/" class="mt-8">Volver al inicio</Button>
     </Container>
   </Section>
 </Layout>

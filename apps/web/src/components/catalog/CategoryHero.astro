@@ -1,0 +1,27 @@
+---
+import type { CategoryInfo } from '../../types/catalog';
+import Badge from '../ui/Badge.astro';
+
+export interface Props {
+  category: CategoryInfo;
+  productCount: number;
+}
+
+const { category, productCount } = Astro.props;
+---
+
+<div class="section-padding relative overflow-hidden">
+  <div class={`absolute inset-0 bg-gradient-to-br ${category.heroGradient}`} />
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="relative mx-auto max-w-3xl text-center">
+      <span class="text-5xl">{category.icon}</span>
+      <p class="mt-4 text-sm font-medium uppercase tracking-[0.2em] text-primary">Categoría</p>
+      <h1 class="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">{category.name}</h1>
+      <p class="mx-auto mt-4 max-w-2xl text-balance text-muted dark:text-muted-dark">{category.description}</p>
+      <div class="mt-6 flex items-center justify-center gap-3">
+        <Badge variant="default">{productCount} productos</Badge>
+        <Badge variant="warning">Laboratorio</Badge>
+      </div>
+    </div>
+  </div>
+</div>

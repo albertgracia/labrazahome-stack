@@ -1,0 +1,17 @@
+---
+export interface Props {
+  gradients: string[];
+}
+
+const { gradients } = Astro.props;
+---
+
+<div class="grid gap-4 sm:grid-cols-2">
+  {gradients.map((g, i) => (
+    <div
+      class={`h-64 rounded-xl bg-gradient-to-br ${g} flex items-center justify-center ${i === 0 ? 'sm:col-span-2 sm:h-80' : ''}`}
+    >
+      <span class="text-6xl opacity-30 select-none">✦</span>
+    </div>
+  ))}
+</div>

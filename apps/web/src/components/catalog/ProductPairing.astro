@@ -1,0 +1,20 @@
+---
+export interface Props {
+  pairings: string[];
+}
+
+const { pairings } = Astro.props;
+---
+
+<div>
+  <p class="text-sm font-medium uppercase tracking-[0.2em] text-primary">Maridaje</p>
+  <h3 class="mt-2 text-xl font-semibold text-zinc-900 dark:text-zinc-100">Sugerencias</h3>
+  <div class="mt-4 grid gap-3 sm:grid-cols-2">
+    {pairings.map(p => (
+      <div class="flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3 dark:border-border-dark dark:bg-card-dark">
+        <span class="text-lg">✦</span>
+        <span class="text-sm text-muted dark:text-muted-dark">{p}</span>
+      </div>
+    ))}
+  </div>
+</div>

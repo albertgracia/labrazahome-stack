@@ -1,0 +1,106 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Section from '../../../components/ui/Section.astro';
+import Container from '../../../components/ui/Container.astro';
+import Badge from '../../../components/ui/Badge.astro';
+import Button from '../../../components/ui/Button.astro';
+import ProductCategoryNav from '../../../components/catalog/ProductCategoryNav.astro';
+import ProductGallery from '../../../components/catalog/ProductGallery.astro';
+import ProductSpecs from '../../../components/catalog/ProductSpecs.astro';
+import ProductStory from '../../../components/catalog/ProductStory.astro';
+import ProductPairing from '../../../components/catalog/ProductPairing.astro';
+import ProductTrustBadges from '../../../components/catalog/ProductTrustBadges.astro';
+import ProductAIHints from '../../../components/catalog/ProductAIHints.astro';
+import { products } from '../../../data/catalog';
+
+export async function getStaticPaths() {
+  return products.map(p => ({
+    params: { categoria: p.category, slug: p.slug },
+    props: { product: p },
+  }));
+}
+
+const { product } = Astro.props;
+
+const statusLabels = {
+  concept: 'Concepto',
+  design: 'En diseño',
+  prototype: 'Prototipo',
+  future: 'Futuro',
+};
+---
+
+<Layout
+  title={`${product.name} — LabrazaHome Labs`}
+  description={product.shortDescription}
+  canonical={`/catalogo/${product.category}/${product.slug}/`}
+>
+  <Section class="relative overflow-hidden pb-0!">
+    <div class={`absolute inset-0 bg-gradient-to-br ${product.imageGradient}`} />
+    <Container class="relative">
+      <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
+        <div>
+          <ProductCategoryNav current={product.category} />
+          <p class="mt-6 text-sm font-medium uppercase tracking-[0.2em] text-primary">{product.producer}</p>
+          <h1 class="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">{product.name}</h1>
+          <p class="mt-3 flex items-center gap-2 text-sm text-muted dark:text-muted-dark">
+            <span>📍 {product.region}</span>
+            <span>·</span>
+            <Badge variant={product.status === 'prototype' ? 'warning' : 'default'}>{statusLabels[product.status]}</Badge>
+          </p>
+          <p class="mt-4 text-lg leading-relaxed text-balance text-muted dark:text-muted-dark">{product.longDescription}</p>
+          <div class="mt-6 flex flex-wrap gap-4">
+            <Button variant="secondary" size="md" href="/#">
+              Consultar recomendación futura
+            </Button>
+            <Button variant="ghost" size="md" href="/#">
+              Guardar para B2B futuro
+            </Button>
+          </div>
+          <div class="mt-4">
+            <ProductTrustBadges badges={product.highlights.slice(0, 4)} />
+          </div>
+        </div>
+        <div class="hidden lg:block">
+          <ProductGallery gradients={[product.imageGradient, product.imageGradient]} />
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section>
+    <Container>
+      <div class="grid gap-10 lg:grid-cols-2">
+        <div>
+          <ProductSpecs specs={product.specs} />
+        </div>
+        <div>
+          <ProductPairing pairings={product.pairing} />
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section background="muted">
+    <Container class="max-w-3xl">
+      <ProductStory story={product.story} producer={product.producer} />
+    </Container>
+  </Section>
+
+  <Section background="muted" class="pt-0!">
+    <Container>
+      <ProductAIHints productName={product.name} />
+    </Container>
+  </Section>
+
+  <Section>
+    <Container class="text-center">
+      <Badge variant="warning">Producto mock de laboratorio</Badge>
+      <p class="mt-3 text-sm text-muted dark:text-muted-dark">
+        Este producto es una representación conceptual del Catálogo Premium v2. No es un producto real
+        ni está disponible para compra. Los datos mostrados son simulados para fines de desarrollo y diseño.
+      </p>
+      <Button variant="secondary" size="lg" href="/catalogo" class="mt-6">Volver al catálogo</Button>
+    </Container>
+  </Section>
+</Layout>
