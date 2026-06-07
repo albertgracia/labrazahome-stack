@@ -12,6 +12,9 @@ const {
   description = 'Base moderna para desarrollo web con Astro, React, Fastify, Prisma y PostgreSQL.',
   canonical,
 } = Astro.props;
+
+const siteUrl = Astro.site ?? new URL('https://labrazahome-stack.vercel.app');
+const canonicalUrl = canonical ? new URL(canonical, siteUrl).href : Astro.url.href;
 ---
 
 <!DOCTYPE html>
@@ -23,7 +26,8 @@ const {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:url" content={Astro.url.href} />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
   </head>

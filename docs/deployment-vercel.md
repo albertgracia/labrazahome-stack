@@ -39,14 +39,14 @@ El `vercel.json` en la raíz especificaba `outputDirectory: "apps/web/dist"`. Co
 
 ## Variables de entorno necesarias
 
-| Variable          | Descripción                              | Ejemplo                         |
-| ----------------- | ---------------------------------------- | ------------------------------- |
-| `PUBLIC_SITE_URL` | URL base del sitio (sitemap y canonical) | `https://stack-2026.vercel.app` |
+| Variable          | Descripción                              | Ejemplo                                |
+| ----------------- | ---------------------------------------- | -------------------------------------- |
+| `PUBLIC_SITE_URL` | URL base del sitio (sitemap y canonical) | `https://labrazahome-stack.vercel.app` |
 
 ### Comportamiento de PUBLIC_SITE_URL
 
 - Si se define, `astro.config.mjs` la usará como `site` para sitemap y canonical.
-- Si **no** se define, el fallback es `https://stack-2026.vercel.app`.
+- Si **no** se define, el fallback es `https://labrazahome-stack.vercel.app`.
 - En local, definir `PUBLIC_SITE_URL=http://localhost:4321` en `.env` para sitemap local.
 - En Vercel preview, establecer `PUBLIC_SITE_URL` a la URL de preview automática.
 - En producción, establecer `PUBLIC_SITE_URL` al dominio definitivo.
@@ -65,7 +65,7 @@ El `vercel.json` en la raíz especificaba `outputDirectory: "apps/web/dist"`. Co
 
 - `apps/api` (Fastify) no está incluido. Para producción se requiere un despliegue separado.
 - La base de datos (PostgreSQL + Prisma) no está desplegada. El frontend es completamente estático por ahora.
-- El dominio `stack-2026.vercel.app` es un placeholder. Configurar dominio real cuando corresponda.
+- El dominio actual es `labrazahome-stack.vercel.app`. Configurar dominio real cuando corresponda.
 - No hay redirects, headers de seguridad, ni reglas de rewrites configuradas aún.
 
 ## Qué NO desplegar todavía
