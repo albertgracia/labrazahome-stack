@@ -70,17 +70,17 @@ PASS - The development environment scaffold has been successfully created with a
 
 ### Problemas detectados y soluciones
 
-| Problema | Solución |
-|----------|----------|
-| `pnpm check` no existía | Añadido script `check` en package.json raíz: `"check": "pnpm lint && pnpm typecheck && pnpm build"` |
-| `pnpm db:migrate` fallaba: DATABASE_URL no encontrada | Migrado de `pnpm --filter db migrate` a `prisma migrate dev --schema=packages/db/schema.prisma` para ejecutar Prisma desde la raíz donde sí existe `.env`. Instalado `prisma` como devDependency raíz. |
-| `docker-compose.yml` contenía `version: '3.8'` obsoleto | Eliminado atributo `version` (obsoleto en Docker Compose v2). |
-| ESLint sin configuración en apps/web y apps/api | Eliminados scripts `lint` de sub-paquetes. Script `lint` raíz cambiado a `prettier --check .` |
-| Formato Prettier inconsistente | Ejecutado `pnpm format` para estandarizar |
-| `.nvmrc` contenía "pnpm" en vez de "22" | Corregido a "22" |
-| `.env.example` incompleto | Añadidos `API_PORT=8080` y `WEB_PORT=4321` |
-| Archivos basura (`final_verification.md`, `stack-2026.md`, `project-plan.md`, `docs/audit-report.md`) | Eliminados |
-| `.gitignore` ignoraba `pnpm-lock.yaml` (debe committearse) | Corregido. Añadido `.astro/` a gitignore |
+| Problema                                                                                              | Solución                                                                                                                                                                                               |
+| ----------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pnpm check` no existía                                                                               | Añadido script `check` en package.json raíz: `"check": "pnpm lint && pnpm typecheck && pnpm build"`                                                                                                    |
+| `pnpm db:migrate` fallaba: DATABASE_URL no encontrada                                                 | Migrado de `pnpm --filter db migrate` a `prisma migrate dev --schema=packages/db/schema.prisma` para ejecutar Prisma desde la raíz donde sí existe `.env`. Instalado `prisma` como devDependency raíz. |
+| `docker-compose.yml` contenía `version: '3.8'` obsoleto                                               | Eliminado atributo `version` (obsoleto en Docker Compose v2).                                                                                                                                          |
+| ESLint sin configuración en apps/web y apps/api                                                       | Eliminados scripts `lint` de sub-paquetes. Script `lint` raíz cambiado a `prettier --check .`                                                                                                          |
+| Formato Prettier inconsistente                                                                        | Ejecutado `pnpm format` para estandarizar                                                                                                                                                              |
+| `.nvmrc` contenía "pnpm" en vez de "22"                                                               | Corregido a "22"                                                                                                                                                                                       |
+| `.env.example` incompleto                                                                             | Añadidos `API_PORT=8080` y `WEB_PORT=4321`                                                                                                                                                             |
+| Archivos basura (`final_verification.md`, `stack-2026.md`, `project-plan.md`, `docs/audit-report.md`) | Eliminados                                                                                                                                                                                             |
+| `.gitignore` ignoraba `pnpm-lock.yaml` (debe committearse)                                            | Corregido. Añadido `.astro/` a gitignore                                                                                                                                                               |
 
 ### Estado final
 
@@ -92,6 +92,7 @@ PASS - The development environment scaffold has been successfully created with a
 - `pnpm db:down` → **PASS**
 
 ### Archivos modificados en esta corrección
+
 - `package.json` — añadido script `check`, cambiado script `lint`, cambiados `db:migrate`/`db:generate` a ruta directa con `--schema`, añadido `prisma` devDependency
 - `.env` — creado con `DATABASE_URL` de desarrollo
 - `.env.example` — añadidos `API_PORT` y `WEB_PORT`

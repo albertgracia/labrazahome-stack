@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css';
+
 export interface Props {
   title?: string;
 }
@@ -12,7 +14,6 @@ const { title = "Stack 2026" } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
-    <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
   <body class="min-h-screen bg-gray-50 text-gray-900 antialiased">
     <nav class="border-b border-gray-200 bg-white">
