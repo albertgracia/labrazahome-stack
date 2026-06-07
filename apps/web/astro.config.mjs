@@ -9,5 +9,5 @@ export default defineConfig({
   site,
   integrations: [react(), sitemap()],
   output: "static",
-  server: { port: 4321 },
+  server: { port: 4321, host: true },
 });
