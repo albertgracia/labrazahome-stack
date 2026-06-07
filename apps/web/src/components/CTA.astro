@@ -1,0 +1,23 @@
+---
+export interface Props {
+  title: string;
+  subtitle?: string;
+  id?: string;
+}
+
+const { title, subtitle, id } = Astro.props;
+---
+
+<section id={id} class="section-padding">
+  <div class="container-default">
+    <div class="rounded-2xl bg-primary px-6 py-16 text-center text-white sm:px-16 sm:py-20">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">{title}</h2>
+      {subtitle && <p class="mx-auto mt-4 max-w-xl text-lg text-primary-100">{subtitle}</p>}
+      <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="inline-flex h-12 items-center justify-center rounded-lg bg-white px-8 text-sm font-semibold text-primary shadow-sm transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary">
+          Ver en GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

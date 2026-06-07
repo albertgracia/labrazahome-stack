@@ -1,0 +1,40 @@
+---
+export interface TechItem {
+  name: string;
+  description: string;
+  category: string;
+}
+
+export interface Props {
+  items: TechItem[];
+  id?: string;
+}
+
+const { items, id } = Astro.props;
+
+const categories = [...new Set(items.map((i) => i.category))];
+---
+
+<section id={id} class="section-padding bg-white dark:bg-white/[.02]">
+  <div class="container-default">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Stack tecnológico</h2>
+      <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Tecnologías modernas para un desarrollo rápido y fiable.</p>
+    </div>
+    <div class="mt-12 space-y-8">
+      {categories.map((category) => (
+        <div>
+          <h3 class="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-500">{category}</h3>
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {items.filter((i) => i.category === category).map((item) => (
+              <div class="rounded-lg border border-gray-100 bg-surface px-4 py-3 dark:border-gray-800 dark:bg-surface-dark">
+                <div class="font-medium">{item.name}</div>
+                <div class="text-sm text-gray-500 dark:text-gray-500">{item.description}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

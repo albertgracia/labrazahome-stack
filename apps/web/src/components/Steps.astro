@@ -1,0 +1,41 @@
+---
+export interface Step {
+  number: string;
+  title: string;
+  description: string;
+}
+
+export interface Props {
+  title: string;
+  subtitle?: string;
+  steps: Step[];
+  id?: string;
+}
+
+const { title, subtitle, steps, id } = Astro.props;
+---
+
+<section id={id} class="section-padding">
+  <div class="container-default">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">{title}</h2>
+      {subtitle && <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">{subtitle}</p>}
+    </div>
+    <div class="relative mt-16">
+      <div class="absolute left-8 top-0 hidden h-full w-px bg-gray-200 dark:bg-gray-800 sm:block" aria-hidden="true" />
+      <div class="space-y-12">
+        {steps.map((step) => (
+          <div class="relative flex flex-col gap-4 sm:flex-row sm:gap-8">
+            <div class="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-primary bg-white text-lg font-bold text-primary dark:bg-surface-dark sm:ml-0">
+              {step.number}
+            </div>
+            <div class="pt-3">
+              <h3 class="text-lg font-semibold">{step.title}</h3>
+              <p class="mt-1 text-gray-600 dark:text-gray-400">{step.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,16 +1,99 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import FeatureGrid from '../components/FeatureGrid.astro';
+import TechStack from '../components/TechStack.astro';
+import Steps from '../components/Steps.astro';
+import CTA from '../components/CTA.astro';
 import Counter from '../components/Counter.tsx';
+
+const features = [
+  {
+    title: 'Monorepo organizado',
+    description: 'Estructura pnpm workspaces que separa frontend, backend, paquetes compartidos y base de datos.',
+    icon: '📦',
+  },
+  {
+    title: 'TypeScript estricto',
+    description: 'Tipado fuerte en toda la base con strict mode, ESM y configuración centralizada.',
+    icon: '🛡️',
+  },
+  {
+    title: 'Desarrollo local aislado',
+    description: 'PostgreSQL 17 vía Docker Compose con persistencia y migraciones Prisma 6.',
+    icon: '🐳',
+  },
+  {
+    title: 'Frontend moderno',
+    description: 'Astro 6 con React 19 y Tailwind CSS v4 para interfaces rápidas y reactivas.',
+    icon: '⚛️',
+  },
+  {
+    title: 'API eficiente',
+    description: 'Fastify 5 con TypeScript, validación Zod y arquitectura modular.',
+    icon: '⚡',
+  },
+  {
+    title: 'Calidad automatizada',
+    description: 'Type checking, build y formato unificado con Prettier en un solo comando.',
+    icon: '✅',
+  },
+];
+
+const techItems = [
+  { name: 'Astro 6', description: 'Framework web de alto rendimiento', category: 'Frontend' },
+  { name: 'React 19', description: 'Biblioteca de interfaces de usuario', category: 'Frontend' },
+  { name: 'Tailwind CSS v4', description: 'Framework de estilos utility-first', category: 'Frontend' },
+  { name: 'TypeScript 5', description: 'Superconjunto tipado de JavaScript', category: 'Lenguaje' },
+  { name: 'Fastify 5', description: 'Framework backend rápido y extensible', category: 'Backend' },
+  { name: 'Prisma 6', description: 'ORM moderno para PostgreSQL', category: 'Backend' },
+  { name: 'PostgreSQL 17', description: 'Base de datos relacional avanzada', category: 'Base de datos' },
+  { name: 'pnpm 10', description: 'Gestor de paquetes rápido y eficiente', category: 'Herramientas' },
+  { name: 'Docker Compose', description: 'Entorno de desarrollo containerizado', category: 'Herramientas' },
+];
+
+const steps = [
+  { number: '01', title: 'Clona el repositorio', description: 'git clone y pnpm install para instalar todas las dependencias del monorepo.' },
+  { number: '02', title: 'Levanta la base de datos', description: 'pnpm db:up inicia PostgreSQL 17 en Docker con la configuración predefinida.' },
+  { number: '03', title: 'Prepara Prisma', description: 'pnpm db:generate y pnpm db:migrate sincronizan el esquema con la base de datos.' },
+  { number: '04', title: 'Desarrolla', description: 'pnpm dev arranca frontend (4321) y API (8080) simultáneamente con recarga en caliente.' },
+  { number: '05', title: 'Valida antes de commitear', description: 'pnpm check ejecuta lint, typecheck y build para garantizar la calidad.' },
+];
 ---
 
-<Layout title="Stack 2026 — Home">
-  <section class="flex min-h-[calc(100vh-8rem)] flex-col items-center justify-center px-4">
-    <h1 class="text-5xl font-bold tracking-tight sm:text-6xl">Stack 2026</h1>
-    <p class="mt-4 max-w-md text-center text-lg text-gray-600">
-      Modern web development environment for building production-grade applications.
-    </p>
-    <div class="mt-8">
-      <Counter client:load />
+<Layout title="Stack 2026 — Base moderna para desarrollo web" description="Entorno de desarrollo web moderno con Astro, React, Fastify, Prisma y PostgreSQL.">
+  <Hero
+    title="Stack 2026"
+    subtitle="Base moderna para desarrollo web con Astro, React, Fastify, Prisma y PostgreSQL."
+    tagline="Entorno de desarrollo"
+  />
+  <FeatureGrid
+    id="features"
+    title="Características"
+    subtitle="Todo lo que necesitas para construir aplicaciones web modernas y escalables."
+    features={features}
+  />
+  <TechStack id="stack" items={techItems} />
+  <Steps
+    id="workflow"
+    title="Flujo de desarrollo"
+    subtitle="Cinco pasos para empezar a construir."
+    steps={steps}
+  />
+  <section class="section-padding bg-white dark:bg-white/[.02]">
+    <div class="container-default">
+      <div class="mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">Demo interactiva</h2>
+        <p class="mt-4 text-lg text-gray-600 dark:text-gray-400">Componente React 19 con estado en tiempo real.</p>
+        <div class="mt-8 flex justify-center">
+          <Counter client:load />
+        </div>
+      </div>
     </div>
   </section>
+  <CTA
+    id="contact"
+    title="¿Listo para empezar?"
+    subtitle="Clona el repositorio y comienza a desarrollar en minutos."
+  />
 </Layout>
