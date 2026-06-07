@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Stack 2026 — Sobre el proyecto"
+  description="Conoce el propósito, stack tecnológico y enfoque de arquitectura de Stack 2026."
+>
+  <section class="section-padding">
+    <div class="container-default">
+      <div class="mx-auto max-w-3xl">
+        <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">Sobre el proyecto</h1>
+        <p class="mt-6 text-lg leading-relaxed text-gray-600 dark:text-gray-400">
+          Stack 2026 es un entorno de desarrollo web moderno diseñado para construir aplicaciones
+          escalables con tecnologías punteras. Nace de la necesidad de tener una base sólida,
+          reproducible y bien documentada que permita a equipos de desarrollo arrancar proyectos
+          sin fricción.
+        </p>
+
+        <h2 class="mt-12 text-2xl font-bold tracking-tight">Stack tecnológico</h2>
+        <div class="mt-6 space-y-4">
+          <div class="rounded-lg border border-gray-200 p-4 dark:border-gray-800">
+            <h3 class="font-semibold">Frontend</h3>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Astro 6 con React 19 y Tailwind CSS v4 para interfaces rápidas, reactivas y con excelente DX.</p>
+          </div>
+          <div class="rounded-lg border border-gray-200 p-4 dark:border-gray-800">
+            <h3 class="font-semibold">Backend</h3>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Fastify 5 con TypeScript, validación Zod y arquitectura modular para APIs eficientes y tipadas.</p>
+          </div>
+          <div class="rounded-lg border border-gray-200 p-4 dark:border-gray-800">
+            <h3 class="font-semibold">Base de datos</h3>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">PostgreSQL 17 con Prisma 6 ORM para acceso a datos type-safe con migraciones y seed.</p>
+          </div>
+          <div class="rounded-lg border border-gray-200 p-4 dark:border-gray-800">
+            <h3 class="font-semibold">Infraestructura</h3>
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Monorepo pnpm workspaces, Docker Compose para desarrollo local, TypeScript strict en toda la base.</p>
+          </div>
+        </div>
+
+        <h2 class="mt-12 text-2xl font-bold tracking-tight">Arquitectura limpia</h2>
+        <p class="mt-4 leading-relaxed text-gray-600 dark:text-gray-400">
+          El proyecto sigue principios de arquitectura limpia: separación clara de responsabilidades
+          entre frontend, backend, base de datos y paquetes compartidos. Cada capa es independiente
+          y testeable. Las dependencias apuntan hacia adentro: el dominio no depende de la
+          infraestructura.
+        </p>
+
+        <h2 class="mt-12 text-2xl font-bold tracking-tight">Estado actual</h2>
+        <p class="mt-4 leading-relaxed text-gray-600 dark:text-gray-400">
+          Stack 2026 se encuentra en fase de construcción de base. El scaffold inicial está completo
+          y validado. Actualmente se están añadiendo capas de contenido, SEO e integración continua.
+        </p>
+      </div>
+    </div>
+  </section>
+</Layout>
