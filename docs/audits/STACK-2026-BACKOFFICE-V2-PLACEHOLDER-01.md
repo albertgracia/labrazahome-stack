@@ -1,9 +1,11 @@
 # STACK-2026-BACKOFFICE-V2-PLACEHOLDER-01 — Backoffice Admin v2 Placeholder
 
 ## Summary
+
 Replaced the basic `/admin` list-based placeholder with a comprehensive visual dashboard matching the Stripe/Linear/Vercel style, based on the architecture defined in `docs/architecture/backoffice-v2.md`.
 
 ## Changes
+
 - **`apps/web/src/pages/admin/index.astro`**: Complete redesign with 7 sections:
   1. **Hero** — badges (Laboratorio, Arquitectura completada, Implementación pendiente), title, subtitle
   2. **KPI strip** — 6 MetricCard components (Productos, B2B, Presupuestos, Revisiones, Publicaciones, Integraciones) with mock values and trend indicators
@@ -14,6 +16,7 @@ Replaced the basic `/admin` list-based placeholder with a comprehensive visual d
   7. **Roadmap** — 4-point progress timeline (Arquitectura → Placeholder → Implementación → Producción)
 
 ## Design Decisions
+
 - Used existing UI components: `MetricCard`, `Card`, `Badge`, `Section`, `Container`
 - Color-coded workflow dots (indigo/emerald/amber) using lookup objects to avoid Tailwind JIT dynamic class issues
 - Profile levels use semantic colors (purple/indigo/amber/zinc) matching access level hierarchy
@@ -21,6 +24,7 @@ Replaced the basic `/admin` list-based placeholder with a comprehensive visual d
 - All data is mock with laboratorio badges — no real data, no API calls
 
 ## Validations
+
 - `pnpm format` — ✅ all files pass
 - `pnpm --filter web typecheck` — ✅ no errors
 - `pnpm --filter web build` — ✅ 24 pages built, admin/index.html included
