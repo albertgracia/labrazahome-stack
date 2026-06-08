@@ -6,19 +6,19 @@ Validar y blindar el modo API del Sommelier para que en Vercel no intente llamar
 
 ## Files Modified
 
-| File | Cambio |
-|---|---|
-| `apps/web/src/lib/sommelier/config.ts` | Default `getApiMode()` cambiado de `"api"` a `"mock"` |
-| `.env.example` | Añadidos `PUBLIC_SOMMELIER_API_MODE`, `PUBLIC_SOMMELIER_API_URL` con defaults seguros + comentarios LM Studio |
-| `docs/architecture/backend-sommelier-api.md` | Añadida sección "Vercel Safety" |
+| File                                         | Cambio                                                                                                        |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `apps/web/src/lib/sommelier/config.ts`       | Default `getApiMode()` cambiado de `"api"` a `"mock"`                                                         |
+| `.env.example`                               | Añadidos `PUBLIC_SOMMELIER_API_MODE`, `PUBLIC_SOMMELIER_API_URL` con defaults seguros + comentarios LM Studio |
+| `docs/architecture/backend-sommelier-api.md` | Añadida sección "Vercel Safety"                                                                               |
 
 ## Files Reviewed (no changes needed)
 
-| File | Veredicto |
-|---|---|
-| `apps/web/src/lib/sommelier/api-client.ts` | ✅ Safe — `request()` catcha errores de red, nunca expone URLs |
+| File                                                  | Veredicto                                                            |
+| ----------------------------------------------------- | -------------------------------------------------------------------- |
+| `apps/web/src/lib/sommelier/api-client.ts`            | ✅ Safe — `request()` catcha errores de red, nunca expone URLs       |
 | `apps/web/src/components/sommelier/SommelierChat.tsx` | ✅ Safe — fallback silencioso, muestra "Frontend Fallback" sin error |
-| `docs/architecture/lmstudio-provider.md` | ✅ Safe — documenta que frontend nunca llama LM Studio directo |
+| `docs/architecture/lmstudio-provider.md`              | ✅ Safe — documenta que frontend nunca llama LM Studio directo       |
 
 ## Security Analysis
 
@@ -38,12 +38,12 @@ localStorage "api"             → api (override temporal)
 
 ### Comportamiento por Entorno
 
-| Entorno | Mode | API Backend | Frontend Engine |
-|---|---|---|---|
-| Vercel producción | `mock` (default) | No intentado | Mock local |
-| Local dev sin backend | `mock` (default) | No intentado | Mock local |
-| Local dev con Fastify | `api` (env var) | `localhost:8080` | API backend |
-| Lab (LM Studio futuro) | `api` (env var) | `192.168.1.x:8080` | API → LM Studio |
+| Entorno                | Mode             | API Backend        | Frontend Engine |
+| ---------------------- | ---------------- | ------------------ | --------------- |
+| Vercel producción      | `mock` (default) | No intentado       | Mock local      |
+| Local dev sin backend  | `mock` (default) | No intentado       | Mock local      |
+| Local dev con Fastify  | `api` (env var)  | `localhost:8080`   | API backend     |
+| Lab (LM Studio futuro) | `api` (env var)  | `192.168.1.x:8080` | API → LM Studio |
 
 ### Reglas de Seguridad
 

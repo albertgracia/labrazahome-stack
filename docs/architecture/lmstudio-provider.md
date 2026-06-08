@@ -8,14 +8,11 @@ Conectar Sommelier AI v2 con modelos locales ejecutados mediante LM Studio para 
 
 ## No Alcance (en esta fase)
 
-- Conexión real a LM Studio
-- Llamadas HTTP a `127.0.0.1:1234`
-- Endpoints Fastify implementados
-- Variables de entorno en producción
 - Autenticación de usuarios
 - Persistencia de conversaciones
 - Rate limiting real
 - Integración con AI-LAB
+- moondream2 (visión) — futuro
 
 ## Arquitectura General
 
@@ -303,18 +300,18 @@ type IntentType =
 SOMMELIER_PROVIDER=mock|lmstudio|ailab
 
 # LM Studio
-LMSTUDIO_BASE_URL=http://127.0.0.1:1234/v1
-LMSTUDIO_MODEL=qwen/qwen3-coder-30b-a3b-instruct
+LMSTUDIO_BASE_URL=http://192.168.1.250:1234/v1
+LMSTUDIO_MODEL=llama-3.2-1b-instruct
 
 # Timeouts
 SOMMELIER_TIMEOUT_MS=30000
 SOMMELIER_MAX_TOKENS=2048
 
-# Temperature
+# Temperature (hardcoded 0.7 in provider)
 SOMMELIER_TEMPERATURE=0.7
 ```
 
-Estas variables deben documentarse en `.env.example` pero NO añadirse como secretos reales hasta la fase de implementación.
+Variables definidas en `.env.example` con valores seguros por defecto (`mock`).
 
 ## Prompt Design
 
@@ -501,14 +498,15 @@ No loguear:
 
 ## Roadmap
 
-| Fase | Descripción                                | Dependencias                 |
-| ---- | ------------------------------------------ | ---------------------------- |
-| 1    | Arquitectura y documentación (esta fase)   | —                            |
-| 2    | Provider interface + MockProvider refactor | Sommelier AI v2 actual       |
-| 3    | LM Studio Provider implementación          | Fase 2 + LM Studio instalado |
-| 4    | Fastify endpoints + validación Zod         | Fase 3 + apps/api            |
-| 5    | Prompt system + catalog context builder    | Fase 3                       |
-| 6    | Fallback y health check                    | Fase 3                       |
-| 7    | Guardrails + response validation           | Fase 3                       |
-| 8    | Integración con Frontend Chat              | Fases 3-7                    |
-| 9    | AI-LAB Provider                            | Fase 2 + AI-LAB disponible   |
+| Fase | Descripción                                | Estado        |
+| ---- | ------------------------------------------ | ------------- |
+| 1    | Arquitectura y documentación               | ✅ Completado |
+| 2    | Provider interface + MockProvider refactor | ✅ Completado |
+| 3    | LM Studio Provider implementación (real)   | ✅ Completado |
+| 4    | Fastify endpoints + validación Zod         | ✅ Completado |
+| 5    | Prompt system + catalog context builder    | ✅ Completado |
+| 6    | Fallback y health check                    | ✅ Completado |
+| 7    | Guardrails + response validation           | ✅ Completado |
+| 8    | Integración con Frontend Chat              | ✅ Completado |
+| 9    | AI-LAB Provider                            | ⏳ Pendiente  |
+| 10   | moondream2 (visión) en LM Studio           | ⏳ Futuro     |

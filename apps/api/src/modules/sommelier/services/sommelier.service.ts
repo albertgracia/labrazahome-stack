@@ -1,6 +1,7 @@
 import type {
   SommelierProvider,
   ChatInput,
+  SommelierProviderResponse,
 } from "../providers/sommelier-provider";
 import type {
   SommelierChatRequest,
@@ -16,7 +17,12 @@ export class SommelierService {
   private catalogContextService: CatalogContextService;
   private guardrailsService: GuardrailsService;
 
-  constructor(private provider: SommelierProvider) {
+  constructor(
+    private provider: SommelierProvider,
+    private providerName: string = "mock",
+    private fallbackProvider?: SommelierProvider,
+    private fallbackProviderName: string = "mock",
+  ) {
     this.catalogContextService = new CatalogContextService();
     this.guardrailsService = new GuardrailsService();
   }
@@ -44,29 +50,58 @@ export class SommelierService {
 
     const startTime = Date.now();
     let fallbackUsed = false;
-    let providerResponse;
+    let providerResponse: SommelierProviderResponse;
+    let modelName: string | undefined;
 
     try {
       providerResponse = await this.provider.chat(input);
+      modelName = providerResponse.model;
     } catch {
-      providerResponse = {
-        answer:
-          "Lo siento, el servicio de recomendación no está disponible en este momento. Por favor, inténtalo de nuevo más tarde.",
-        intent: "general" as const,
-        recommendations: [],
-        pairings: [],
-        confidence: 0.3,
-        model: undefined,
-        warnings: [
-          {
-            type: "fallback" as const,
-            message:
-              "El proveedor de respuestas no está disponible. Usando respuesta de emergencia.",
-          },
-        ],
-        sources: [],
-      };
-      fallbackUsed = true;
+      if (this.fallbackProvider) {
+        try {
+          providerResponse = await this.fallbackProvider.chat(input);
+          modelName = providerResponse.model ?? this.fallbackProviderName;
+          fallbackUsed = true;
+        } catch {
+          providerResponse = {
+            answer:
+              "Lo siento, el servicio de recomendación no está disponible en este momento. Por favor, inténtalo de nuevo más tarde.",
+            intent: "general" as const,
+            recommendations: [],
+            pairings: [],
+            confidence: 0.3,
+            model: undefined,
+            warnings: [
+              {
+                type: "fallback" as const,
+                message:
+                  "El proveedor de respuestas no está disponible. Usando respuesta de emergencia.",
+              },
+            ],
+            sources: [],
+          };
+          fallbackUsed = true;
+        }
+      } else {
+        providerResponse = {
+          answer:
+            "Lo siento, el servicio de recomendación no está disponible en este momento. Por favor, inténtalo de nuevo más tarde.",
+          intent: "general" as const,
+          recommendations: [],
+          pairings: [],
+          confidence: 0.3,
+          model: undefined,
+          warnings: [
+            {
+              type: "fallback" as const,
+              message:
+                "El proveedor de respuestas no está disponible. Usando respuesta de emergencia.",
+            },
+          ],
+          sources: [],
+        };
+        fallbackUsed = true;
+      }
     }
 
     const latencyMs = Date.now() - startTime;
@@ -74,10 +109,14 @@ export class SommelierService {
     const postWarnings =
       this.guardrailsService.validateOutput(providerResponse);
 
+    const activeProvider = fallbackUsed
+      ? this.fallbackProviderName
+      : this.providerName;
+
     return normalizeProviderResponse({
       providerResponse,
-      provider: "mock",
-      model: providerResponse.model ?? "mock-v1",
+      provider: activeProvider,
+      model: modelName ?? activeProvider,
       traceId,
       latencyMs,
       warnings: [...preWarnings, ...postWarnings, ...providerResponse.warnings],

@@ -23,16 +23,14 @@ Frontend Sommelier (Vercel)
 
 ## No Alcance (en esta fase)
 
-- Implementación real de endpoints
-- Conexión a LM Studio o AI-LAB
-- Llamadas HTTP reales
-- Modificaciones en `apps/api`
+- Conexión a AI-LAB
 - Migraciones Prisma
 - Tokens o secretos reales
 - Autenticación de usuarios
 - Persistencia de conversaciones
 - Rate limiting real
 - Logging real
+- moondream2 (visión) en LM Studio
 
 ## Arquitectura General
 
@@ -716,22 +714,22 @@ Fase futura (API backend):
 
 ## Roadmap de Implementación
 
-| Fase | Descripción                                           | Dependencias                 |
-| ---- | ----------------------------------------------------- | ---------------------------- |
-| 1    | Arquitectura y documentación (esta fase)              | —                            |
-| 2    | Scaffold estructura `apps/api/src/modules/sommelier/` | apps/api existente           |
-| 3    | Zod schemas + validación                              | Fase 2                       |
-| 4    | Provider interface + MockProvider en API              | Fase 2                       |
-| 5    | POST /api/v1/sommelier/chat endpoint                  | Fase 3 + Fase 4              |
-| 6    | Catalog Context Service                               | Fase 5 + Catálogo Premium v2 |
-| 7    | Guardrails Service                                    | Fase 5                       |
-| 8    | GET /api/v1/sommelier/health + providers              | Fase 5                       |
-| 9    | Error handling + fallback                             | Fase 5                       |
-| 10   | Frontend migración a API                              | Fase 5 + Frontend Sommelier  |
-| 11   | LM Studio Provider en API                             | Provider implementado        |
-| 12   | AI-LAB Provider en API                                | Provider implementado        |
-| 13   | Observabilidad + tracing                              | Fase 5 + sistema de logging  |
-| 14   | Rate limiting + CORS hardening                        | Fase 5                       |
+| Fase | Descripción                                           | Dependencias  |
+| ---- | ----------------------------------------------------- | ------------- |
+| 1    | Arquitectura y documentación                          | ✅ Completado |
+| 2    | Scaffold estructura `apps/api/src/modules/sommelier/` | ✅ Completado |
+| 3    | Zod schemas + validación                              | ✅ Completado |
+| 4    | Provider interface + MockProvider en API              | ✅ Completado |
+| 5    | POST /api/v1/sommelier/chat endpoint                  | ✅ Completado |
+| 6    | Catalog Context Service                               | ✅ Completado |
+| 7    | Guardrails Service                                    | ✅ Completado |
+| 8    | GET /api/v1/sommelier/health + providers              | ✅ Completado |
+| 9    | Error handling + fallback                             | ✅ Completado |
+| 10   | Frontend migración a API                              | ✅ Completado |
+| 11   | LM Studio Provider en API (real)                      | ✅ Completado |
+| 12   | AI-LAB Provider en API                                | ⏳ Pendiente  |
+| 13   | Observabilidad + tracing                              | ⏳ Pendiente  |
+| 14   | Rate limiting + CORS hardening                        | ⏳ Pendiente  |
 
 ## Scaffold Status (STACK-2026-BACKEND-SOMMELIER-API-SCAFFOLD-01)
 
@@ -751,7 +749,7 @@ apps/api/src/modules/sommelier/
 ├── providers/
 │   ├── sommelier-provider.ts        ← SommelierProvider interface
 │   ├── mock.provider.ts             ← MockProvider (responde placeholders)
-│   ├── lmstudio.provider.ts         ← LMStudioProvider (stub, no implementado)
+│   ├── lmstudio.provider.ts         ← LMStudioProvider (real, llama-3.2-1b-instruct)
 │   └── ailab.provider.ts            ← AILabProvider (stub, no implementado)
 └── utils/
     ├── trace.ts                     ← createTraceId()
@@ -770,26 +768,25 @@ apps/api/src/modules/sommelier/
 - ✅ Zod schemas y tipos (request, response, health, metadata, catalog context)
 - ✅ Provider interface con genéricos
 - ✅ MockProvider con respuestas placeholder
-- ✅ LMStudioProvider y AILabProvider stubs con error controlado
-- ✅ SommelierService con orquestación básica (provider, catalog context, guardrails)
-- ✅ CatalogContextService con TODOs para candidate selection
-- ✅ GuardrailsService con pre/post validación básica
+- ✅ LMStudioProvider real (llama-3.2-1b-instruct, fetch nativo, timeout, fallback)
+- ✅ AILabProvider stub pendiente
+- ✅ SommelierService con fallback provider (primario → fallback → emergencia)
+- ✅ CatalogContextService con candidate selection (máx 5)
+- ✅ GuardrailsService con pre/post validación
 - ✅ createTraceId() con formato som-{timestamp}-{seq}-{random}
 - ✅ SommelierError con códigos de error
 - ✅ normalizeProviderResponse()
-- ✅ 4 endpoints seguros en Fastify
+- ✅ 6 endpoints seguros en Fastify
+- ✅ Provider selector: SOMMELIER_PROVIDER=mock|lmstudio
 
 ### No implementado
 
-- ❌ Llamadas a LM Studio
 - ❌ Llamadas a AI-LAB
-- ❌ Catalog context candidate selection
-- ❌ Guardrails completos
 - ❌ Conexión a Prisma
-- ❌ Env vars de configuración
 - ❌ Rate limiting
 - ❌ Observabilidad real (tracing, logging)
 - ❌ Tests automatizados
+- ❌ moondream2 (visión) en LM Studio
 
 ## MockProvider Status (STACK-2026-BACKEND-SOMMELIER-MOCK-PROVIDER-01)
 
