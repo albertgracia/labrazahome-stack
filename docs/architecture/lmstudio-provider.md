@@ -1,5 +1,7 @@
 # LM Studio Provider — Arquitectura de Conexión para Sommelier AI v2
 
+> **Relación con AI-LAB:** LM Studio es el provider local simple para desarrollo rápido. AI-LAB será el provider gobernado con routing, trazabilidad, MCP y observabilidad. Ambos comparten la misma interfaz `SommelierProvider`. Ver [`docs/architecture/ailab-provider.md`](./ailab-provider.md) para la arquitectura del provider gobernado.
+
 ## Visión
 
 Conectar Sommelier AI v2 con modelos locales ejecutados mediante LM Studio para obtener respuestas generadas por IA real, manteniendo el mock engine como fallback y preparando el terreno para AI-LAB como provider futuro.

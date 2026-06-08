@@ -293,7 +293,7 @@ apps/api/
 
 ### AI Layer
 
-> Proveedores documentados en detalle en [`docs/architecture/lmstudio-provider.md`](./lmstudio-provider.md).
+> Proveedores documentados en detalle en [`docs/architecture/lmstudio-provider.md`](./lmstudio-provider.md) (LM Studio) y [`docs/architecture/ailab-provider.md`](./ailab-provider.md) (AI-LAB).
 
 ```
 ┌─────────────────────────────────────────┐
@@ -545,6 +545,7 @@ Mock Provider (actual) → LM Studio Provider (local/lab) → AI-LAB Provider (f
 ```
 
 La arquitectura completa del provider de LM Studio está documentada en [`docs/architecture/lmstudio-provider.md`](./lmstudio-provider.md).
+La arquitectura del provider de AI-LAB está documentada en [`docs/architecture/ailab-provider.md`](./ailab-provider.md).
 
 ## Roadmap
 
@@ -558,5 +559,5 @@ La arquitectura completa del provider de LM Studio está documentada en [`docs/a
 | **Fase 6**  | Backend endpoints Fastify               | API existente                                                                 |
 | **Fase 7**  | Integración LM Studio (local)           | Fase 5 + LM Studio · Arquitectura en `docs/architecture/lmstudio-provider.md` |
 | **Fase 8**  | Perfiles de usuario (privado/B2B/admin) | Fase 6                                                                        |
-| **Fase 9**  | Integración AI-LAB                      | Fase 5 + AI-LAB                                                               |
+| **Fase 9**  | Integración AI-LAB                      | Fase 5 + AI-LAB · Arquitectura en `docs/architecture/ailab-provider.md`       |
 | **Fase 10** | Conexión controlada Rioja Marketplace   | Runbook aprobado                                                              |
