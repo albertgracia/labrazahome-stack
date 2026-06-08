@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import ChatMessage from "./ChatMessage";
 import SommelierModeSelector from "./SommelierModeSelector";
 import ProductContextPanel from "./ProductContextPanel";
@@ -25,15 +25,17 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
   const [input, setInput] = useState("");
   const [profile, setProfile] = useState<Profile>("private");
   const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  const scrollToBottom = useCallback(() => {
+    const el = messagesContainerRef.current;
+    if (!el) return;
+    el.scrollTop = el.scrollHeight;
+  }, []);
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isTyping]);
+  }, [messages, isTyping, scrollToBottom]);
 
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,9 +73,9 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
   };
 
   return (
-    <div className="min-h-[520px] md:min-h-[640px] w-full flex flex-col">
+    <div className="flex h-[min(640px,calc(100vh-220px))] min-h-[480px] w-full flex-col overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
+      <div className="flex shrink-0 items-center justify-between px-5 py-4 border-b border-white/10">
         <div className="flex items-center gap-3">
           <div className="relative">
             <div className="w-3 h-3 rounded-full bg-emerald-500" />
@@ -98,7 +100,8 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
 
       {/* Chat Area */}
       <div
-        className="flex-1 overflow-y-auto p-5 space-y-5"
+        ref={messagesContainerRef}
+        className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-5"
         style={{
           background:
             "linear-gradient(180deg, rgba(9,9,11,0.95) 0%, rgba(24,24,27,0.9) 100%)",
@@ -162,13 +165,12 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
             </div>
           </div>
         )}
-        <div ref={messagesEndRef} />
       </div>
 
       {/* Input Area */}
       <form
         onSubmit={handleSend}
-        className="border-t border-white/10 bg-zinc-950/90 p-4"
+        className="shrink-0 border-t border-white/10 bg-zinc-950/90 p-4"
       >
         <div className="flex gap-3">
           <input
