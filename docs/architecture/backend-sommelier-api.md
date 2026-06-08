@@ -781,7 +781,6 @@ apps/api/src/modules/sommelier/
 
 ### No implementado
 
-- ❌ Lógica real de chat (POST devuelve 501)
 - ❌ Llamadas a LM Studio
 - ❌ Llamadas a AI-LAB
 - ❌ Catalog context candidate selection
@@ -791,3 +790,38 @@ apps/api/src/modules/sommelier/
 - ❌ Rate limiting
 - ❌ Observabilidad real (tracing, logging)
 - ❌ Tests automatizados
+
+## MockProvider Status (STACK-2026-BACKEND-SOMMELIER-MOCK-PROVIDER-01)
+
+### Implementado
+
+- ✅ `apps/api/src/modules/sommelier/data/catalog.mock.ts` — 10 productos backend (vinos, aceites, mieles, gourmet, packs)
+- ✅ `MockSommelierProvider.chat()` con detección de intención por palabras clave
+- ✅ `POST /api/v1/sommelier/chat` funcional (ya no 501)
+- ✅ Respuestas en español con recomendaciones, maridajes y fuentes
+- ✅ Guardrails: mensaje vacío, longitud máxima, price/stock claims, distinción lab/producción
+- ✅ Validación Zod en route handler
+- ✅ Error handling con SommelierError y códigos claros
+- ✅ Fallback en SommelierService si provider.chat() lanza excepción
+
+### Intents Soportados
+
+| Intención        | Keywords                         | Categoría | Confianza |
+| ---------------- | -------------------------------- | --------- | --------- |
+| `pairing`        | carne, chuletón, cordero, queso  | vinos     | 0.92      |
+| `recommendation` | aceite, aove, oliva              | aceites   | 0.88      |
+| `recommendation` | miel, romero, desayuno, infusión | mieles    | 0.88      |
+| `recommendation` | regalo, pack, cesta, detalle     | packs     | 0.88      |
+| `recommendation` | gourmet, foie, delicatessen      | gourmet   | 0.88      |
+| `recommendation` | tinto, reserva, crianza, vino    | vinos     | 0.88      |
+| `general`        | fallback (ninguna keyword)       | —         | 0.55      |
+
+### Endpoints State
+
+| Method | Path                         | State                        |
+| ------ | ---------------------------- | ---------------------------- |
+| GET    | /api/v1/sommelier/health     | ✅ funcional                 |
+| GET    | /api/v1/sommelier/providers  | ✅ funcional                 |
+| GET    | /api/v1/sommelier/guardrails | ✅ funcional                 |
+| GET    | /api/v1/sommelier            | ✅ funcional (discovery)     |
+| POST   | /api/v1/sommelier/chat       | ✅ funcional (mock provider) |

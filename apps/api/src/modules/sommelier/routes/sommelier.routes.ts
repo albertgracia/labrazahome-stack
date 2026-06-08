@@ -1,6 +1,8 @@
 import type { FastifyInstance } from "fastify";
 import { MockSommelierProvider } from "../providers/mock.provider";
 import { SommelierService } from "../services/sommelier.service";
+import { SommelierChatRequestSchema } from "../schemas/sommelier.schemas";
+import { SommelierError, SommelierErrorCode } from "../utils/errors";
 
 export async function registerSommelierRoutes(app: FastifyInstance) {
   const mockProvider = new MockSommelierProvider();
@@ -42,32 +44,33 @@ export async function registerSommelierRoutes(app: FastifyInstance) {
           description: "Max 2000 characters per message",
         },
         {
+          name: "empty_message",
+          enabled: true,
+          description: "Reject empty messages",
+        },
+        {
           name: "input_sanitization",
           enabled: true,
           description: "Strip HTML/scripts from input",
         },
         {
           name: "no_price_claims",
-          enabled: false,
+          enabled: true,
           description: "Prevent fictional price claims",
         },
         {
           name: "no_stock_claims",
-          enabled: false,
+          enabled: true,
           description: "Prevent fictional stock claims",
         },
         {
           name: "lab_production_distinction",
-          enabled: false,
-          description: "Distinguish lab vs production",
-        },
-        {
-          name: "spanish_response",
           enabled: true,
-          description: "Ensure response in Spanish",
+          description: "Distinguish lab vs production",
         },
       ],
       active: true,
+      provider: "mock",
     };
   });
 
@@ -75,7 +78,7 @@ export async function registerSommelierRoutes(app: FastifyInstance) {
     return {
       service: "sommelier",
       version: "1.0.0",
-      status: "scaffold",
+      status: "mock_active",
       endpoints: [
         {
           method: "GET",
@@ -95,17 +98,40 @@ export async function registerSommelierRoutes(app: FastifyInstance) {
         {
           method: "POST",
           path: "/api/v1/sommelier/chat",
-          status: "not_implemented",
+          status: "implemented",
         },
       ],
     };
   });
 
-  app.post("/api/v1/sommelier/chat", async (_request, reply) => {
-    return reply.status(501).send({
-      error: "NOT_IMPLEMENTED",
-      message: "POST /api/v1/sommelier/chat is not implemented yet",
-      statusCode: 501,
-    });
+  app.post("/api/v1/sommelier/chat", async (request, reply) => {
+    const parsed = SommelierChatRequestSchema.safeParse(request.body);
+
+    if (!parsed.success) {
+      return reply.status(400).send({
+        error: "INVALID_REQUEST",
+        message: "El cuerpo de la solicitud no es válido.",
+        statusCode: 400,
+        details: parsed.error.flatten().fieldErrors,
+      });
+    }
+
+    try {
+      const response = await sommelierService.chat(parsed.data);
+      return reply.status(200).send(response);
+    } catch (err) {
+      if (err instanceof SommelierError) {
+        return reply.status(err.statusCode).send({
+          error: err.code,
+          message: err.message,
+          statusCode: err.statusCode,
+        });
+      }
+      return reply.status(500).send({
+        error: "INTERNAL_ERROR",
+        message: "Error interno del servidor al procesar la solicitud.",
+        statusCode: 500,
+      });
+    }
   });
 }

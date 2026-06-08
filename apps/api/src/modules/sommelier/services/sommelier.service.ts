@@ -24,18 +24,15 @@ export class SommelierService {
   async chat(request: SommelierChatRequest): Promise<SommelierChatResponse> {
     const traceId = createTraceId();
 
-    // Pre-guardrails
     const preWarnings: SommelierWarning[] =
       this.guardrailsService.validateInput(request);
 
-    // Build catalog context
     const catalogContext = this.catalogContextService.buildContext(
       request.message,
       request.profile,
       request.selectedProductSlug,
     );
 
-    // Build chat input for provider
     const input: ChatInput = {
       message: request.message,
       profile: request.profile,
@@ -44,24 +41,47 @@ export class SommelierService {
       traceId,
     };
 
-    // Call provider
     const startTime = Date.now();
-    const providerResponse = await this.provider.chat(input);
+    let fallbackUsed = false;
+    let providerResponse;
+
+    try {
+      providerResponse = await this.provider.chat(input);
+    } catch {
+      providerResponse = {
+        answer:
+          "Lo siento, el servicio de recomendación no está disponible en este momento. Por favor, inténtalo de nuevo más tarde.",
+        intent: "general" as const,
+        recommendations: [],
+        pairings: [],
+        confidence: 0.3,
+        model: undefined,
+        warnings: [
+          {
+            type: "fallback" as const,
+            message:
+              "El proveedor de respuestas no está disponible. Usando respuesta de emergencia.",
+          },
+        ],
+        sources: [],
+      };
+      fallbackUsed = true;
+    }
+
     const latencyMs = Date.now() - startTime;
 
-    // Post-guardrails
     const postWarnings =
       this.guardrailsService.validateOutput(providerResponse);
 
-    // Normalize response
     return normalizeProviderResponse({
       providerResponse,
-      provider: providerResponse.model ? "mock" : "mock",
-      model: providerResponse.model,
+      provider: "mock",
+      model: providerResponse.model ?? "mock-v1",
       traceId,
       latencyMs,
       warnings: [...preWarnings, ...postWarnings, ...providerResponse.warnings],
       profile: request.profile,
+      fallbackUsed,
     });
   }
 

@@ -10,3 +10,5 @@ export { createTraceId } from "./utils/trace";
 export { SommelierError, SommelierErrorCode } from "./utils/errors";
 export { normalizeProviderResponse } from "./utils/response-normalizer";
 export { registerSommelierRoutes } from "./routes/sommelier.routes";
+export { mockCatalog } from "./data/catalog.mock";
+export type { MockProduct } from "./data/catalog.mock";

@@ -13,6 +13,7 @@ interface NormalizeInput {
   latencyMs: number;
   warnings: SommelierWarning[];
   profile: SommelierProfile;
+  fallbackUsed: boolean;
 }
 
 export function normalizeProviderResponse(
@@ -26,6 +27,7 @@ export function normalizeProviderResponse(
     latencyMs,
     warnings,
     profile,
+    fallbackUsed,
   } = input;
 
   const sourcesUsed = providerResponse.sources.length;
@@ -42,13 +44,13 @@ export function normalizeProviderResponse(
     traceId,
     warnings,
     sources: providerResponse.sources,
-    fallbackUsed: false,
+    fallbackUsed,
     metadata: {
       traceId,
       provider,
       model,
       latencyMs,
-      fallbackUsed: false,
+      fallbackUsed,
       sourcesUsed,
       warningsCount,
       intent: providerResponse.intent,
