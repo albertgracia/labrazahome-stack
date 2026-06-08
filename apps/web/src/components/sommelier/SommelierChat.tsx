@@ -18,6 +18,12 @@ import {
   PROFILE_STORAGE_KEY,
   SOMMELIER_PROFILES,
 } from "../../data/sommelier/profiles";
+import { chat as apiChat } from "../../lib/sommelier/api-client";
+import {
+  getApiMode,
+  getProviderLabel,
+  type SommelierApiMode,
+} from "../../lib/sommelier/config";
 
 interface Props {
   initialProduct?: ProductPremium;
@@ -77,6 +83,8 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
     collected: {},
     completed: false,
   });
+  const [apiMode] = useState<SommelierApiMode>(() => getApiMode());
+  const [providerLabel, setProviderLabel] = useState<string>("");
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = useCallback(() => {
@@ -116,9 +124,66 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
     setInput("");
     setIsTyping(true);
 
+    let fallbackUsed = false;
+
+    if (apiMode === "api") {
+      const { data, error } = await apiChat({
+        message: input,
+        profile,
+        conversationContext: flowCtx,
+        locale: "es",
+      });
+
+      if (data && !error) {
+        setProviderLabel(getProviderLabel(apiMode, false));
+        setFlowCtx((prev) => ({
+          ...prev,
+          category: data.intent !== "general" ? data.intent : prev.category,
+        }));
+
+        const assistantMessage: ChatMessageType = {
+          role: "assistant",
+          content: data.answer,
+          timestamp: new Date(),
+          isMock: false,
+          recommendations:
+            data.recommendations && data.recommendations.length > 0
+              ? data.recommendations.map((r) => ({
+                  slug: r.slug,
+                  name: r.name,
+                  category: r.category,
+                  reason: r.reason,
+                  confidence: r.confidence,
+                }))
+              : undefined,
+          pairings:
+            data.pairings && data.pairings.length > 0
+              ? data.pairings.map((p) => ({
+                  product: p.product,
+                  pairing: p.pairing,
+                  reason: p.reason,
+                }))
+              : undefined,
+        };
+
+        setMessages((prev) => [...prev, assistantMessage]);
+        setIsTyping(false);
+        return;
+      }
+
+      fallbackUsed = true;
+      setProviderLabel(getProviderLabel(apiMode, true));
+    }
+
     setTimeout(() => {
       const { result, context } = processConversation(input, flowCtx, profile);
       setFlowCtx(context);
+
+      if (apiMode === "mock") {
+        setProviderLabel(getProviderLabel("mock", false));
+      } else {
+        setProviderLabel(getProviderLabel("api", true));
+      }
 
       const assistantMessage: ChatMessageType = {
         role: "assistant",
@@ -158,12 +223,19 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
             </p>
           </div>
         </div>
-        <SommelierModeSelector
-          selectedProfile={profile}
-          onSelectProfile={handleSelectProfile}
-          isSaved={isSaved}
-          onClear={handleClearProfile}
-        />
+        <div className="flex items-center gap-3">
+          {providerLabel && (
+            <span className="text-[10px] text-zinc-600 bg-white/5 px-2 py-0.5 rounded-full">
+              {providerLabel}
+            </span>
+          )}
+          <SommelierModeSelector
+            selectedProfile={profile}
+            onSelectProfile={handleSelectProfile}
+            isSaved={isSaved}
+            onClear={handleClearProfile}
+          />
+        </div>
       </div>
 
       {/* Profile memory indicator */}

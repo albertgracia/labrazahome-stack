@@ -825,3 +825,21 @@ apps/api/src/modules/sommelier/
 | GET    | /api/v1/sommelier/guardrails | ✅ funcional                 |
 | GET    | /api/v1/sommelier            | ✅ funcional (discovery)     |
 | POST   | /api/v1/sommelier/chat       | ✅ funcional (mock provider) |
+| POST   | /api/v1/sommelier/catalog-context | ✅ funcional (intent detection) |
+
+## Frontend Connection
+
+El frontend se conecta al backend API a través de `apps/web/src/lib/sommelier/api-client.ts`.
+
+**Flujo:**
+1. `SommelierChat.tsx` intenta llamar a API primero (`apiMode === "api"`)
+2. Si API responde → usa respuesta backend con `traceId`, `intent`, `recommendations`, `pairings`
+3. Si API falla → usa `processConversation()` (mock engine frontend) con badge "Frontend Fallback"
+4. Si `apiMode === "mock"` (localStorage override) → siempre usa mock engine local
+
+**Provider label** visible en header del chat: "Mock API" / "Frontend Fallback" / "Simulador local".
+
+**Configuración:**
+- `PUBLIC_SOMMELIER_API_MODE=api` o `=mock` (env var)
+- `PUBLIC_SOMMELIER_API_URL` para URL del backend (default `http://localhost:8080`)
+- localStorage `SOMMELIER_API_MODE` para override temporal
