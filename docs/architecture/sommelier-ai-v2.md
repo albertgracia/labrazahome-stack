@@ -293,12 +293,14 @@ apps/api/
 
 ### AI Layer
 
+> Proveedores documentados en detalle en [`docs/architecture/lmstudio-provider.md`](./lmstudio-provider.md).
+
 ```
 ┌─────────────────────────────────────────┐
 │           AI Provider Abstraction        │
 │  ┌──────────┐  ┌──────────┐  ┌──────┐   │
 │  │   Mock   │  │ LM Studio│  │AI-LAB│   │
-│  │ (ahora)  │  │ (futuro) │  │(fut.)│   │
+│  │ (ahora)  │  │ (local)  │  │(fut.)│   │
 │  └──────────┘  └──────────┘  └──────┘   │
 └─────────────────────────────────────────┘
          │                │
@@ -529,17 +531,32 @@ Relación directa de consumo. Sommelier AI lee el catálogo vía:
 | Deriva de tono/perfil               | Baja         | Medio   | Prompts versionados, revisión periódica           |
 | Exposición de datos internos        | Baja         | Alto    | Validación de respuesta, no exponer configuración |
 
+## Provider Progression
+
+El Sommelier AI v2 evolucionará a través de 3 proveedores de respuestas, cada uno con mayor capacidad pero también mayor complejidad operativa.
+
+```
+Mock Provider (actual) → LM Studio Provider (local/lab) → AI-LAB Provider (futuro)
+     │                           │                              │
+     ├── Siempre disponible      ├── Requiere LM Studio         ├── Requiere AI-LAB
+     ├── Sin dependencias        ├── Local/LAN                  ├── Gateway centralizado
+     ├── Respuestas fijas        ├── Respuestas IA reales       ├── Routing inteligente
+     └── Ideal para CI/CD        └── Ideal para testing         └── Ideal para producción
+```
+
+La arquitectura completa del provider de LM Studio está documentada en [`docs/architecture/lmstudio-provider.md`](./lmstudio-provider.md).
+
 ## Roadmap
 
-| Fase        | Hito                                    | Dependencias        |
-| ----------- | --------------------------------------- | ------------------- |
-| **Actual**  | Arquitectura y documentación            | —                   |
-| **Fase 2**  | Placeholder visual (`/sommelier`)       | Catálogo Premium v2 |
-| **Fase 3**  | Chat React island + estado local        | Design System       |
-| **Fase 4**  | Mock responses (simuladas, sin IA)      | Fase 3              |
-| **Fase 5**  | Provider abstraction + prompt system    | Fase 4              |
-| **Fase 6**  | Backend endpoints Fastify               | API existente       |
-| **Fase 7**  | Integración LM Studio (local)           | Fase 5 + LM Studio  |
-| **Fase 8**  | Perfiles de usuario (privado/B2B/admin) | Fase 6              |
-| **Fase 9**  | Integración AI-LAB                      | Fase 5 + AI-LAB     |
-| **Fase 10** | Conexión controlada Rioja Marketplace   | Runbook aprobado    |
+| Fase        | Hito                                    | Dependencias                                                                  |
+| ----------- | --------------------------------------- | ----------------------------------------------------------------------------- |
+| **Actual**  | Arquitectura y documentación            | —                                                                             |
+| **Fase 2**  | Placeholder visual (`/sommelier`)       | Catálogo Premium v2                                                           |
+| **Fase 3**  | Chat React island + estado local        | Design System                                                                 |
+| **Fase 4**  | Mock responses (simuladas, sin IA)      | Fase 3                                                                        |
+| **Fase 5**  | Provider abstraction + prompt system    | Fase 4                                                                        |
+| **Fase 6**  | Backend endpoints Fastify               | API existente                                                                 |
+| **Fase 7**  | Integración LM Studio (local)           | Fase 5 + LM Studio · Arquitectura en `docs/architecture/lmstudio-provider.md` |
+| **Fase 8**  | Perfiles de usuario (privado/B2B/admin) | Fase 6                                                                        |
+| **Fase 9**  | Integración AI-LAB                      | Fase 5 + AI-LAB                                                               |
+| **Fase 10** | Conexión controlada Rioja Marketplace   | Runbook aprobado                                                              |
