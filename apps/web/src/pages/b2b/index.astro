@@ -1,0 +1,100 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Card from '../../components/ui/Card.astro';
+
+const profiles = [
+  { icon: "🍽️", title: "Restaurante", description: "Selecciona vinos para tu carta, maridajes por menú y condiciones por volumen." },
+  { icon: "🏪", title: "Tienda Gourmet", description: "Variedad de productos premium, condiciones por mix y novedades del catálogo." },
+  { icon: "🚚", title: "Distribuidor", description: "Grandes volúmenes, condiciones especiales y planificación de suministro." },
+  { icon: "🏨", title: "Hotel / Hospitality", description: "Selección para minibar, recepción, eventos y restaurante interno." },
+  { icon: "🎁", title: "Empresa", description: "Packs corporativos personalizados para regalos y eventos." },
+];
+
+const modules = [
+  "Dashboard profesional", "Catálogo con capa B2B", "Ficha producto profesional",
+  "Solicitud de presupuesto", "Pedidos recurrentes", "MOQ y reglas mínimas",
+  "Sommelier modo B2B", "Documentos y fichas técnicas", "Historial de compras",
+];
+---
+
+<Layout
+  title="LabrazaHome Labs — Portal B2B"
+  description="Portal profesional B2B para restaurantes, tiendas gourmet, distribuidores y hoteles. En diseño."
+  canonical="/b2b/"
+>
+  <Section>
+    <Container width="narrow">
+      <div class="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/5 px-3 py-1 text-xs font-medium text-amber-400">
+        <span class="h-1.5 w-1.5 rounded-full bg-amber-400" />
+        Laboratorio · En diseño
+      </div>
+      <h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">Portal B2B v2</h1>
+      <p class="mt-4 text-lg leading-relaxed text-muted dark:text-muted-dark">
+        Plataforma profesional para restaurantes, tiendas gourmet, distribuidores y compradores
+        del sector agroalimentario premium. El catálogo con condiciones comerciales, presupuestos
+        y herramientas de compra profesional.
+      </p>
+
+      <hr class="my-12 border-border dark:border-border-dark" />
+
+      <h2 class="text-2xl font-bold tracking-tight">Perfiles profesionales</h2>
+      <div class="mt-6 grid gap-4 sm:grid-cols-2">
+        {profiles.map((p) => (
+          <Card>
+            <div class="flex items-start gap-4">
+              <span class="text-2xl">{p.icon}</span>
+              <div>
+                <h3 class="font-semibold">{p.title}</h3>
+                <p class="mt-1 text-sm text-muted dark:text-muted-dark">{p.description}</p>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      <hr class="my-12 border-border dark:border-border-dark" />
+
+      <h2 class="text-2xl font-bold tracking-tight">Módulos futuros</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-3">
+        {modules.map((m) => (
+          <div class="rounded-lg border border-border bg-white px-4 py-3 text-sm dark:border-border-dark dark:bg-surface-dark">
+            {m}
+          </div>
+        ))}
+      </div>
+
+      <hr class="my-12 border-border dark:border-border-dark" />
+
+      <h2 class="text-2xl font-bold tracking-tight">Integración con el ecosistema</h2>
+      <div class="mt-6 space-y-4">
+        <Card>
+          <h3 class="font-semibold text-indigo-400">Catálogo Premium v2</h3>
+          <p class="mt-1 text-sm text-muted dark:text-muted-dark">El B2B consume el catálogo como fuente editorial y añade capa profesional: MOQ, condiciones, precios y documentos técnicos.</p>
+        </Card>
+        <Card>
+          <h3 class="font-semibold text-indigo-400">Sommelier AI v2</h3>
+          <p class="mt-1 text-sm text-muted dark:text-muted-dark">Modo profesional con recomendaciones para carta, argumentario de venta para camareros, sugerencias de upsell y alternativas por disponibilidad.</p>
+        </Card>
+        <Card>
+          <h3 class="font-semibold text-indigo-400">Backoffice Admin v2</h3>
+          <p class="mt-1 text-sm text-muted dark:text-muted-dark">Gestión de cuentas B2B, condiciones comerciales, solicitudes de presupuesto, reglas MOQ y documentación desde el panel de administración.</p>
+        </Card>
+        <Card>
+          <h3 class="font-semibold text-indigo-400">Rioja Marketplace</h3>
+          <p class="mt-1 text-sm text-muted dark:text-muted-dark">Integración futura controlada: read-only inicial, productos sincronizados, disponibilidad consultada en tiempo real, sin compartir base de datos.</p>
+        </Card>
+      </div>
+
+      <hr class="my-12 border-border dark:border-border-dark" />
+
+      <div class="rounded-xl border border-indigo-500/20 bg-indigo-500/5 p-8 text-center">
+        <p class="text-lg font-semibold">Portal en fase de diseño arquitectónico</p>
+        <p class="mt-2 text-sm text-muted dark:text-muted-dark">
+          Los perfiles, módulos y rutas están definidos. La implementación comenzará en una fase posterior.
+        </p>
+      </div>
+    </Container>
+  </Section>
+</Layout>
