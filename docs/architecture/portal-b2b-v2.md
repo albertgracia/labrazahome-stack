@@ -1,5 +1,8 @@
 # Portal B2B v2 — Arquitectura
 
+> **Estado:** Arquitectura completada · Placeholder visual avanzado implementado en `apps/web/src/pages/b2b/index.astro` (STACK-2026-B2B-V2-PLACEHOLDER-ENHANCEMENT-01).
+> El placeholder incluye hero, KPIs mock, perfiles B2B, módulos, flujos, integraciones, roadmap y aviso de laboratorio.
+
 ## Visión
 
 El Portal B2B v2 será la plataforma profesional del ecosistema LabrazaHome Labs, diseñada para restaurantes, tiendas gourmet, distribuidores, hoteles y compradores profesionales del sector agroalimentario premium.

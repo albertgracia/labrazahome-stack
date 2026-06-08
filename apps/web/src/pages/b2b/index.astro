@@ -3,97 +3,291 @@ import Layout from '../../layouts/Layout.astro';
 import Section from '../../components/ui/Section.astro';
 import Container from '../../components/ui/Container.astro';
 import Card from '../../components/ui/Card.astro';
+import MetricCard from '../../components/ui/MetricCard.astro';
+import Badge from '../../components/ui/Badge.astro';
+import Button from '../../components/ui/Button.astro';
 
-const profiles = [
-  { icon: "🍽️", title: "Restaurante", description: "Selecciona vinos para tu carta, maridajes por menú y condiciones por volumen." },
-  { icon: "🏪", title: "Tienda Gourmet", description: "Variedad de productos premium, condiciones por mix y novedades del catálogo." },
-  { icon: "🚚", title: "Distribuidor", description: "Grandes volúmenes, condiciones especiales y planificación de suministro." },
-  { icon: "🏨", title: "Hotel / Hospitality", description: "Selección para minibar, recepción, eventos y restaurante interno." },
-  { icon: "🎁", title: "Empresa", description: "Packs corporativos personalizados para regalos y eventos." },
+const kpis = [
+  { label: "Perfiles profesionales", value: "7", icon: "👥", trend: "neutral" as const, trendText: "definidos en arquitectura" },
+  { label: "Módulos diseñados", value: "14", icon: "📦", trend: "neutral" as const, trendText: "mapeados en doc" },
+  { label: "Rutas planificadas", value: "17", icon: "🔗", trend: "neutral" as const, trendText: "API REST previstas" },
+  { label: "Modelos conceptuales", value: "10", icon: "📐", trend: "neutral" as const, trendText: "entidades de dominio" },
+  { label: "Integraciones futuras", value: "4", icon: "🔌", trend: "neutral" as const, trendText: "Catálogo · Sommelier · Admin · RM" },
+  { label: "Estado", value: "Arquitectura", icon: "🏗️", trend: "neutral" as const, trendText: "Implementación pendiente" },
 ];
 
+const profiles = [
+  { icon: "🍽️", title: "Restaurante", needs: "Vinos para carta, maridajes por menú, condiciones por volumen", priority: "Alta", status: "definido" as const },
+  { icon: "🏪", title: "Tienda gourmet", needs: "Mix de productos premium, condiciones por variedad, novedades", priority: "Alta", status: "definido" as const },
+  { icon: "🚚", title: "Distribuidor", needs: "Grandes volúmenes, condiciones especiales, planificación supply", priority: "Alta", status: "definido" as const },
+  { icon: "🏨", title: "Hotel / hospitality", needs: "Minibar, recepción, eventos, restaurante interno", priority: "Media", status: "definido" as const },
+  { icon: "🎁", title: "Empresa / regalo corporativo", needs: "Packs personalizados, condiciones por volumen, branding", priority: "Media", status: "definido" as const },
+  { icon: "🏭", title: "Bodega / proveedor futuro", needs: "Catálogo propio, condiciones de distribución, logística", priority: "Baja", status: "futuro" as const },
+  { icon: "🛡️", title: "Admin comercial interno", needs: "Gestión de cuentas, supervisión de condiciones, informes", priority: "Crítica", status: "definido" as const },
+];
+
+const profileStatusColor = {
+  definido: { label: "Definido", class: "text-emerald-400 border-emerald-500/20 bg-emerald-500/5" },
+  futuro: { label: "Futuro", class: "text-zinc-400 border-zinc-500/20 bg-zinc-500/5" },
+};
+
+const profilePriorityColor = {
+  Crítica: "text-purple-400",
+  Alta: "text-indigo-400",
+  Media: "text-amber-400",
+  Baja: "text-zinc-400",
+};
+
 const modules = [
-  "Dashboard profesional", "Catálogo con capa B2B", "Ficha producto profesional",
-  "Solicitud de presupuesto", "Pedidos recurrentes", "MOQ y reglas mínimas",
-  "Sommelier modo B2B", "Documentos y fichas técnicas", "Historial de compras",
+  { icon: "📊", title: "Dashboard B2B", desc: "Panel profesional con KPIs, pedidos recientes y alertas", status: "architecture" as const, relation: "Catálogo + Admin" },
+  { icon: "📖", title: "Catálogo profesional", desc: "Catálogo completo con capa B2B: precios, stock, MOQ", status: "architecture" as const, relation: "Catálogo Premium" },
+  { icon: "📝", title: "Ficha producto B2B", desc: "Datos técnicos, documentos, condiciones por perfil", status: "architecture" as const, relation: "Catálogo + Admin" },
+  { icon: "⭐", title: "Favoritos / selección", desc: "Listas de productos guardados para pedido recurrente", status: "planned" as const, relation: "Catálogo" },
+  { icon: "📋", title: "Solicitud presupuesto", desc: "Sistema de solicitud con condiciones personalizadas", status: "architecture" as const, relation: "Admin" },
+  { icon: "🔄", title: "Pedido recurrente", desc: "Programación de pedidos periódicos y automatización", status: "planned" as const, relation: "Admin" },
+  { icon: "📏", title: "MOQ", desc: "Reglas de cantidad mínima por producto y perfil", status: "architecture" as const, relation: "Admin" },
+  { icon: "📄", title: "Condiciones comerciales", desc: "Acuerdos personalizados por cliente y volumen", status: "architecture" as const, relation: "Admin" },
+  { icon: "🍷", title: "Sommelier B2B", desc: "Recomendaciones para carta, argumentario venta y upsell", status: "architecture" as const, relation: "Sommelier AI" },
+  { icon: "📑", title: "Documentos / fichas técnicas", desc: "Fichas, certificaciones, alérgenos y datos legales", status: "planned" as const, relation: "Catálogo + Admin" },
+  { icon: "📜", title: "Historial compras", desc: "Histórico de pedidos, facturas y recurrencias", status: "future" as const, relation: "Admin" },
+  { icon: "💬", title: "Contacto comercial", desc: "Canal de comunicación directa con equipo comercial", status: "future" as const, relation: "Admin" },
+];
+
+const moduleStatusLabel = {
+  architecture: { label: "Arquitectura", class: "text-indigo-400 border-indigo-500/20 bg-indigo-500/5" },
+  planned: { label: "Planificado", class: "text-amber-400 border-amber-500/20 bg-amber-500/5" },
+  future: { label: "Futuro", class: "text-zinc-400 border-zinc-500/20 bg-zinc-500/5" },
+};
+
+const flows = [
+  {
+    title: "Flujo 1 · Exploración",
+    icon: "🔍",
+    steps: ["Explorar catálogo", "Añadir a selección", "Solicitar presupuesto"],
+  },
+  {
+    title: "Flujo 2 · Sommelier profesional",
+    icon: "🍷",
+    steps: ["Sommelier B2B", "Recomendación carta / restaurante", "Pack profesional"],
+  },
+  {
+    title: "Flujo 3 · Operativa recurrente",
+    icon: "🔄",
+    steps: ["Cuenta B2B", "Condiciones comerciales", "Pedido recurrente"],
+  },
+];
+
+const roadmapItems = [
+  { label: "Arquitectura", done: true },
+  { label: "Placeholder", done: true },
+  { label: "Dashboard real", done: false },
+  { label: "Integración Backoffice", done: false },
+  { label: "Integración Rioja Marketplace", done: false },
+];
+
+const integrations = [
+  { name: "Catálogo Premium v2", icon: "📦", desc: "El B2B consume el catálogo como fuente editorial y añade capa profesional: MOQ, condiciones, precios y documentos técnicos.", status: "Activa" as const },
+  { name: "Sommelier AI v2", icon: "🍷", desc: "Modo profesional con recomendaciones para carta, argumentario de venta para camareros, sugerencias de upsell y alternativas por disponibilidad.", status: "Activa" as const },
+  { name: "Backoffice Admin v2", icon: "🛡️", desc: "Gestión de cuentas B2B, condiciones comerciales, solicitudes de presupuesto, reglas MOQ y documentación desde el panel de administración.", status: "Activa" as const },
+  { name: "Rioja Marketplace", icon: "🏠", desc: "Integración futura controlada: read-only inicial, productos sincronizados, disponibilidad consultada en tiempo real, sin compartir base de datos.", status: "Futura" as const },
 ];
 ---
 
 <Layout
-  title="LabrazaHome Labs — Portal B2B"
-  description="Portal profesional B2B para restaurantes, tiendas gourmet, distribuidores y hoteles. En diseño."
+  title="Portal B2B v2 — Plataforma profesional | LabrazaHome Labs"
+  description="Portal profesional B2B para restaurantes, tiendas gourmet, distribuidores y hoteles. Acceso a catálogo premium con condiciones comerciales, presupuestos y herramientas de compra profesional."
   canonical="/b2b/"
 >
-  <Section>
-    <Container width="narrow">
-      <div class="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-xs font-medium text-emerald-400">
-        <span class="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-        Arquitectura completada · Implementación pendiente
+  <!-- 1. HERO -->
+  <Section background="muted">
+    <Container>
+      <div class="flex flex-wrap items-center gap-3">
+        <Badge variant="warning">Laboratorio</Badge>
+        <Badge variant="success">Arquitectura completada</Badge>
+        <span class="inline-flex items-center rounded-full border border-amber-500/20 bg-amber-500/5 px-2.5 py-0.5 text-xs font-medium text-amber-400">
+          Implementación pendiente
+        </span>
       </div>
       <h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">Portal B2B v2</h1>
-      <p class="mt-4 text-lg leading-relaxed text-muted dark:text-muted-dark">
-        Plataforma profesional para restaurantes, tiendas gourmet, distribuidores y compradores
-        del sector agroalimentario premium. El catálogo con condiciones comerciales, presupuestos
-        y herramientas de compra profesional.
+      <p class="mt-3 max-w-2xl text-lg text-muted dark:text-muted-dark">
+        La futura experiencia profesional para restaurantes, distribuidores, hoteles, tiendas gourmet y compradores especializados del sector agroalimentario premium.
       </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <Button variant="primary" size="lg">Explorar módulos</Button>
+        <Button variant="secondary" size="lg">Ver relación con catálogo</Button>
+      </div>
+    </Container>
+  </Section>
 
-      <hr class="my-12 border-border dark:border-border-dark" />
+  <!-- 2. KPI STRIP -->
+  <Section>
+    <Container>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+        {kpis.map((kpi) => (
+          <MetricCard label={kpi.label} value={kpi.value} icon={kpi.icon} trend={kpi.trend}>
+            <span slot="trend">{kpi.trendText}</span>
+          </MetricCard>
+        ))}
+      </div>
+    </Container>
+  </Section>
 
-      <h2 class="text-2xl font-bold tracking-tight">Perfiles profesionales</h2>
-      <div class="mt-6 grid gap-4 sm:grid-cols-2">
-        {profiles.map((p) => (
-          <Card>
+  <!-- 3. PERFILES B2B -->
+  <Section background="muted">
+    <Container>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold tracking-tight">Perfiles profesionales</h2>
+        <p class="mt-1 text-sm text-muted dark:text-muted-dark">7 perfiles definidos en la arquitectura B2B con necesidades, prioridad y estado.</p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {profiles.map((p) => {
+          const s = profileStatusColor[p.status];
+          return (
+            <Card variant="elevated">
+              <div class="flex items-start gap-4">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-lg">{p.icon}</span>
+                <div class="min-w-0 flex-1">
+                  <div class="flex items-center justify-between gap-2">
+                    <h3 class="font-semibold">{p.title}</h3>
+                    <span class={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-medium ${s.class}`}>{s.label}</span>
+                  </div>
+                  <p class="mt-1 text-xs leading-relaxed text-muted dark:text-muted-dark">{p.needs}</p>
+                  <span class={`mt-1 inline-block text-[10px] font-medium uppercase tracking-wider ${profilePriorityColor[p.priority]}`}>{p.priority}</span>
+                </div>
+              </div>
+            </Card>
+          );
+        })}
+      </div>
+    </Container>
+  </Section>
+
+  <!-- 4. MÓDULOS PROFESIONALES -->
+  <Section>
+    <Container>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold tracking-tight">Módulos profesionales</h2>
+        <p class="mt-1 text-sm text-muted dark:text-muted-dark">14 módulos diseñados en la arquitectura. 12 visibles en esta vista previa.</p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {modules.map((mod) => {
+          const s = moduleStatusLabel[mod.status];
+          return (
+            <Card variant="elevated">
+              <div class="flex items-start gap-4">
+                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-lg">{mod.icon}</span>
+                <div class="min-w-0 flex-1">
+                  <div class="flex items-center justify-between gap-2">
+                    <h3 class="font-semibold">{mod.title}</h3>
+                    <span class={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-medium ${s.class}`}>{s.label}</span>
+                  </div>
+                  <p class="mt-1 text-xs leading-relaxed text-muted dark:text-muted-dark">{mod.desc}</p>
+                  <span class="mt-1 inline-block text-[10px] text-primary/70">{mod.relation}</span>
+                </div>
+              </div>
+            </Card>
+          );
+        })}
+      </div>
+    </Container>
+  </Section>
+
+  <!-- 5. FLUJOS B2B -->
+  <Section background="muted">
+    <Container>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold tracking-tight">Flujos B2B</h2>
+        <p class="mt-1 text-sm text-muted dark:text-muted-dark">3 flujos operativos principales documentados en la arquitectura.</p>
+      </div>
+      <div class="grid gap-8 sm:grid-cols-3">
+        {flows.map((flow) => (
+          <div class="relative">
+            <div class="mb-4 flex items-center gap-3">
+              <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-sm">{flow.icon}</span>
+              <h3 class="font-semibold">{flow.title}</h3>
+            </div>
+            <div class="relative space-y-0">
+              <div class="absolute left-[15px] top-3 h-[calc(100%-24px)] w-0.5 bg-primary/20" />
+              {flow.steps.map((step) => (
+                <div class="relative flex items-center gap-4 pb-6 last:pb-0">
+                  <div class="z-10 h-3 w-3 rounded-full border-2 border-surface bg-primary dark:border-surface-dark" />
+                  <span class="text-sm text-muted dark:text-muted-dark">{step}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </Section>
+
+  <!-- 6. RELACIÓN CON ECOSISTEMA -->
+  <Section>
+    <Container>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold tracking-tight">Relación con el ecosistema</h2>
+        <p class="mt-1 text-sm text-muted dark:text-muted-dark">B2B es la capa profesional sobre el catálogo. No duplica datos, los especializa.</p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {integrations.map((int) => (
+          <Card variant={int.status === "Activa" ? "elevated" : "default"}>
             <div class="flex items-start gap-4">
-              <span class="text-2xl">{p.icon}</span>
-              <div>
-                <h3 class="font-semibold">{p.title}</h3>
-                <p class="mt-1 text-sm text-muted dark:text-muted-dark">{p.description}</p>
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-lg">{int.icon}</span>
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center justify-between gap-2">
+                  <h3 class="font-semibold">{int.name}</h3>
+                  <span class={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-medium ${
+                    int.status === "Activa"
+                      ? "border-emerald-500/20 bg-emerald-500/5 text-emerald-400"
+                      : "border-zinc-500/20 bg-zinc-500/5 text-zinc-400"
+                  }`}>{int.status}</span>
+                </div>
+                <p class="mt-1 text-xs leading-relaxed text-muted dark:text-muted-dark">{int.desc}</p>
               </div>
             </div>
           </Card>
         ))}
       </div>
+    </Container>
+  </Section>
 
-      <hr class="my-12 border-border dark:border-border-dark" />
-
-      <h2 class="text-2xl font-bold tracking-tight">Módulos futuros</h2>
-      <div class="mt-6 grid gap-3 sm:grid-cols-3">
-        {modules.map((m) => (
-          <div class="rounded-lg border border-border bg-white px-4 py-3 text-sm dark:border-border-dark dark:bg-surface-dark">
-            {m}
-          </div>
-        ))}
+  <!-- 7. ROADMAP B2B -->
+  <Section background="muted">
+    <Container>
+      <div class="mb-8">
+        <h2 class="text-2xl font-bold tracking-tight">Roadmap B2B</h2>
+        <p class="mt-1 text-sm text-muted dark:text-muted-dark">Estado actual del Portal B2B v2 en el laboratorio.</p>
       </div>
-
-      <hr class="my-12 border-border dark:border-border-dark" />
-
-      <h2 class="text-2xl font-bold tracking-tight">Integración con el ecosistema</h2>
-      <div class="mt-6 space-y-4">
-        <Card>
-          <h3 class="font-semibold text-indigo-400">Catálogo Premium v2</h3>
-          <p class="mt-1 text-sm text-muted dark:text-muted-dark">El B2B consume el catálogo como fuente editorial y añade capa profesional: MOQ, condiciones, precios y documentos técnicos.</p>
-        </Card>
-        <Card>
-          <h3 class="font-semibold text-indigo-400">Sommelier AI v2</h3>
-          <p class="mt-1 text-sm text-muted dark:text-muted-dark">Modo profesional con recomendaciones para carta, argumentario de venta para camareros, sugerencias de upsell y alternativas por disponibilidad.</p>
-        </Card>
-        <Card>
-          <h3 class="font-semibold text-indigo-400">Backoffice Admin v2</h3>
-          <p class="mt-1 text-sm text-muted dark:text-muted-dark">Gestión de cuentas B2B, condiciones comerciales, solicitudes de presupuesto, reglas MOQ y documentación desde el panel de administración.</p>
-        </Card>
-        <Card>
-          <h3 class="font-semibold text-indigo-400">Rioja Marketplace</h3>
-          <p class="mt-1 text-sm text-muted dark:text-muted-dark">Integración futura controlada: read-only inicial, productos sincronizados, disponibilidad consultada en tiempo real, sin compartir base de datos.</p>
-        </Card>
+      <div class="mx-auto max-w-2xl">
+        <div class="relative space-y-0">
+          <div class="absolute left-[15px] top-3 h-[calc(100%-24px)] w-0.5 bg-border dark:bg-border-dark" />
+          {roadmapItems.map((item) => (
+            <div class="relative flex items-center gap-4 pb-10 last:pb-0">
+              <div class={`z-10 h-4 w-4 rounded-full border-2 border-surface ${item.done ? 'bg-emerald-500' : 'bg-border'} dark:border-surface-dark`} />
+              <div class="flex items-center gap-3">
+                <span class="text-sm font-medium text-zinc-900 dark:text-zinc-100">{item.label}</span>
+                {item.done ? (
+                  <span class="text-xs text-emerald-500 font-medium">✅</span>
+                ) : (
+                  <span class="text-xs text-zinc-500">⏳</span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
+    </Container>
+  </Section>
 
-      <hr class="my-12 border-border dark:border-border-dark" />
-
-      <div class="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-8 text-center">
-        <p class="text-lg font-semibold">Arquitectura completada</p>
-        <p class="mt-2 text-sm text-muted dark:text-muted-dark">
-          7 perfiles, 14 módulos, 17 rutas y 10 modelos conceptuales definidos.
-          La implementación del portal real comenzará en una fase posterior.
+  <!-- 8. AVISO LABORATORIO -->
+  <Section>
+    <Container>
+      <div class="mx-auto max-w-2xl rounded-xl border border-amber-500/20 bg-amber-500/5 p-8 text-center">
+        <p class="text-lg font-semibold">🧪 Aviso de laboratorio</p>
+        <p class="mt-3 text-sm leading-relaxed text-muted dark:text-muted-dark">
+          Este portal es una simulación de laboratorio.<br />
+          No contiene datos reales, precios reales ni condiciones comerciales reales.<br />
+          La implementación del portal profesional comenzará en fases posteriores.
         </p>
       </div>
     </Container>
