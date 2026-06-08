@@ -1,5 +1,7 @@
 # Sommelier AI v2 — Arquitectura
 
+> **Profile memory:** Memoria local de perfil implementada via `localStorage` (clave `labrazahome:sommelier-profile`). Guarda solo el tipo de perfil (`private`, `b2b`, `producer`, `admin`). No guarda datos personales ni conversaciones. Implementado en STACK-2026-SOMMELIER-PROFILE-MEMORY-01. La integración con backend solo se realizará cuando exista autenticación real.
+
 ## Visión
 
 Sommelier AI v2 será el asistente inteligente conversacional del ecosistema LabrazaHome Labs. Consumirá los datos del Catálogo Premium v2 para ofrecer recomendaciones personalizadas, maridajes inteligentes y explicaciones de producto con profundidad editorial.

@@ -1,9 +1,7 @@
 import type {
   ConversationContext,
   ConversationResult,
-  FlowResultType,
-  Recommendation,
-  Pairing,
+  Profile,
 } from "../../types/sommelier";
 import { generateMockResponse } from "./mockResponses";
 
@@ -151,6 +149,7 @@ export function getCategoryLabel(category: string | null): string {
 export function processConversation(
   input: string,
   context: ConversationContext,
+  profile?: Profile,
 ): { result: ConversationResult; context: ConversationContext } {
   // If no active flow or flow completed, try fresh detection
   if (!context.category || context.completed) {
@@ -176,7 +175,7 @@ export function processConversation(
       };
     }
 
-    const direct = generateMockResponse(input);
+    const direct = generateMockResponse(input, profile);
     if (direct.confidence >= 0.5) {
       return {
         result: {
@@ -208,7 +207,7 @@ export function processConversation(
   // Active flow in progress
   const flow = FLOWS[context.category];
   if (!flow) {
-    const direct = generateMockResponse(input);
+    const direct = generateMockResponse(input, profile);
     return {
       result: {
         ...direct,
@@ -253,7 +252,7 @@ export function processConversation(
 
   // All steps complete → recommend
   const syntheticQuery = buildSyntheticQuery(context.category, newCollected);
-  const mockResult = generateMockResponse(syntheticQuery);
+  const mockResult = generateMockResponse(syntheticQuery, profile);
 
   const answer = `Perfecto, ya tengo suficiente información. Aquí va mi recomendación:\n\n${mockResult.answer}`;
 

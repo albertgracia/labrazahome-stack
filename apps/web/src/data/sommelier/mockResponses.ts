@@ -1,5 +1,7 @@
+import type { Profile } from "../../types/sommelier";
 import type { ProductPremium } from "../../types/catalog";
 import { getProductBySlug, getProductsByCategory } from "../catalog/index";
+import { applyProfilePrefix } from "./profiles";
 
 const WINE_RED_MEAT_SLUGS = ["reserva-del-alto-ebro", "garnacha-de-altura"];
 
@@ -124,7 +126,7 @@ function resultForProduct(
   };
 }
 
-function fallback(): MockResult {
+function fallback(profile?: Profile): MockResult {
   const categories = [
     { name: "vinos", icon: "🍷", label: "vinos" },
     { name: "aceites", icon: "🫒", label: "aceites de oliva" },
@@ -134,14 +136,20 @@ function fallback(): MockResult {
   ];
 
   return {
-    answer: `No encuentro una recomendación exacta en el catálogo actual para esa consulta. Aquí tienes las categorías que puedes explorar:\n\n${categories.map((c) => `${c.icon} ${c.label}`).join("\n")}\n\n¿Te gustaría que te recomiende algo de alguna de ellas?`,
+    answer: applyProfilePrefix(
+      `No encuentro una recomendación exacta en el catálogo actual para esa consulta. Aquí tienes las categorías que puedes explorar:\n\n${categories.map((c) => `${c.icon} ${c.label}`).join("\n")}\n\n¿Te gustaría que te recomiende algo de alguna de ellas?`,
+      profile,
+    ),
     recommendations: [],
     pairings: [],
     confidence: 0.3,
   };
 }
 
-export function generateMockResponse(query: string): MockResult {
+export function generateMockResponse(
+  query: string,
+  profile?: Profile,
+): MockResult {
   const lower = query.toLowerCase().trim();
 
   // --- CASE 1: Red meat wine ---
@@ -157,10 +165,13 @@ export function generateMockResponse(query: string): MockResult {
   ) {
     const slug = pick(WINE_RED_MEAT_SLUGS);
     const product = getProductBySlug(slug);
-    if (!product) return fallback();
+    if (!product) return fallback(profile);
     const ratings = formatAllRatings(product);
     const knowledge = buildWineKnowledge(product);
-    const answer = `Te recomiendo ${product.name}. ${product.shortDescription}${ratings ? `\n\nPuntuaciones: ${ratings}` : ""}${knowledge}\n\nSus taninos y estructura lo hacen ideal para carnes rojas, chuletones y cordero asado.`;
+    const answer = applyProfilePrefix(
+      `Te recomiendo ${product.name}. ${product.shortDescription}${ratings ? `\n\nPuntuaciones: ${ratings}` : ""}${knowledge}\n\nSus taninos y estructura lo hacen ideal para carnes rojas, chuletones y cordero asado.`,
+      profile,
+    );
     return {
       answer,
       recommendations: [
@@ -200,7 +211,10 @@ export function generateMockResponse(query: string): MockResult {
     if (k?.aromaProfile && k.aromaProfile.length > 0) {
       extra += `\nPerfil aromático: ${k.aromaProfile.slice(0, 3).join(", ")}.`;
     }
-    const answer = `Para acompañar quesos, te sugiero ${product.name}.${ratings ? `\n\nPuntuaciones: ${ratings}` : ""}${extra}\n\nSus notas y estructura están diseñadas para complementar la untuosidad y salinidad de los quesos curados.`;
+    const answer = applyProfilePrefix(
+      `Para acompañar quesos, te sugiero ${product.name}.${ratings ? `\n\nPuntuaciones: ${ratings}` : ""}${extra}\n\nSus notas y estructura están diseñadas para complementar la untuosidad y salinidad de los quesos curados.`,
+      profile,
+    );
     return {
       answer,
       recommendations: [
@@ -229,7 +243,10 @@ export function generateMockResponse(query: string): MockResult {
     if (products.length === 0) return fallback();
     const product = pick(products);
     const knowledge = buildOilKnowledge(product);
-    const answer = `Te recomiendo ${product.name} de ${product.producer}. ${product.shortDescription}${knowledge}`;
+    const answer = applyProfilePrefix(
+      `Te recomiendo ${product.name} de ${product.producer}. ${product.shortDescription}${knowledge}`,
+      profile,
+    );
     return {
       answer,
       recommendations: [
@@ -256,7 +273,10 @@ export function generateMockResponse(query: string): MockResult {
     if (products.length === 0) return fallback();
     const product = pick(products);
     const knowledge = buildHoneyKnowledge(product);
-    const answer = `Para los amantes de la miel, recomiendo ${product.name}. ${product.shortDescription}${knowledge}`;
+    const answer = applyProfilePrefix(
+      `Para los amantes de la miel, recomiendo ${product.name}. ${product.shortDescription}${knowledge}`,
+      profile,
+    );
     return {
       answer,
       recommendations: [
@@ -287,7 +307,10 @@ export function generateMockResponse(query: string): MockResult {
     if (products.length === 0) return fallback();
     const product = pick(products);
     const knowledge = buildPackKnowledge(product);
-    const answer = `Para un regalo especial, ${product.name} es la elección perfecta. ${product.shortDescription}${knowledge}`;
+    const answer = applyProfilePrefix(
+      `Para un regalo especial, ${product.name} es la elección perfecta. ${product.shortDescription}${knowledge}`,
+      profile,
+    );
     return {
       answer,
       recommendations: [
@@ -309,5 +332,5 @@ export function generateMockResponse(query: string): MockResult {
   }
 
   // --- CASE 6: Unknown ---
-  return fallback();
+  return fallback(profile);
 }

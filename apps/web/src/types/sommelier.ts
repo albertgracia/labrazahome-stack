@@ -1,4 +1,4 @@
-export type Profile = "private" | "b2b" | "supplier" | "admin";
+export type Profile = "private" | "b2b" | "producer" | "admin";
 
 export interface ProductContext {
   slug: string;

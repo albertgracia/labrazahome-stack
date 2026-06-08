@@ -4,19 +4,53 @@ import SommelierModeSelector from "./SommelierModeSelector";
 import ProductContextPanel from "./ProductContextPanel";
 import PairingSuggestion from "./PairingSuggestion";
 import RecommendationCard from "./RecommendationCard";
-import {
+import type {
   Profile,
   ChatMessage as ChatMessageType,
   ConversationContext,
 } from "../../types/sommelier";
-import { ProductPremium } from "../../types/catalog";
+import type { ProductPremium } from "../../types/catalog";
 import {
   processConversation,
   getCategoryLabel,
 } from "../../data/sommelier/flows";
+import {
+  PROFILE_STORAGE_KEY,
+  SOMMELIER_PROFILES,
+} from "../../data/sommelier/profiles";
 
 interface Props {
   initialProduct?: ProductPremium;
+}
+
+function loadProfile(): Profile {
+  if (typeof window === "undefined") return "private";
+  try {
+    const saved = localStorage.getItem(PROFILE_STORAGE_KEY);
+    if (
+      saved === "private" ||
+      saved === "b2b" ||
+      saved === "producer" ||
+      saved === "admin"
+    ) {
+      return saved;
+    }
+  } catch {}
+  return "private";
+}
+
+function saveProfile(profile: Profile) {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(PROFILE_STORAGE_KEY, profile);
+  } catch {}
+}
+
+function clearProfile() {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.removeItem(PROFILE_STORAGE_KEY);
+  } catch {}
 }
 
 const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
@@ -30,8 +64,12 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
     },
   ]);
   const [input, setInput] = useState("");
-  const [profile, setProfile] = useState<Profile>("private");
+  const [profile, setProfile] = useState<Profile>(loadProfile);
   const [isTyping, setIsTyping] = useState(false);
+  const [isSaved, setIsSaved] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return localStorage.getItem(PROFILE_STORAGE_KEY) !== null;
+  });
   const [flowCtx, setFlowCtx] = useState<ConversationContext>({
     category: null,
     step: 0,
@@ -51,6 +89,18 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
     scrollToBottom();
   }, [messages, isTyping, scrollToBottom]);
 
+  const handleSelectProfile = useCallback((p: Profile) => {
+    setProfile(p);
+    saveProfile(p);
+    setIsSaved(true);
+  }, []);
+
+  const handleClearProfile = useCallback(() => {
+    clearProfile();
+    setProfile("private");
+    setIsSaved(false);
+  }, []);
+
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -67,7 +117,7 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
     setIsTyping(true);
 
     setTimeout(() => {
-      const { result, context } = processConversation(input, flowCtx);
+      const { result, context } = processConversation(input, flowCtx, profile);
       setFlowCtx(context);
 
       const assistantMessage: ChatMessageType = {
@@ -90,6 +140,8 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
     }, 1200);
   };
 
+  const currentProfile = SOMMELIER_PROFILES[profile];
+
   return (
     <div className="flex h-[min(640px,calc(100vh-220px))] min-h-[480px] w-full flex-col overflow-hidden">
       {/* Header */}
@@ -102,19 +154,30 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
           <div>
             <h2 className="text-sm font-bold text-white">Sommelier AI</h2>
             <p className="text-[11px] text-zinc-500 tracking-wide uppercase">
-              {profile === "private"
-                ? "Cliente Privado"
-                : profile === "b2b"
-                  ? "Cliente B2B"
-                  : "Proveedor"}
+              {currentProfile.label}
             </p>
           </div>
         </div>
         <SommelierModeSelector
           selectedProfile={profile}
-          onSelectProfile={setProfile}
+          onSelectProfile={handleSelectProfile}
+          isSaved={isSaved}
+          onClear={handleClearProfile}
         />
       </div>
+
+      {/* Profile memory indicator */}
+      {isSaved && (
+        <div className="flex shrink-0 items-center gap-1.5 px-5 py-1.5 border-b border-white/5 bg-indigo-950/20">
+          <span className="text-[10px] text-indigo-400/70">
+            💾 Perfil recordado localmente
+          </span>
+          <span className="text-[10px] text-zinc-600">·</span>
+          <span className="text-[10px] text-zinc-500">
+            Solo se guarda el tipo de perfil en este navegador
+          </span>
+        </div>
+      )}
 
       {/* Flow Step Indicator */}
       {flowCtx.category && !flowCtx.completed && (
@@ -204,6 +267,24 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Quick Prompts */}
+      <div className="shrink-0 border-t border-white/5 bg-black/30 px-4 py-2">
+        <div className="flex flex-wrap gap-2">
+          {currentProfile.quickPrompts.map((prompt) => (
+            <button
+              key={prompt}
+              type="button"
+              onClick={() => {
+                setInput(prompt);
+              }}
+              className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] text-zinc-400 transition-colors hover:border-indigo-500/30 hover:text-indigo-300"
+            >
+              {prompt}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Input Area */}
