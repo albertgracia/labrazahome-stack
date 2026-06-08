@@ -134,6 +134,7 @@ Todos los tests realizados con `LMSTUDIO_BASE_URL=http://192.168.1.250:1234/v1`,
 ```
 
 **Análisis de calidad:**
+
 - El modelo `llama-3.2-1b-instruct` (1B parámetros) **no genera JSON válido** siguiendo el contrato
 - Responde en texto plano con formato markdown (**Respuesta**)
 - El parser `extractJSON()` falla y se activa el fallback a raw content
@@ -176,14 +177,14 @@ El error se propaga correctamente. En `SommelierService.chat()` el catch lo capt
 
 **RESULTADO: PARTIAL**
 
-| Criterio              | Estado | Detalle                                                    |
-| --------------------- | ------ | ---------------------------------------------------------- |
-| Compilación/Typecheck | ✅ PASS | `pnpm --filter api typecheck` + `pnpm --filter api build`  |
-| Lint/Format           | ✅ PASS | `pnpm check`                                               |
-| Health endpoint       | ✅ PASS | Status "ok", latency 22ms                                  |
-| Chat endpoint         | ⚠️ PARTIAL | Modelo responde pero **no genera JSON válido** (1B params) |
-| Fallback chain        | ✅ PASS | LM Studio down → MockProvider activado correctamente       |
-| Calidad respuesta IA  | ❌ FAIL | `llama-3.2-1b-instruct` demasiado pequeño para structured output |
+| Criterio              | Estado     | Detalle                                                          |
+| --------------------- | ---------- | ---------------------------------------------------------------- |
+| Compilación/Typecheck | ✅ PASS    | `pnpm --filter api typecheck` + `pnpm --filter api build`        |
+| Lint/Format           | ✅ PASS    | `pnpm check`                                                     |
+| Health endpoint       | ✅ PASS    | Status "ok", latency 22ms                                        |
+| Chat endpoint         | ⚠️ PARTIAL | Modelo responde pero **no genera JSON válido** (1B params)       |
+| Fallback chain        | ✅ PASS    | LM Studio down → MockProvider activado correctamente             |
+| Calidad respuesta IA  | ❌ FAIL    | `llama-3.2-1b-instruct` demasiado pequeño para structured output |
 
 ### Decisión
 
