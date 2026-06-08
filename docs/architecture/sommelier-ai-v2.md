@@ -547,6 +547,19 @@ Mock Provider (actual) → LM Studio Provider (local/lab) → AI-LAB Provider (f
 La arquitectura completa del provider de LM Studio está documentada en [`docs/architecture/lmstudio-provider.md`](./lmstudio-provider.md).
 La arquitectura del provider de AI-LAB está documentada en [`docs/architecture/ailab-provider.md`](./ailab-provider.md).
 
+## Backend API Architecture
+
+El backend Sommelier API (Fastify) será la frontera segura entre el frontend y los proveedores de IA. Responsabilidades clave:
+
+1. **Validación** — Zod schemas para request/response
+2. **Provider selection** — Enruta a Mock / LM Studio / AI-LAB según `SOMMELIER_PROVIDER`
+3. **Catalog context** — Construye contexto compacto (≤5 productos) sin enviar catálogo completo
+4. **Guardrails** — Pre-check (input) y post-check (output) con reglas contra invención de datos
+5. **Fallback** — Si el provider activo falla, usa MockProvider automáticamente
+6. **Trazabilidad** — traceId, metadatos de provider, latencia
+
+Arquitectura completa en [`docs/architecture/backend-sommelier-api.md`](./backend-sommelier-api.md).
+
 ## Roadmap
 
 | Fase        | Hito                                    | Dependencias                                                                  |

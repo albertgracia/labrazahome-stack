@@ -423,11 +423,24 @@ Para evitar enviar el catálogo completo en cada petición, se debe implementar:
 4. **Prompt Assembly** — Inyectar contexto compacto en el system prompt
 5. **Structured Response** — Parsear y validar JSON de respuesta
 
+## Fastify API Integration
+
+El LM Studio Provider será consumido exclusivamente a través de la Backend Sommelier API (Fastify). El frontend nunca llama a LM Studio directamente.
+
+**Flujo:**
+```
+Frontend → POST /api/v1/sommelier/chat → Fastify → LMStudioProvider → LM Studio API
+```
+
+Fastify es responsable de: validación Zod, construcción de contexto de catálogo, guardrails pre/post, timeouts, fallback automático a MockProvider y trazabilidad.
+
+Arquitectura completa del backend en [`docs/architecture/backend-sommelier-api.md`](./backend-sommelier-api.md).
+
 ## Seguridad
 
 | Riesgo                          | Mitigación                                                                 |
 | ------------------------------- | -------------------------------------------------------------------------- |
-| LM Studio expuesto públicamente | El provider solo funciona en local/LAN. Vercel no puede alcanzar 127.0.0.1 |
+| LM Studio expuesto públicamente | El provider solo funciona en local/LAN a través de Fastify como proxy.     |
 | Prompt injection                | Sanitización de input del usuario. Límite de 2000 caracteres por mensaje   |
 | Respuesta inválida              | Parser con validación Zod. Si falla, se usa MockProvider como fallback     |
 | Timeout                         | Timeout configurable (30s default). Fallback automático                    |

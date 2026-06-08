@@ -568,11 +568,24 @@ Si AI-LAB falla (timeout, error de red, respuesta inválida, health check fallid
 4. Mantener el chat completamente funcional
 5. Opcional: botón "Reintentar con AI-LAB"
 
+## Backend Fastify API Integration
+
+El AI-LAB Provider será consumido exclusivamente a través de la Backend Sommelier API (Fastify). El frontend nunca llama a AI-LAB directamente.
+
+**Flujo:**
+```
+Frontend → POST /api/v1/sommelier/chat → Fastify → AILabProvider → AI-LAB Gateway
+```
+
+Fastify es responsable de: validación Zod, construcción de contexto de catálogo, guardrails pre/post, routing de proveedor, timeouts, fallback automático a MockProvider y trazabilidad completa.
+
+Arquitectura completa del backend en [`docs/architecture/backend-sommelier-api.md`](./backend-sommelier-api.md).
+
 ## Seguridad
 
 | Riesgo                       | Mitigación                                                           |
 | ---------------------------- | -------------------------------------------------------------------- |
-| AI-LAB expuesto públicamente | Fastify como frontera. AI-LAB solo en LAN/lab.                       |
+| AI-LAB expuesto públicamente | Fastify como frontera única. AI-LAB solo en LAN/lab.                 |
 | Token泄露                    | Tokens solo server-side. No en frontend ni logs.                     |
 | Prompt injection             | Sanitización de input. Límite 2000 chars. Output validation con Zod. |
 | MCP mutable                  | MCP solo read-only en esta fase.                                     |
