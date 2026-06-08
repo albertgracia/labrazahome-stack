@@ -19,26 +19,26 @@ const products = [
   {
     icon: '🍷',
     title: 'Sommelier AI v2',
-    description: 'Asistente inteligente para recomendaciones, maridajes y experiencia de compra guiada basada en perfiles y preferencias.',
-    status: 'development' as const,
+    description: 'Asistente inteligente conversacional con recomendaciones, maridajes, flujos guiados y base de conocimiento enriquecida.',
+    status: 'completed' as const,
   },
   {
     icon: '📦',
     title: 'Catálogo Premium v2',
     description: 'Experiencia editorial y visual para vinos, aceites, mieles y productos seleccionados del sector agroalimentario premium.',
-    status: 'development' as const,
+    status: 'completed' as const,
   },
   {
     icon: '🏢',
     title: 'Portal B2B v2',
     description: 'Herramientas para profesionales, distribuidores, bodegas y operaciones comerciales del ecosistema LabrazaHome.',
-    status: 'design' as const,
+    status: 'architecture' as const,
   },
   {
     icon: '🛠️',
     title: 'Backoffice Admin v2',
     description: 'Panel operativo avanzado para gestión, analítica y control interno del ecosistema digital LabrazaHome.',
-    status: 'design' as const,
+    status: 'architecture' as const,
   },
 ];
 
@@ -46,11 +46,12 @@ const roadmapItems = [
   { phase: 'Fase 1', title: 'Base técnica', description: 'Infraestructura fundamental: monorepo, Astro, Fastify, Prisma, PostgreSQL.', status: 'completed' as const },
   { phase: 'Fase 1', title: 'Landing LabrazaHome Labs', description: 'Presencia digital del laboratorio con identidad corporativa premium.', status: 'completed' as const },
   { phase: 'Fase 1', title: 'Design System', description: 'Sistema de diseño unificado para todos los productos del laboratorio.', status: 'completed' as const },
-  { phase: 'Fase 2', title: 'Catálogo Premium v2', description: 'Experiencia editorial y visual para productos agroalimentarios selectos.', status: 'in-progress' as const },
-  { phase: 'Fase 2', title: 'Sommelier AI v2', description: 'Asistente inteligente con recomendaciones y maridaje basado en IA.', status: 'next' as const },
-  { phase: 'Fase 3', title: 'Portal B2B v2', description: 'Herramientas comerciales para profesionales y distribuidores del sector.', status: 'future' as const },
-  { phase: 'Fase 3', title: 'Backoffice Admin v2', description: 'Panel de administración y analítica para la gestión del ecosistema.', status: 'future' as const },
-  { phase: 'Fase 4', title: 'Integración Rioja Marketplace', description: 'Conexión controlada y documentada con la plataforma de producción.', status: 'future' as const },
+  { phase: 'Fase 2', title: 'Catálogo Premium v2', description: '11 productos, 5 categorías, fichas técnicas, ratings y base de conocimiento.', status: 'completed' as const },
+  { phase: 'Fase 2', title: 'Sommelier AI v2', description: 'UI conversacional, motor de recomendaciones, flujos guiados y conocimiento enriquecido.', status: 'completed' as const },
+  { phase: 'Fase 3', title: 'Portal B2B v2', description: 'Arquitectura completa con 7 perfiles, 14 módulos y 17 rutas diseñadas + placeholder.', status: 'architecture' as const },
+  { phase: 'Fase 3', title: 'Backoffice Admin v2', description: 'Arquitectura completa con 8 perfiles, 20 módulos y 36 rutas diseñadas + placeholder.', status: 'architecture' as const },
+  { phase: 'Fase 4', title: 'IA Real', description: 'Integración controlada con modelos locales (LM Studio) y AI-LAB Gateway.', status: 'next' as const },
+  { phase: 'Fase 5', title: 'Integración Rioja Marketplace', description: 'Conexión controlada y documentada con la plataforma de producción.', status: 'future' as const },
 ];
 ---
 

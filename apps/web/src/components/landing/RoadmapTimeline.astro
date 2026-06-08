@@ -3,7 +3,7 @@ export interface RoadmapItem {
   phase: string;
   title: string;
   description: string;
-  status: 'completed' | 'in-progress' | 'next' | 'future';
+  status: 'completed' | 'in-progress' | 'architecture' | 'next' | 'future';
 }
 
 export interface Props {
@@ -22,6 +22,12 @@ const statusStyle = {
     line: 'bg-primary/30',
     badge: 'text-primary',
     label: 'En curso',
+  },
+  architecture: {
+    dot: 'bg-indigo-500',
+    line: 'bg-indigo-500/30',
+    badge: 'text-indigo-400',
+    label: 'Arquitectura',
   },
   next: {
     dot: 'bg-muted dark:bg-muted-dark',

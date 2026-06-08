@@ -6,7 +6,7 @@ export interface Product {
   icon: string;
   title: string;
   description: string;
-  status: 'base' | 'development' | 'design' | 'future';
+  status: 'base' | 'completed' | 'development' | 'architecture' | 'design' | 'future';
 }
 
 export interface Props {
@@ -15,7 +15,9 @@ export interface Props {
 
 const statusConfig = {
   base: { badge: 'Plataforma base', variant: 'default' as const },
+  completed: { badge: 'Completado', variant: 'success' as const },
   development: { badge: 'En desarrollo', variant: 'warning' as const },
+  architecture: { badge: 'Arquitectura completa', variant: 'success' as const },
   design: { badge: 'En diseño', variant: 'default' as const },
   future: { badge: 'Futuro', variant: 'default' as const },
 };
