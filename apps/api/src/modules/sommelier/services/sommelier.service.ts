@@ -31,6 +31,7 @@ export class SommelierService {
       request.message,
       request.profile,
       request.selectedProductSlug,
+      5,
     );
 
     const input: ChatInput = {

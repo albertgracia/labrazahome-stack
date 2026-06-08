@@ -156,3 +156,20 @@ export const CatalogContextItemSchema = z.object({
   status: z.string(),
 });
 export type CatalogContextItem = z.infer<typeof CatalogContextItemSchema>;
+
+export const CatalogContextRequestSchema = z.object({
+  message: z.string().min(1).max(2000),
+  profile: SommelierProfileEnum,
+  maxProducts: z.number().int().min(1).max(20).default(5),
+});
+export type CatalogContextRequest = z.infer<typeof CatalogContextRequestSchema>;
+
+export const CatalogContextResponseSchema = z.object({
+  intent: z.string(),
+  candidates: z.array(CatalogContextItemSchema),
+  sources: z.array(SommelierSourceSchema),
+  warnings: z.array(SommelierWarningSchema),
+});
+export type CatalogContextResponse = z.infer<
+  typeof CatalogContextResponseSchema
+>;
