@@ -7,23 +7,24 @@
 
 ## Routes Verified (11/11)
 
-| Route | Status | Notes |
-|---|---|---|
-| `/` | ✅ PASS | Landing loads, ecosystem visible, roadmap with correct states |
-| `/catalogo/` | ✅ PASS | Categories, products, mock banner |
-| `/catalogo/vinos/reserva-del-alto-ebro/` | ✅ PASS | Product detail, ratings (Parker 92), mock banner |
-| `/sommelier/` | ✅ PASS | Chat loads, quick prompts, laboratorio badge |
-| `/b2b/` | ✅ PASS | Hero, KPIs, profiles, modules, flows, ecosystem, roadmap, warning |
-| `/admin/` | ✅ PASS | KPIs, modules, workflows, RBAC, integrations, roadmap |
-| `/docs/` | ✅ PASS | Documentation page loads, dev guide visible |
-| `/about/` | ✅ PASS | About page loads |
-| `/robots.txt` | ✅ PASS | Points to correct sitemap |
-| `/sitemap-index.xml` | ✅ PASS | Points to sitemap-0.xml |
-| `/sitemap-0.xml` | ✅ PASS | 23 URLs indexed, all correct |
+| Route                                    | Status  | Notes                                                             |
+| ---------------------------------------- | ------- | ----------------------------------------------------------------- |
+| `/`                                      | ✅ PASS | Landing loads, ecosystem visible, roadmap with correct states     |
+| `/catalogo/`                             | ✅ PASS | Categories, products, mock banner                                 |
+| `/catalogo/vinos/reserva-del-alto-ebro/` | ✅ PASS | Product detail, ratings (Parker 92), mock banner                  |
+| `/sommelier/`                            | ✅ PASS | Chat loads, quick prompts, laboratorio badge                      |
+| `/b2b/`                                  | ✅ PASS | Hero, KPIs, profiles, modules, flows, ecosystem, roadmap, warning |
+| `/admin/`                                | ✅ PASS | KPIs, modules, workflows, RBAC, integrations, roadmap             |
+| `/docs/`                                 | ✅ PASS | Documentation page loads, dev guide visible                       |
+| `/about/`                                | ✅ PASS | About page loads                                                  |
+| `/robots.txt`                            | ✅ PASS | Points to correct sitemap                                         |
+| `/sitemap-index.xml`                     | ✅ PASS | Points to sitemap-0.xml                                           |
+| `/sitemap-0.xml`                         | ✅ PASS | 23 URLs indexed, all correct                                      |
 
 ## Module Results
 
 ### Landing — ✅ PASS
+
 - LabrazaHome Labs branding present
 - 5 ecosystem products listed with correct statuses:
   - Rioja Marketplace: "Plataforma base"
@@ -36,6 +37,7 @@
 - Footer with navigation and copyright
 
 ### Catálogo Premium v2 — ✅ PASS
+
 - `/catalogo/` loads with all 5 categories
 - Category filter buttons work (Todos, Vinos, Aceites, Mieles, Gourmet, Packs)
 - 11 products visible with descriptions and tags
@@ -49,6 +51,7 @@
 - Navigation works between catalog and product detail
 
 ### Sommelier AI v2 — ✅ PASS
+
 - Chat interface loads with initial greeting
 - Quick prompt buttons visible (vino, maridaje, regalo, miel, aceite)
 - Mode selector visible (Cliente Privado/B2B/Proveedor)
@@ -57,6 +60,7 @@
 - Input field visible at bottom
 
 ### Portal B2B v2 — ✅ PASS
+
 - 8 sections all rendering correctly:
   - Hero with badges + CTA buttons
   - KPI strip (6 MetricCards)
@@ -70,6 +74,7 @@
 - Matches admin visual quality
 
 ### Backoffice Admin v2 — ✅ PASS
+
 - 7 sections all rendering correctly:
   - Hero with badges
   - KPI strip (6 MetricCards with trends)
@@ -82,6 +87,7 @@
 - No real admin functionality
 
 ### SEO — ✅ PASS
+
 - `robots.txt` correctly points to `https://labrazahome-stack.vercel.app/sitemap-index.xml`
 - `sitemap-index.xml` accessible and valid
 - `sitemap-0.xml` contains all 23 URLs with correct paths
@@ -90,9 +96,9 @@
 
 ## Issues Detected
 
-| Issue | Severity | Description |
-|---|---|---|
-| `/roadmap` returns 404 | LOW | Roadmap is embedded in landing page and documented in `docs/roadmap.md`, but has no standalone route. Expected — navigation uses anchor `/#roadmap`. |
+| Issue                  | Severity | Description                                                                                                                                          |
+| ---------------------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/roadmap` returns 404 | LOW      | Roadmap is embedded in landing page and documented in `docs/roadmap.md`, but has no standalone route. Expected — navigation uses anchor `/#roadmap`. |
 
 No CRITICAL, HIGH, or MEDIUM issues found.
 
