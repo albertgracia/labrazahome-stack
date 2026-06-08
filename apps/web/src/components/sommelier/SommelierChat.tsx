@@ -4,9 +4,16 @@ import SommelierModeSelector from "./SommelierModeSelector";
 import ProductContextPanel from "./ProductContextPanel";
 import PairingSuggestion from "./PairingSuggestion";
 import RecommendationCard from "./RecommendationCard";
-import { Profile, ChatMessage as ChatMessageType } from "../../types/sommelier";
+import {
+  Profile,
+  ChatMessage as ChatMessageType,
+  ConversationContext,
+} from "../../types/sommelier";
 import { ProductPremium } from "../../types/catalog";
-import { generateMockResponse } from "../../data/sommelier/mockResponses";
+import {
+  processConversation,
+  getCategoryLabel,
+} from "../../data/sommelier/flows";
 
 interface Props {
   initialProduct?: ProductPremium;
@@ -25,6 +32,13 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
   const [input, setInput] = useState("");
   const [profile, setProfile] = useState<Profile>("private");
   const [isTyping, setIsTyping] = useState(false);
+  const [flowCtx, setFlowCtx] = useState<ConversationContext>({
+    category: null,
+    step: 0,
+    totalSteps: 0,
+    collected: {},
+    completed: false,
+  });
   const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = useCallback(() => {
@@ -53,23 +67,27 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
     setIsTyping(true);
 
     setTimeout(() => {
-      const response = generateMockResponse(input);
+      const { result, context } = processConversation(input, flowCtx);
+      setFlowCtx(context);
 
       const assistantMessage: ChatMessageType = {
         role: "assistant",
-        content: response.answer,
+        content: result.answer,
         timestamp: new Date(),
         isMock: true,
         recommendations:
-          response.recommendations.length > 0
-            ? response.recommendations
+          result.recommendations && result.recommendations.length > 0
+            ? result.recommendations
             : undefined,
-        pairings: response.pairings.length > 0 ? response.pairings : undefined,
+        pairings:
+          result.pairings && result.pairings.length > 0
+            ? result.pairings
+            : undefined,
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
       setIsTyping(false);
-    }, 1500);
+    }, 1200);
   };
 
   return (
@@ -97,6 +115,29 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
           onSelectProfile={setProfile}
         />
       </div>
+
+      {/* Flow Step Indicator */}
+      {flowCtx.category && !flowCtx.completed && (
+        <div className="flex shrink-0 items-center gap-3 px-5 py-2 border-b border-white/5 bg-black/20">
+          <span className="text-[11px] text-zinc-400 uppercase tracking-wider font-medium">
+            {getCategoryLabel(flowCtx.category)}
+          </span>
+          <span className="text-[11px] text-zinc-600">·</span>
+          <span className="text-[11px] text-zinc-500">
+            Paso {flowCtx.step} de {flowCtx.totalSteps}
+          </span>
+          <div className="flex gap-1.5 ml-auto">
+            {Array.from({ length: flowCtx.totalSteps }).map((_, i) => (
+              <div
+                key={i}
+                className={`h-1 rounded-full transition-all duration-300 ${
+                  i < flowCtx.step ? "w-4 bg-indigo-500" : "w-2 bg-zinc-700"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Chat Area */}
       <div
@@ -159,9 +200,7 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
                   style={{ animationDelay: "300ms" }}
                 />
               </div>
-              <span className="text-sm text-zinc-400">
-                Analizando tu consulta...
-              </span>
+              <span className="text-sm text-zinc-400">Pensando...</span>
             </div>
           </div>
         )}

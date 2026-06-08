@@ -29,3 +29,23 @@ export type ChatMessage = {
   recommendations?: Recommendation[];
   pairings?: Pairing[];
 };
+
+export interface ConversationContext {
+  category: string | null;
+  step: number;
+  totalSteps: number;
+  collected: Record<string, string>;
+  completed: boolean;
+}
+
+export type FlowResultType = "question" | "recommendation" | "fallback";
+
+export interface ConversationResult {
+  type: FlowResultType;
+  answer: string;
+  recommendations?: Recommendation[];
+  pairings?: Pairing[];
+  step?: number;
+  totalSteps?: number;
+  confidence: number;
+}
