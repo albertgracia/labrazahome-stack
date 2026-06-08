@@ -313,6 +313,18 @@ SOMMELIER_TEMPERATURE=0.7
 
 Variables definidas en `.env.example` con valores seguros por defecto (`mock`).
 
+## Matriz de Modelos Probados (LM Studio)
+
+| Modelo                  | Health | Latencia | JSON Válido               | Calidad                     | Recomendado          |
+| ----------------------- | ------ | -------- | ------------------------- | --------------------------- | -------------------- |
+| `llama-3.2-1b-instruct` | ✅ OK  | 22ms     | ❌ FAIL                   | Texto plano, sin estructura | ❌ No                |
+| `google/gemma-4-e4b`    | ✅ OK  | 22ms     | ❌ FAIL (markdown fences) | Parcial, alucina catálogo   | ⚠️ Con ajuste parser |
+
+Detalles en:
+
+- `docs/audits/STACK-2026-LMSTUDIO-PROVIDER-IMPLEMENTATION-01.md` (llama-3.2-1b)
+- `docs/audits/STACK-2026-LMSTUDIO-GEMMA-MODEL-SMOKE-01.md` (gemma-4-e4b)
+
 ## Prompt Design
 
 ### System Prompt Base
