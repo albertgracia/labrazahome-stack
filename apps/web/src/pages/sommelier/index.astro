@@ -4,6 +4,7 @@ import Section from '../../components/ui/Section.astro';
 import Container from '../../components/ui/Container.astro';
 import Card from '../../components/ui/Card.astro';
 import Badge from '../../components/ui/Badge.astro';
+import SommelierChat from '../../components/sommelier/SommelierChat.tsx';
 ---
 
 <Layout
@@ -14,13 +15,12 @@ import Badge from '../../components/ui/Badge.astro';
   <Section>
     <Container width="narrow">
       <div class="flex flex-col items-center text-center">
-        <Badge variant="warning">En diseño</Badge>
+        <Badge variant="warning">En fase de integración</Badge>
         <h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">
           Sommelier AI <span class="gradient-text">v2</span>
         </h1>
         <p class="mt-4 max-w-2xl text-lg text-muted">
           Asistente inteligente para recomendar, explicar y maridar productos del Catálogo Premium v2.
-          Actualmente en fase de arquitectura.
         </p>
       </div>
     </Container>
@@ -61,29 +61,14 @@ import Badge from '../../components/ui/Badge.astro';
 
   <Section>
     <Container width="narrow">
-      <div class="rounded-xl border border-border bg-card p-8 dark:border-border-dark dark:bg-card-dark">
-        <h2 class="text-2xl font-bold">¿Cómo funciona?</h2>
-        <p class="mt-4 text-muted">
-          Sommelier AI v2 consume los datos del Catálogo Premium v2 —sus fichas técnicas,
-          historias, maridajes y etiquetas— para ofrecer respuestas inteligentes adaptadas a tu perfil.
-        </p>
-        <div class="mt-6 space-y-4 text-sm text-muted">
-          <div class="flex items-start gap-3">
-            <span class="mt-0.5 text-primary">1.</span>
-            <span>Seleccionas tu perfil: cliente privado, B2B, proveedor o admin</span>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="mt-0.5 text-primary">2.</span>
-            <span>Haces una pregunta en lenguaje natural sobre productos, maridajes o recomendaciones</span>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="mt-0.5 text-primary">3.</span>
-            <span>El asistente consulta el catálogo y adapta la respuesta a tu perfil</span>
-          </div>
-          <div class="flex items-start gap-3">
-            <span class="mt-0.5 text-primary">4.</span>
-            <span>Recibes una respuesta con productos recomendados, maridajes y contexto editorial</span>
-          </div>
+      <div class="rounded-xl border border-border bg-card p-4 md:p-8 dark:border-border-dark dark:bg-card-dark">
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold">Chat Sommelier AI</h2>
+          <p class="text-muted">Interactúa con nuestro asistente inteligente para descubrir productos.</p>
+        </div>
+        
+        <div class="relative">
+          <SommelierChat client:load />
         </div>
       </div>
     </Container>
@@ -94,9 +79,7 @@ import Badge from '../../components/ui/Badge.astro';
       <div class="rounded-xl border border-border bg-card p-8 text-center dark:border-border-dark dark:bg-card-dark">
         <Badge variant="warning">Modo laboratorio</Badge>
         <p class="mt-4 text-sm text-muted">
-          Esta página es un placeholder visual. Sommelier AI v2 está en fase de
-          arquitectura y diseño. El chat funcional, el backend y la IA real llegarán
-          en fases posteriores.
+          Esta interfaz es un prototipo de UX. Las respuestas son simuladas para validación de diseño.
         </p>
         <p class="mt-2 text-sm text-muted">
           Mientras tanto, puedes explorar el <a href="/catalogo" class="text-primary underline">Catálogo Premium v2</a>.

@@ -1,0 +1,22 @@
+import React from 'react';
+
+interface Props {
+  recommendations: Array<{ slug: string; name: string; category: string; reason: string; confidence: number }>;
+}
+
+const RecommendationCard: React.FC<Props> = ({ recommendations }) => {
+  return (
+    <div className="grid grid-cols-1 md:grid:grid-cols-2 gap-4">
+      {recommendations.map((rec, index) => (
+        <RecommendationCard 
+          key={index} 
+          productName={rec.name} 
+          reason={rec.reason} 
+          confidence={rec.confidence} 
+        />
+      ))}
+    </div>
+  );
+};
+
+export default RecommendationCard;
