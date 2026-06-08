@@ -196,7 +196,12 @@ interface SommelierChatResponse {
   /** Respuesta en lenguaje natural */
   answer: string;
   /** Intención detectada */
-  intent: "pairing" | "recommendation" | "comparison" | "product_explanation" | "general";
+  intent:
+    | "pairing"
+    | "recommendation"
+    | "comparison"
+    | "product_explanation"
+    | "general";
   /** Productos recomendados */
   recommendations: Array<{
     slug: string;
@@ -221,7 +226,13 @@ interface SommelierChatResponse {
   traceId: string;
   /** Advertencias */
   warnings: Array<{
-    type: "mock_data" | "no_data" | "low_confidence" | "lab_mode" | "fallback" | "guardrail";
+    type:
+      | "mock_data"
+      | "no_data"
+      | "low_confidence"
+      | "lab_mode"
+      | "fallback"
+      | "guardrail";
     message: string;
   }>;
   /** Fuentes usadas */
@@ -268,8 +279,21 @@ import { z } from "zod";
 
 const ProfileEnum = z.enum(["private", "b2b", "producer", "admin"]);
 const ProviderEnum = z.enum(["mock", "lmstudio", "ailab"]);
-const IntentEnum = z.enum(["pairing", "recommendation", "comparison", "product_explanation", "general"]);
-const WarningTypeEnum = z.enum(["mock_data", "no_data", "low_confidence", "lab_mode", "fallback", "guardrail"]);
+const IntentEnum = z.enum([
+  "pairing",
+  "recommendation",
+  "comparison",
+  "product_explanation",
+  "general",
+]);
+const WarningTypeEnum = z.enum([
+  "mock_data",
+  "no_data",
+  "low_confidence",
+  "lab_mode",
+  "fallback",
+  "guardrail",
+]);
 const SourceTypeEnum = z.enum(["product", "category", "general_knowledge"]);
 
 export const ConversationContextSchema = z.object({
@@ -421,10 +445,7 @@ async function chatWithFallback(input: ChatInput): Promise<{
   }
 
   try {
-    const response = await withTimeout(
-      provider.chat(input),
-      getTimeoutMs(),
-    );
+    const response = await withTimeout(provider.chat(input), getTimeoutMs());
     return { response, fallbackUsed: false };
   } catch (error) {
     console.warn(`Provider ${provider.constructor.name} failed:`, error);
@@ -461,7 +482,11 @@ interface CatalogContextItem {
 }
 
 class CatalogContextService {
-  buildContext(message: string, profile: Profile, selectedSlug?: string): CatalogContextItem[] {
+  buildContext(
+    message: string,
+    profile: Profile,
+    selectedSlug?: string,
+  ): CatalogContextItem[] {
     // 1. Classify intent from message
     const intent = this.classifyIntent(message);
 
@@ -470,7 +495,7 @@ class CatalogContextService {
 
     // 3. Filter by selected slug if provided
     if (selectedSlug) {
-      candidates = candidates.filter(c => c.slug === selectedSlug);
+      candidates = candidates.filter((c) => c.slug === selectedSlug);
       if (candidates.length === 0) {
         const product = getProductBySlug(selectedSlug);
         if (product) candidates = [product];
@@ -529,12 +554,16 @@ class GuardrailsService {
     if (this.containsPriceClaim(response.answer)) {
       warnings.push({
         type: "guardrail",
-        message: "La respuesta fue corregida para eliminar referencias a precios no verificados.",
+        message:
+          "La respuesta fue corregida para eliminar referencias a precios no verificados.",
       });
     }
 
     // Verificar que diferencia lab/producción
-    if (!response.answer.includes("laboratorio") && !response.answer.includes("mock")) {
+    if (
+      !response.answer.includes("laboratorio") &&
+      !response.answer.includes("mock")
+    ) {
       warnings.push({
         type: "lab_mode",
         message: "Respuesta generada en modo laboratorio.",
@@ -584,15 +613,15 @@ class SommelierError extends Error {
 
 ### Comportamiento por Error
 
-| Error | HTTP Status | Comportamiento |
-|---|---|---|
-| `INVALID_REQUEST` | 400 | Devolver errores de validación Zod |
-| `PROVIDER_TIMEOUT` | 200 (con fallback) | Usar MockProvider, añadir warning |
-| `PROVIDER_UNAVAILABLE` | 200 (con fallback) | Usar MockProvider, añadir warning |
-| `INVALID_PROVIDER_RESPONSE` | 200 (con fallback) | Usar MockProvider, añadir warning |
-| `CATALOG_CONTEXT_EMPTY` | 200 | Devolver respuesta genérica sin recomendaciones |
-| `GUARDRAIL_VIOLATION` | 200 | Incluir warning de corrección |
-| `RATE_LIMITED` | 429 | Devolver error con retry-after |
+| Error                       | HTTP Status        | Comportamiento                                  |
+| --------------------------- | ------------------ | ----------------------------------------------- |
+| `INVALID_REQUEST`           | 400                | Devolver errores de validación Zod              |
+| `PROVIDER_TIMEOUT`          | 200 (con fallback) | Usar MockProvider, añadir warning               |
+| `PROVIDER_UNAVAILABLE`      | 200 (con fallback) | Usar MockProvider, añadir warning               |
+| `INVALID_PROVIDER_RESPONSE` | 200 (con fallback) | Usar MockProvider, añadir warning               |
+| `CATALOG_CONTEXT_EMPTY`     | 200                | Devolver respuesta genérica sin recomendaciones |
+| `GUARDRAIL_VIOLATION`       | 200                | Incluir warning de corrección                   |
+| `RATE_LIMITED`              | 429                | Devolver error con retry-after                  |
 
 ## Observabilidad
 
@@ -632,15 +661,15 @@ interface SommelierMetadata {
 
 ## Seguridad
 
-| Riesgo | Mitigación |
-|---|---|
-| Frontend llama a proveedores directo | Fastify como única frontera. CORS restrictivo. |
-| Token泄露 | Tokens solo server-side. Nunca en frontend. |
-| Prompt injection | Sanitización de input. Límite 2000 caracteres. |
-| Proveedor no autorizado | Provider select por env var. No aceptar proveedor del cliente. |
-| Datos sensibles en logs | Política estricta de logging. Solo metadatos. |
-| Rate limiting | Futuro: middleware Fastify. |
-| CORS abusivo | CORS configurado solo para orígenes conocidos. |
+| Riesgo                               | Mitigación                                                     |
+| ------------------------------------ | -------------------------------------------------------------- |
+| Frontend llama a proveedores directo | Fastify como única frontera. CORS restrictivo.                 |
+| Token泄露                            | Tokens solo server-side. Nunca en frontend.                    |
+| Prompt injection                     | Sanitización de input. Límite 2000 caracteres.                 |
+| Proveedor no autorizado              | Provider select por env var. No aceptar proveedor del cliente. |
+| Datos sensibles en logs              | Política estricta de logging. Solo metadatos.                  |
+| Rate limiting                        | Futuro: middleware Fastify.                                    |
+| CORS abusivo                         | CORS configurado solo para orígenes conocidos.                 |
 
 ## Relación con Frontend
 
@@ -687,19 +716,78 @@ Fase futura (API backend):
 
 ## Roadmap de Implementación
 
-| Fase | Descripción | Dependencias |
-|---|---|---|
-| 1 | Arquitectura y documentación (esta fase) | — |
-| 2 | Scaffold estructura `apps/api/src/modules/sommelier/` | apps/api existente |
-| 3 | Zod schemas + validación | Fase 2 |
-| 4 | Provider interface + MockProvider en API | Fase 2 |
-| 5 | POST /api/v1/sommelier/chat endpoint | Fase 3 + Fase 4 |
-| 6 | Catalog Context Service | Fase 5 + Catálogo Premium v2 |
-| 7 | Guardrails Service | Fase 5 |
-| 8 | GET /api/v1/sommelier/health + providers | Fase 5 |
-| 9 | Error handling + fallback | Fase 5 |
-| 10 | Frontend migración a API | Fase 5 + Frontend Sommelier |
-| 11 | LM Studio Provider en API | Provider implementado |
-| 12 | AI-LAB Provider en API | Provider implementado |
-| 13 | Observabilidad + tracing | Fase 5 + sistema de logging |
-| 14 | Rate limiting + CORS hardening | Fase 5 |
+| Fase | Descripción                                           | Dependencias                 |
+| ---- | ----------------------------------------------------- | ---------------------------- |
+| 1    | Arquitectura y documentación (esta fase)              | —                            |
+| 2    | Scaffold estructura `apps/api/src/modules/sommelier/` | apps/api existente           |
+| 3    | Zod schemas + validación                              | Fase 2                       |
+| 4    | Provider interface + MockProvider en API              | Fase 2                       |
+| 5    | POST /api/v1/sommelier/chat endpoint                  | Fase 3 + Fase 4              |
+| 6    | Catalog Context Service                               | Fase 5 + Catálogo Premium v2 |
+| 7    | Guardrails Service                                    | Fase 5                       |
+| 8    | GET /api/v1/sommelier/health + providers              | Fase 5                       |
+| 9    | Error handling + fallback                             | Fase 5                       |
+| 10   | Frontend migración a API                              | Fase 5 + Frontend Sommelier  |
+| 11   | LM Studio Provider en API                             | Provider implementado        |
+| 12   | AI-LAB Provider en API                                | Provider implementado        |
+| 13   | Observabilidad + tracing                              | Fase 5 + sistema de logging  |
+| 14   | Rate limiting + CORS hardening                        | Fase 5                       |
+
+## Scaffold Status (STACK-2026-BACKEND-SOMMELIER-API-SCAFFOLD-01)
+
+### Estructura creada
+
+```
+apps/api/src/modules/sommelier/
+├── index.ts                          ← Barrel exports
+├── routes/
+│   └── sommelier.routes.ts          ← 4 endpoints stub
+├── schemas/
+│   └── sommelier.schemas.ts         ← Todos los Zod schemas + types
+├── services/
+│   ├── sommelier.service.ts         ← Orquestación (stub)
+│   ├── catalog-context.service.ts   ← Context builder (TODOs)
+│   └── guardrails.service.ts        ← Pre/post validación (TODOs)
+├── providers/
+│   ├── sommelier-provider.ts        ← SommelierProvider interface
+│   ├── mock.provider.ts             ← MockProvider (responde placeholders)
+│   ├── lmstudio.provider.ts         ← LMStudioProvider (stub, no implementado)
+│   └── ailab.provider.ts            ← AILabProvider (stub, no implementado)
+└── utils/
+    ├── trace.ts                     ← createTraceId()
+    ├── errors.ts                    ← SommelierError + error codes
+    └── response-normalizer.ts       ← normalizeProviderResponse()
+```
+
+### Integración en server.ts
+
+- Rutas registradas seguras: `GET /api/v1/sommelier/health`, `/providers`, `/guardrails`
+- `POST /api/v1/sommelier/chat` devuelve 501 NOT_IMPLEMENTED
+- Sin impacto en endpoints existentes (`/healthz`, `/api/v1/status`)
+
+### Implementado
+
+- ✅ Zod schemas y tipos (request, response, health, metadata, catalog context)
+- ✅ Provider interface con genéricos
+- ✅ MockProvider con respuestas placeholder
+- ✅ LMStudioProvider y AILabProvider stubs con error controlado
+- ✅ SommelierService con orquestación básica (provider, catalog context, guardrails)
+- ✅ CatalogContextService con TODOs para candidate selection
+- ✅ GuardrailsService con pre/post validación básica
+- ✅ createTraceId() con formato som-{timestamp}-{seq}-{random}
+- ✅ SommelierError con códigos de error
+- ✅ normalizeProviderResponse()
+- ✅ 4 endpoints seguros en Fastify
+
+### No implementado
+
+- ❌ Lógica real de chat (POST devuelve 501)
+- ❌ Llamadas a LM Studio
+- ❌ Llamadas a AI-LAB
+- ❌ Catalog context candidate selection
+- ❌ Guardrails completos
+- ❌ Conexión a Prisma
+- ❌ Env vars de configuración
+- ❌ Rate limiting
+- ❌ Observabilidad real (tracing, logging)
+- ❌ Tests automatizados

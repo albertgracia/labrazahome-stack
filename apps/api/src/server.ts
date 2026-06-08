@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
+import { registerSommelierRoutes } from "./modules/sommelier/routes/sommelier.routes";
 
 const server = Fastify({ logger: true });
 
@@ -19,6 +20,8 @@ server.get("/api/v1/status", async () => {
     timestamp: new Date().toISOString(),
   };
 });
+
+await registerSommelierRoutes(server);
 
 const start = async () => {
   try {

@@ -573,6 +573,7 @@ Si AI-LAB falla (timeout, error de red, respuesta inválida, health check fallid
 El AI-LAB Provider será consumido exclusivamente a través de la Backend Sommelier API (Fastify). El frontend nunca llama a AI-LAB directamente.
 
 **Flujo:**
+
 ```
 Frontend → POST /api/v1/sommelier/chat → Fastify → AILabProvider → AI-LAB Gateway
 ```

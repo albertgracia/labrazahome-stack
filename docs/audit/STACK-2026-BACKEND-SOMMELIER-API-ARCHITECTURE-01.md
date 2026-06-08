@@ -16,28 +16,28 @@ Diseñada la arquitectura completa del backend API (Fastify) para Sommelier AI v
 
 ## Architecture Coverage
 
-| Component | Estado |
-|---|---|
-| Endpoints (POST /chat, GET /health, etc.) | Definidos |
-| Zod schemas (request, response, health) | Definidos |
-| Provider interface + selector | Definido |
-| Catalog context service | Definido (sin implementar) |
-| Guardrails service (pre + post) | Definido (sin implementar) |
-| Error handling (códigos, fallback) | Definido |
-| Observabilidad (metadata, logging policy) | Definida |
-| Seguridad (riesgos y mitigaciones) | Definida |
-| Migration path from frontend mock | Definido |
-| B2B/Admin integration notes | Definido |
-| Roadmap (14 fases) | Definido |
+| Component                                 | Estado                     |
+| ----------------------------------------- | -------------------------- |
+| Endpoints (POST /chat, GET /health, etc.) | Definidos                  |
+| Zod schemas (request, response, health)   | Definidos                  |
+| Provider interface + selector             | Definido                   |
+| Catalog context service                   | Definido (sin implementar) |
+| Guardrails service (pre + post)           | Definido (sin implementar) |
+| Error handling (códigos, fallback)        | Definido                   |
+| Observabilidad (metadata, logging policy) | Definida                   |
+| Seguridad (riesgos y mitigaciones)        | Definida                   |
+| Migration path from frontend mock         | Definido                   |
+| B2B/Admin integration notes               | Definido                   |
+| Roadmap (14 fases)                        | Definido                   |
 
 ## Provider Trilogy Complete
 
 Los 3 documentos de provider ahora forman una trilogía coherente:
 
-| Document | Focus | Provider |
-|---|---|---|
-| `lmstudio-provider.md` | Local simple | LM Studio |
-| `ailab-provider.md` | Governed | AI-LAB |
+| Document                   | Focus        | Provider                          |
+| -------------------------- | ------------ | --------------------------------- |
+| `lmstudio-provider.md`     | Local simple | LM Studio                         |
+| `ailab-provider.md`        | Governed     | AI-LAB                            |
 | `backend-sommelier-api.md` | API frontier | Todos (Mock → LM Studio → AI-LAB) |
 
 ## Key Design Decisions

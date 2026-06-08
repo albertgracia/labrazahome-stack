@@ -1,0 +1,12 @@
+export * from "./schemas/sommelier.schemas";
+export * from "./providers/sommelier-provider";
+export { MockSommelierProvider } from "./providers/mock.provider";
+export { LMStudioSommelierProvider } from "./providers/lmstudio.provider";
+export { AILabSommelierProvider } from "./providers/ailab.provider";
+export { SommelierService } from "./services/sommelier.service";
+export { CatalogContextService } from "./services/catalog-context.service";
+export { GuardrailsService } from "./services/guardrails.service";
+export { createTraceId } from "./utils/trace";
+export { SommelierError, SommelierErrorCode } from "./utils/errors";
+export { normalizeProviderResponse } from "./utils/response-normalizer";
+export { registerSommelierRoutes } from "./routes/sommelier.routes";

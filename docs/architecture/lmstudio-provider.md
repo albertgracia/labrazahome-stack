@@ -428,6 +428,7 @@ Para evitar enviar el catálogo completo en cada petición, se debe implementar:
 El LM Studio Provider será consumido exclusivamente a través de la Backend Sommelier API (Fastify). El frontend nunca llama a LM Studio directamente.
 
 **Flujo:**
+
 ```
 Frontend → POST /api/v1/sommelier/chat → Fastify → LMStudioProvider → LM Studio API
 ```
@@ -438,15 +439,15 @@ Arquitectura completa del backend en [`docs/architecture/backend-sommelier-api.m
 
 ## Seguridad
 
-| Riesgo                          | Mitigación                                                                 |
-| ------------------------------- | -------------------------------------------------------------------------- |
-| LM Studio expuesto públicamente | El provider solo funciona en local/LAN a través de Fastify como proxy.     |
-| Prompt injection                | Sanitización de input del usuario. Límite de 2000 caracteres por mensaje   |
-| Respuesta inválida              | Parser con validación Zod. Si falla, se usa MockProvider como fallback     |
-| Timeout                         | Timeout configurable (30s default). Fallback automático                    |
-| Datos sensibles en logs         | No loguear mensajes completos. Solo tipo de consulta y perfil              |
-| Rate limiting                   | Futuro: límite por IP/sesión en Fastify middleware                         |
-| Model drift                     | Prompts versionados y revisados. System prompt fijo por versión            |
+| Riesgo                          | Mitigación                                                               |
+| ------------------------------- | ------------------------------------------------------------------------ |
+| LM Studio expuesto públicamente | El provider solo funciona en local/LAN a través de Fastify como proxy.   |
+| Prompt injection                | Sanitización de input del usuario. Límite de 2000 caracteres por mensaje |
+| Respuesta inválida              | Parser con validación Zod. Si falla, se usa MockProvider como fallback   |
+| Timeout                         | Timeout configurable (30s default). Fallback automático                  |
+| Datos sensibles en logs         | No loguear mensajes completos. Solo tipo de consulta y perfil            |
+| Rate limiting                   | Futuro: límite por IP/sesión en Fastify middleware                       |
+| Model drift                     | Prompts versionados y revisados. System prompt fijo por versión          |
 
 ## Fallback Behavior
 
