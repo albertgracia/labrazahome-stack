@@ -818,13 +818,13 @@ apps/api/src/modules/sommelier/
 
 ### Endpoints State
 
-| Method | Path                         | State                        |
-| ------ | ---------------------------- | ---------------------------- |
-| GET    | /api/v1/sommelier/health     | ✅ funcional                 |
-| GET    | /api/v1/sommelier/providers  | ✅ funcional                 |
-| GET    | /api/v1/sommelier/guardrails | ✅ funcional                 |
-| GET    | /api/v1/sommelier            | ✅ funcional (discovery)     |
-| POST   | /api/v1/sommelier/chat       | ✅ funcional (mock provider) |
+| Method | Path                              | State                           |
+| ------ | --------------------------------- | ------------------------------- |
+| GET    | /api/v1/sommelier/health          | ✅ funcional                    |
+| GET    | /api/v1/sommelier/providers       | ✅ funcional                    |
+| GET    | /api/v1/sommelier/guardrails      | ✅ funcional                    |
+| GET    | /api/v1/sommelier                 | ✅ funcional (discovery)        |
+| POST   | /api/v1/sommelier/chat            | ✅ funcional (mock provider)    |
 | POST   | /api/v1/sommelier/catalog-context | ✅ funcional (intent detection) |
 
 ## Frontend Connection
@@ -832,6 +832,7 @@ apps/api/src/modules/sommelier/
 El frontend se conecta al backend API a través de `apps/web/src/lib/sommelier/api-client.ts`.
 
 **Flujo:**
+
 1. `SommelierChat.tsx` intenta llamar a API primero (`apiMode === "api"`)
 2. Si API responde → usa respuesta backend con `traceId`, `intent`, `recommendations`, `pairings`
 3. Si API falla → usa `processConversation()` (mock engine frontend) con badge "Frontend Fallback"
@@ -840,6 +841,16 @@ El frontend se conecta al backend API a través de `apps/web/src/lib/sommelier/a
 **Provider label** visible en header del chat: "Mock API" / "Frontend Fallback" / "Simulador local".
 
 **Configuración:**
-- `PUBLIC_SOMMELIER_API_MODE=api` o `=mock` (env var)
+
+- `PUBLIC_SOMMELIER_API_MODE=api` o `=mock` (env var, default `mock` para Vercel)
 - `PUBLIC_SOMMELIER_API_URL` para URL del backend (default `http://localhost:8080`)
 - localStorage `SOMMELIER_API_MODE` para override temporal
+
+### Vercel Safety
+
+- **Default mode: `mock`** — Vercel nunca llama a `localhost:8080` a menos que se configure explícitamente
+- `PUBLIC_SOMMELIER_API_MODE` debe setearse a `api` + `PUBLIC_SOMMELIER_API_URL` para entorno local/lab
+- Si no hay env var ni localStorage, `getApiMode()` devuelve `"mock"` (safe default)
+- LM Studio (`192.168.1.250:1234`) nunca es llamado desde frontend — solo vía Fastify backend
+- Fallback silencioso: si API no responde, se usa mock engine local con badge "Frontend Fallback"
+- Sin errores visibles al usuario cuando API no está disponible

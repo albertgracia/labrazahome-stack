@@ -6,15 +6,15 @@ Conectar el frontend Sommelier AI v2 al backend Fastify Sommelier API, mantenien
 
 ## Files Created
 
-| File | Purpose |
-|---|---|
-| `apps/web/src/lib/sommelier/config.ts` | API mode config (env var, localStorage, label) |
+| File                                       | Purpose                                                         |
+| ------------------------------------------ | --------------------------------------------------------------- |
+| `apps/web/src/lib/sommelier/config.ts`     | API mode config (env var, localStorage, label)                  |
 | `apps/web/src/lib/sommelier/api-client.ts` | API client with chat/health/providers/guardrails/catalogContext |
 
 ## Files Modified
 
-| File | Change |
-|---|---|
+| File                                                  | Change                                                                                                      |
+| ----------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
 | `apps/web/src/components/sommelier/SommelierChat.tsx` | Uses API client when `apiMode === "api"`, falls back to mock engine on failure or when `apiMode === "mock"` |
 
 ## Architecture
@@ -32,21 +32,21 @@ Frontend SommelierChat.tsx
 
 ## API Client Methods
 
-| Method | Endpoint | Request | Response |
-|---|---|---|---|
-| `chat()` | POST /api/v1/sommelier/chat | `{message, profile, conversationContext, locale}` | `ApiChatResponse` with traceId |
-| `health()` | GET /api/v1/sommelier/health | — | provider health + available providers |
-| `providers()` | GET /api/v1/sommelier/providers | — | active provider + capabilities |
-| `guardrails()` | GET /api/v1/sommelier/guardrails | — | limits + disclaimers + rules |
-| `catalogContext()` | POST /api/v1/sommelier/catalog-context | `{message, profile, maxProducts}` | intent + candidates + sources |
+| Method             | Endpoint                               | Request                                           | Response                              |
+| ------------------ | -------------------------------------- | ------------------------------------------------- | ------------------------------------- |
+| `chat()`           | POST /api/v1/sommelier/chat            | `{message, profile, conversationContext, locale}` | `ApiChatResponse` with traceId        |
+| `health()`         | GET /api/v1/sommelier/health           | —                                                 | provider health + available providers |
+| `providers()`      | GET /api/v1/sommelier/providers        | —                                                 | active provider + capabilities        |
+| `guardrails()`     | GET /api/v1/sommelier/guardrails       | —                                                 | limits + disclaimers + rules          |
+| `catalogContext()` | POST /api/v1/sommelier/catalog-context | `{message, profile, maxProducts}`                 | intent + candidates + sources         |
 
 ## Fallback Behavior
 
-| Scenario | Behavior | Provider Label |
-|---|---|---|
-| API available (api mode) | Uses API response | "Mock API" |
+| Scenario                   | Behavior                           | Provider Label      |
+| -------------------------- | ---------------------------------- | ------------------- |
+| API available (api mode)   | Uses API response                  | "Mock API"          |
 | API unavailable (api mode) | Falls back to frontend mock engine | "Frontend Fallback" |
-| Mock mode (apiMode=mock) | Uses frontend mock engine directly | "Simulador local" |
+| Mock mode (apiMode=mock)   | Uses frontend mock engine directly | "Simulador local"   |
 
 ## Provider Label (UI)
 

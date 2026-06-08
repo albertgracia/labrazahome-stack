@@ -10,7 +10,7 @@ export function getApiMode(): SommelierApiMode {
 
   if (import.meta.env.PUBLIC_SOMMELIER_API_MODE === "api") return "api";
 
-  return "api";
+  return "mock";
 }
 
 export function getApiBaseUrl(): string {
