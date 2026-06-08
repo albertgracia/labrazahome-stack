@@ -1,0 +1,120 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Card from '../../components/ui/Card.astro';
+
+const kpis = [
+  { label: "Productos en catálogo", value: "0", note: "11 en mock" },
+  { label: "Productos publicados", value: "0", note: "11 visibles" },
+  { label: "Pendientes revisión", value: "0", note: "sin workflow" },
+  { label: "Cuentas B2B activas", value: "0", note: "sin cuentas" },
+  { label: "Presupuestos pendientes", value: "0", note: "sin solicitudes" },
+  { label: "Sin ficha completa", value: "0", note: "mock completo" },
+];
+
+const modules = [
+  "Dashboard ejecutivo", "Gestión de productos", "Productores / proveedores",
+  "Categorías", "Editorial / storytelling", "Fichas técnicas",
+  "SEO", "Imágenes y media", "Cuentas B2B",
+  "Solicitudes de presupuesto", "Condiciones comerciales", "MOQ / reglas mínimas",
+  "Documentos comerciales", "Sommelier AI governance", "Prompts supervisados",
+  "Analytics", "Integraciones", "Audit logs",
+  "Configuración", "Roles y permisos",
+];
+
+const flows = [
+  "Crear producto", "Revisar y aprobar", "Subir imágenes",
+  "Añadir ficha técnica", "Crear cuenta B2B", "Revisar presupuesto",
+  "Configurar MOQ", "Publicar documento", "Supervisar Sommelier",
+  "Export a Rioja Marketplace",
+];
+---
+
+<Layout
+  title="LabrazaHome Labs — Backoffice Admin"
+  description="Panel de gestión interna del ecosistema LabrazaHome Labs. En diseño."
+  canonical="/admin/"
+>
+  <Section>
+    <Container width="narrow">
+      <div class="inline-flex items-center gap-2 rounded-full border border-amber-500/20 bg-amber-500/5 px-3 py-1 text-xs font-medium text-amber-400">
+        <span class="h-1.5 w-1.5 rounded-full bg-amber-400" />
+        Laboratorio · En diseño
+      </div>
+      <h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">Backoffice Admin v2</h1>
+      <p class="mt-4 text-lg leading-relaxed text-muted dark:text-muted-dark">
+        Panel de gestión interna del ecosistema LabrazaHome Labs. Centro operativo para administrar
+        el catálogo, las cuentas B2B, el Sommelier AI y las integraciones con Rioja Marketplace.
+      </p>
+
+      <hr class="my-12 border-border dark:border-border-dark" />
+
+      <h2 class="text-2xl font-bold tracking-tight">KPIs mock</h2>
+      <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {kpis.map((kpi) => (
+          <div class="rounded-xl border border-border bg-white p-5 dark:border-border-dark dark:bg-surface-dark">
+            <p class="text-3xl font-bold tracking-tight text-indigo-400">{kpi.value}</p>
+            <p class="mt-1 text-sm font-medium">{kpi.label}</p>
+            <p class="mt-0.5 text-xs text-muted dark:text-muted-dark">{kpi.note}</p>
+          </div>
+        ))}
+      </div>
+
+      <hr class="my-12 border-border dark:border-border-dark" />
+
+      <h2 class="text-2xl font-bold tracking-tight">Módulos</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {modules.map((m) => (
+          <div class="rounded-lg border border-border bg-white px-4 py-3 text-sm dark:border-border-dark dark:bg-surface-dark">
+            {m}
+          </div>
+        ))}
+      </div>
+
+      <hr class="my-12 border-border dark:border-border-dark" />
+
+      <h2 class="text-2xl font-bold tracking-tight">Flujos operativos</h2>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {flows.map((f) => (
+          <div class="flex items-center gap-3 rounded-lg border border-border bg-white px-4 py-3 text-sm dark:border-border-dark dark:bg-surface-dark">
+            <span class="h-2 w-2 rounded-full bg-indigo-500" />
+            {f}
+          </div>
+        ))}
+      </div>
+
+      <hr class="my-12 border-border dark:border-border-dark" />
+
+      <h2 class="text-2xl font-bold tracking-tight">Integración con el ecosistema</h2>
+      <div class="mt-6 space-y-4">
+        <Card>
+          <h3 class="font-semibold text-indigo-400">Catálogo Premium v2</h3>
+          <p class="mt-1 text-sm text-muted dark:text-muted-dark">El backoffice es el origen operativo del catálogo: creación, edición, revisión, publicación y archivado de productos con workflow completo.</p>
+        </Card>
+        <Card>
+          <h3 class="font-semibold text-indigo-400">Portal B2B v2</h3>
+          <p class="mt-1 text-sm text-muted dark:text-muted-dark">Gestión de cuentas profesionales, condiciones comerciales, solicitudes de presupuesto, reglas MOQ y documentos desde el panel de administración.</p>
+        </Card>
+        <Card>
+          <h3 class="font-semibold text-indigo-400">Sommelier AI v2</h3>
+          <p class="mt-1 text-sm text-muted dark:text-muted-dark">Edición de prompts, supervisión de respuestas, configuración de tono por perfil, bloqueo de productos no recomendables y métricas de satisfacción.</p>
+        </Card>
+        <Card>
+          <h3 class="font-semibold text-indigo-400">Rioja Marketplace</h3>
+          <p class="mt-1 text-sm text-muted dark:text-muted-dark">Preparación de exports, gestión de integraciones, monitoreo de sincronización y logs de ejecución. Read-only inicial, runbook obligatorio.</p>
+        </Card>
+      </div>
+
+      <hr class="my-12 border-border dark:border-border-dark" />
+
+      <div class="rounded-xl border border-indigo-500/20 bg-indigo-500/5 p-8 text-center">
+        <p class="text-lg font-semibold">Backoffice en fase de diseño arquitectónico</p>
+        <p class="mt-2 text-sm text-muted dark:text-muted-dark">
+          20 módulos, 8 perfiles internos, 12 flujos operativos y 17 modelos conceptuales definidos.
+          La implementación comenzará en una fase posterior.
+        </p>
+      </div>
+    </Container>
+  </Section>
+</Layout>
