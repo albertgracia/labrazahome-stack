@@ -23,6 +23,41 @@ export interface WineRating {
   isMock?: boolean;
 }
 
+export interface ProductKnowledge {
+  tastingNotes?: string[];
+  aromaProfile?: string[];
+
+  // Vinos
+  variety?: string;
+  crianza?: string;
+  altitude?: string;
+  servingTemperature?: string;
+  agingPotential?: string;
+  body?: string;
+  finish?: string;
+
+  // Aceites
+  oliveVariety?: string;
+  bitterness?: string;
+  pungency?: string;
+  culinaryUses?: string[];
+  idealFor?: string[];
+
+  // Mieles
+  floralOrigin?: string;
+  intensity?: string;
+  texture?: string;
+  sweetness?: string;
+  recommendedUses?: string[];
+
+  // Packs
+  targetAudience?: string;
+  occasion?: string;
+  premiumLevel?: string;
+  includes?: string[];
+  recommendedFor?: string[];
+}
+
 export interface ProductPremium {
   id: string;
   slug: string;
@@ -41,6 +76,7 @@ export interface ProductPremium {
   imageGradient: string;
   featured: boolean;
   ratings?: WineRating[];
+  knowledge?: ProductKnowledge;
 }
 
 export interface CategoryInfo {

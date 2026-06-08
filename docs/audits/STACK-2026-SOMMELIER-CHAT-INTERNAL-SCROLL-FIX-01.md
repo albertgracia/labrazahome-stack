@@ -19,22 +19,22 @@ Al enviar varias preguntas, el contenido de la conversación crecía sin límite
 
 ## Solución Técnica
 
-| Archivo | Cambio |
-|---------|--------|
+| Archivo             | Cambio                                                                                      |
+| ------------------- | ------------------------------------------------------------------------------------------- |
 | `SommelierChat.tsx` | Contenedor principal: `flex h-[min(640px,calc(100vh-220px))] min-h-[480px] overflow-hidden` |
-| `SommelierChat.tsx` | Header: `shrink-0` añadido |
-| `SommelierChat.tsx` | Contenedor mensajes: ref `messagesContainerRef`, `overflow-y-auto overscroll-contain` |
-| `SommelierChat.tsx` | Scroll: reemplazado `scrollIntoView` por `el.scrollTop = el.scrollHeight` |
-| `SommelierChat.tsx` | Form: `shrink-0` añadido |
-| `SommelierChat.tsx` | Eliminado `messagesEndRef` (ya no necesario) |
+| `SommelierChat.tsx` | Header: `shrink-0` añadido                                                                  |
+| `SommelierChat.tsx` | Contenedor mensajes: ref `messagesContainerRef`, `overflow-y-auto overscroll-contain`       |
+| `SommelierChat.tsx` | Scroll: reemplazado `scrollIntoView` por `el.scrollTop = el.scrollHeight`                   |
+| `SommelierChat.tsx` | Form: `shrink-0` añadido                                                                    |
+| `SommelierChat.tsx` | Eliminado `messagesEndRef` (ya no necesario)                                                |
 
 ## Validaciones
 
-| Comando | Resultado |
-|---------|-----------|
-| `pnpm format` | ✅ PASS |
-| `pnpm --filter web typecheck` | ✅ PASS |
-| `pnpm --filter web build` | ✅ PASS (22 páginas) |
+| Comando                       | Resultado            |
+| ----------------------------- | -------------------- |
+| `pnpm format`                 | ✅ PASS              |
+| `pnpm --filter web typecheck` | ✅ PASS              |
+| `pnpm --filter web build`     | ✅ PASS (22 páginas) |
 
 ## Smoke Local
 

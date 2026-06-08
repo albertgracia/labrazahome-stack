@@ -7,10 +7,78 @@ function pick<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function formatRating(product: ProductPremium): string {
+function formatAllRatings(product: ProductPremium): string {
   if (!product.ratings || product.ratings.length === 0) return "";
-  const r = product.ratings[0];
-  return `${r.source} ${r.score}/${r.maxScore}`;
+  return product.ratings
+    .map((r) => `${r.source} ${r.score}/${r.maxScore}`)
+    .join(" · ");
+}
+
+function buildWineKnowledge(product: ProductPremium): string {
+  const k = product.knowledge;
+  if (!k) return "";
+  const parts: string[] = [];
+  if (k.body) parts.push(`Cuerpo: ${k.body}`);
+  if (k.finish) parts.push(`Final: ${k.finish}`);
+  if (k.servingTemperature) parts.push(`Servir a ${k.servingTemperature}`);
+  if (k.agingPotential) parts.push(`Potencial de guarda: ${k.agingPotential}`);
+  if (k.aromaProfile && k.aromaProfile.length > 0) {
+    parts.push(`Perfil aromático: ${k.aromaProfile.slice(0, 4).join(", ")}`);
+  }
+  if (k.tastingNotes && k.tastingNotes.length > 0) {
+    parts.push(`Notas de cata: ${k.tastingNotes.slice(0, 3).join(" · ")}`);
+  }
+  return "\n\n" + parts.join("\n");
+}
+
+function buildOilKnowledge(product: ProductPremium): string {
+  const k = product.knowledge;
+  if (!k) return "";
+  const parts: string[] = [];
+  if (k.oliveVariety) parts.push(`Variedad: ${k.oliveVariety}`);
+  if (k.intensity) parts.push(`Intensidad: ${k.intensity}`);
+  if (k.bitterness) parts.push(`Amargor: ${k.bitterness}`);
+  if (k.pungency) parts.push(`Picor: ${k.pungency}`);
+  if (k.aromaProfile && k.aromaProfile.length > 0) {
+    parts.push(`Aromas: ${k.aromaProfile.slice(0, 4).join(", ")}`);
+  }
+  if (k.culinaryUses && k.culinaryUses.length > 0) {
+    parts.push(`Usos culinarios: ${k.culinaryUses.join(", ")}`);
+  }
+  return "\n\n" + parts.join("\n");
+}
+
+function buildHoneyKnowledge(product: ProductPremium): string {
+  const k = product.knowledge;
+  if (!k) return "";
+  const parts: string[] = [];
+  if (k.floralOrigin) parts.push(`Origen floral: ${k.floralOrigin}`);
+  if (k.intensity) parts.push(`Intensidad: ${k.intensity}`);
+  if (k.texture) parts.push(`Textura: ${k.texture}`);
+  if (k.sweetness) parts.push(`Dulzor: ${k.sweetness}`);
+  if (k.aromaProfile && k.aromaProfile.length > 0) {
+    parts.push(`Aromas: ${k.aromaProfile.slice(0, 4).join(", ")}`);
+  }
+  if (k.recommendedUses && k.recommendedUses.length > 0) {
+    parts.push(`Recomendado para: ${k.recommendedUses.slice(0, 3).join(", ")}`);
+  }
+  return "\n\n" + parts.join("\n");
+}
+
+function buildPackKnowledge(product: ProductPremium): string {
+  const k = product.knowledge;
+  if (!k) return "";
+  const parts: string[] = [];
+  if (k.targetAudience) parts.push(`Para: ${k.targetAudience}`);
+  if (k.occasion) parts.push(`Ocasión: ${k.occasion}`);
+  if (k.premiumLevel) parts.push(`Nivel: ${k.premiumLevel}`);
+  if (k.includes && k.includes.length > 0) {
+    parts.push(`Incluye: ${k.includes.join(", ")}`);
+  }
+  if (k.recommendedFor && k.recommendedFor.length > 0) {
+    parts.push(`Recomendado para: ${k.recommendedFor.slice(0, 3).join(", ")}`);
+  }
+  return "\n\n" + parts.join("\n");
 }
 
 interface MockResult {
@@ -90,8 +158,9 @@ export function generateMockResponse(query: string): MockResult {
     const slug = pick(WINE_RED_MEAT_SLUGS);
     const product = getProductBySlug(slug);
     if (!product) return fallback();
-    const rating = formatRating(product);
-    const answer = `Te recomiendo ${product.name}. ${product.shortDescription}${rating ? `\n\nPuntuación: ${rating}` : ""}\n\nSus notas de ${product.specs["Variedad"] || "tanninos equilibrados"} y su crianza de ${product.specs["Crianza"] || "larga barrica"} lo hacen ideal para carnes rojas.`;
+    const ratings = formatAllRatings(product);
+    const knowledge = buildWineKnowledge(product);
+    const answer = `Te recomiendo ${product.name}. ${product.shortDescription}${ratings ? `\n\nPuntuaciones: ${ratings}` : ""}${knowledge}\n\nSus taninos y estructura lo hacen ideal para carnes rojas, chuletones y cordero asado.`;
     return {
       answer,
       recommendations: [
@@ -103,10 +172,10 @@ export function generateMockResponse(query: string): MockResult {
           confidence: 0.92,
         },
       ],
-      pairings: product.pairing.slice(0, 3).map((p) => ({
+      pairings: product.pairing.slice(0, 4).map((p) => ({
         product: product.name,
         pairing: p,
-        reason: `La estructura de ${product.name} armoniza con este plato.`,
+        reason: `La estructura y cuerpo de ${product.name} armoniza perfectamente con ${p.toLowerCase()}.`,
       })),
       confidence: 0.92,
     };
@@ -119,8 +188,19 @@ export function generateMockResponse(query: string): MockResult {
     );
     if (products.length === 0) return fallback();
     const product = pick(products);
-    const rating = formatRating(product);
-    const answer = `Para acompañar quesos, te sugiero ${product.name}.${rating ? `\n\nPuntuación: ${rating}` : ""}\n\n${product.shortDescription}`;
+    const ratings = formatAllRatings(product);
+    const k = product.knowledge;
+    let extra = "";
+    if (k?.body)
+      extra += `\n\nCuerpo: ${k.body} — ideal para la textura cremosa del queso.`;
+    if (k?.finish)
+      extra += `\nFinal: ${k.finish}, que limpia el paladar entre bocado y bocado.`;
+    if (k?.servingTemperature)
+      extra += `\nTemperatura de servicio: ${k.servingTemperature}.`;
+    if (k?.aromaProfile && k.aromaProfile.length > 0) {
+      extra += `\nPerfil aromático: ${k.aromaProfile.slice(0, 3).join(", ")}.`;
+    }
+    const answer = `Para acompañar quesos, te sugiero ${product.name}.${ratings ? `\n\nPuntuaciones: ${ratings}` : ""}${extra}\n\nSus notas y estructura están diseñadas para complementar la untuosidad y salinidad de los quesos curados.`;
     return {
       answer,
       recommendations: [
@@ -137,7 +217,7 @@ export function generateMockResponse(query: string): MockResult {
         .map((p) => ({
           product: product.name,
           pairing: p,
-          reason: `${product.name} complementa los sabores intensos del queso.`,
+          reason: `${product.name} complementa los sabores intensos del queso con su acidez y estructura.`,
         })),
       confidence: 0.88,
     };
@@ -148,8 +228,26 @@ export function generateMockResponse(query: string): MockResult {
     const products = getProductsByCategory("aceites");
     if (products.length === 0) return fallback();
     const product = pick(products);
-    const answer = `Te recomiendo ${product.name} de ${product.producer}. ${product.shortDescription}\n\nAcidez: ${product.specs["Acidez"] || "muy baja"} · Variedad: ${product.specs["Variedad"] || product.specs["Variedades"] || "selección premium"}`;
-    return resultForProduct(product, "Ideal para cocina diaria y aliños.", 0.9);
+    const knowledge = buildOilKnowledge(product);
+    const answer = `Te recomiendo ${product.name} de ${product.producer}. ${product.shortDescription}${knowledge}`;
+    return {
+      answer,
+      recommendations: [
+        {
+          slug: product.slug,
+          name: product.name,
+          category: product.category,
+          reason: "Ideal para cocina diaria y aliños.",
+          confidence: 0.9,
+        },
+      ],
+      pairings: product.pairing.slice(0, 3).map((p) => ({
+        product: product.name,
+        pairing: p,
+        reason: `El perfil frutado de ${product.name} realza los sabores de ${p.toLowerCase()}.`,
+      })),
+      confidence: 0.9,
+    };
   }
 
   // --- CASE 4: Honey ---
@@ -157,12 +255,26 @@ export function generateMockResponse(query: string): MockResult {
     const products = getProductsByCategory("mieles");
     if (products.length === 0) return fallback();
     const product = pick(products);
-    const answer = `Para los amantes de la miel, recomiendo ${product.name}. ${product.shortDescription}\n\nIntensidad: ${product.specs["Intensidad"] || "media"} · Textura: ${product.specs["Textura"] || "cremosa"}`;
-    return resultForProduct(
-      product,
-      "Perfecta para desayunos, postres o maridajes.",
-      0.9,
-    );
+    const knowledge = buildHoneyKnowledge(product);
+    const answer = `Para los amantes de la miel, recomiendo ${product.name}. ${product.shortDescription}${knowledge}`;
+    return {
+      answer,
+      recommendations: [
+        {
+          slug: product.slug,
+          name: product.name,
+          category: product.category,
+          reason: "Perfecta para desayunos, postres o maridajes.",
+          confidence: 0.9,
+        },
+      ],
+      pairings: product.pairing.slice(0, 3).map((p) => ({
+        product: product.name,
+        pairing: p,
+        reason: `${product.name} aporta un contraste dulce que realza ${p.toLowerCase()}.`,
+      })),
+      confidence: 0.9,
+    };
   }
 
   // --- CASE 5: Gift / packs ---
@@ -174,12 +286,26 @@ export function generateMockResponse(query: string): MockResult {
     const products = getProductsByCategory("packs");
     if (products.length === 0) return fallback();
     const product = pick(products);
-    const answer = `Para un regalo especial, ${product.name} es la elección perfecta. ${product.shortDescription}\n\nContenido: ${product.specs["Contenido"] || "selección premium"} · Formato: ${product.specs["Formato"] || "estuche"}`;
-    return resultForProduct(
-      product,
-      "Un regalo gastronómico completo y elegante.",
-      0.95,
-    );
+    const knowledge = buildPackKnowledge(product);
+    const answer = `Para un regalo especial, ${product.name} es la elección perfecta. ${product.shortDescription}${knowledge}`;
+    return {
+      answer,
+      recommendations: [
+        {
+          slug: product.slug,
+          name: product.name,
+          category: product.category,
+          reason: "Un regalo gastronómico completo y elegante.",
+          confidence: 0.95,
+        },
+      ],
+      pairings: product.pairing.slice(0, 3).map((p) => ({
+        product: product.name,
+        pairing: p,
+        reason: `${product.name} está diseñado para ${p.toLowerCase()}.`,
+      })),
+      confidence: 0.95,
+    };
   }
 
   // --- CASE 6: Unknown ---
