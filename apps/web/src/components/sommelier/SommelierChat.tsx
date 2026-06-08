@@ -6,6 +6,7 @@ import PairingSuggestion from "./PairingSuggestion";
 import RecommendationCard from "./RecommendationCard";
 import { Profile, ChatMessage as ChatMessageType } from "../../types/sommelier";
 import { ProductPremium } from "../../types/catalog";
+import { generateMockResponse } from "../../data/sommelier/mockResponses";
 
 interface Props {
   initialProduct?: ProductPremium;
@@ -50,12 +51,20 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
     setIsTyping(true);
 
     setTimeout(() => {
+      const response = generateMockResponse(input);
+
       const assistantMessage: ChatMessageType = {
         role: "assistant",
-        content: `He analizado tu consulta sobre "${input}". Como experto, te sugiero explorar nuestras opciones premium. (Esta es una respuesta de laboratorio para la fase UX).`,
+        content: response.answer,
         timestamp: new Date(),
         isMock: true,
+        recommendations:
+          response.recommendations.length > 0
+            ? response.recommendations
+            : undefined,
+        pairings: response.pairings.length > 0 ? response.pairings : undefined,
       };
+
       setMessages((prev) => [...prev, assistantMessage]);
       setIsTyping(false);
     }, 1500);
@@ -102,12 +111,31 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
         )}
 
         {messages.map((msg, idx) => (
-          <div
-            key={idx}
-            className="animate-fade-in-up"
-            style={{ animationDelay: `${idx * 100}ms` }}
-          >
-            <ChatMessage message={msg} />
+          <div key={idx}>
+            <div
+              className="animate-fade-in-up"
+              style={{ animationDelay: `${idx * 100}ms` }}
+            >
+              <ChatMessage message={msg} />
+            </div>
+
+            {msg.recommendations && msg.recommendations.length > 0 && (
+              <div
+                className="mt-4 animate-fade-in-up"
+                style={{ animationDelay: `${idx * 100 + 200}ms` }}
+              >
+                <RecommendationCard recommendations={msg.recommendations} />
+              </div>
+            )}
+
+            {msg.pairings && msg.pairings.length > 0 && (
+              <div
+                className="mt-4 animate-fade-in-up"
+                style={{ animationDelay: `${idx * 100 + 300}ms` }}
+              >
+                <PairingSuggestion pairings={msg.pairings} />
+              </div>
+            )}
           </div>
         ))}
 

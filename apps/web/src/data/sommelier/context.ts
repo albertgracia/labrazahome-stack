@@ -1,13 +1,10 @@
 import { ProductPremium } from "../../types/catalog";
-import { getMockProductContext, generateMockResponse } from "./mockResponses";
+import { getProductBySlug } from "../catalog/index";
 
-/**
- * Genera un objeto de contexto para el componente lateral del chat.
- */
 export function getSommelierContext(slug: string): {
   product: ProductPremium | undefined;
   contextSlug: string;
 } {
-  const product = getMockProductContext(slug);
+  const product = getProductBySlug(slug);
   return { product, contextSlug: slug };
 }

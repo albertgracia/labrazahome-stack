@@ -1,35 +1,21 @@
 import type { ProductPremium } from "../../types/catalog";
 import { getProductBySlug, getProductsByCategory } from "../catalog/index";
 
-// --- MOCK DATA ENGINE REFINEMENT ---
+const WINE_RED_MEAT_SLUGS = ["reserva-del-alto-ebro", "garnacha-de-altura"];
 
-/**
- * Simula la obtención de un producto por slug del catálogo.
- */
-export function getMockProductContext(
-  slug: string,
-): ProductPremium | undefined {
-  return getProductBySlug(slug);
+function pick<T>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)];
 }
 
-/**
- * Genera una respuesta mock basada en reglas simples y el contexto disponible, simulando la lógica de IA.
- * @param query La pregunta del usuario.
- * @param context El producto o conjunto de productos relevantes (opcional).
- * @returns Un objeto que simula la estructura de respuesta final.
- */
-export function generateMockResponse(
-  query: string,
-  context?: ProductPremium,
-): {
+function formatRating(product: ProductPremium): string {
+  if (!product.ratings || product.ratings.length === 0) return "";
+  const r = product.ratings[0];
+  return `${r.source} ${r.score}/${r.maxScore}`;
+}
+
+interface MockResult {
   answer: string;
-  intent:
-    | "pairing"
-    | "recommendation"
-    | "comparison"
-    | "product_explanation"
-    | "general";
-  recommendedProducts: Array<{
+  recommendations: Array<{
     slug: string;
     name: string;
     category: string;
@@ -38,129 +24,164 @@ export function generateMockResponse(
   }>;
   pairings: Array<{ product: string; pairing: string; reason: string }>;
   confidence: number;
-  warnings: Array<{
-    type: "mock_data" | "no_data" | "low_confidence" | "lab_mode";
-    message: string;
-  }>;
-  nextQuestions: string[];
-} {
-  const isMock = true; // Siempre es mock en esta fase
+}
 
-  let answer = "";
-  let intent:
-    | "pairing"
-    | "recommendation"
-    | "comparison"
-    | "product_explanation"
-    | "general" = "general";
-  let recommendedProducts: Array<{
-    slug: string;
-    name: string;
-    category: string;
-    reason: string;
-    confidence: number;
-  }> = [];
-  let pairings: Array<{ product: string; pairing: string; reason: string }> =
-    [];
-  let warnings: Array<{
-    type: "mock_data" | "no_data" | "low_confidence" | "lab_mode";
-    message: string;
-  }> = [
-    {
-      type: "mock_data",
-      message:
-        "⚠️ ADVERTENCIA DE LABORATORIO: Esta respuesta es simulada y utiliza datos mock. No representa precios, stock o disponibilidad real.",
-    },
-  ];
-
-  const lowerQuery = query.toLowerCase();
-
-  // --- Lógica de Reglas Simples (Mock Engine) ---
-
-  if (
-    lowerQuery.includes("vino") &&
-    (lowerQuery.includes("rioja") || lowerQuery.includes("parker"))
-  ) {
-    intent = "recommendation";
-    const contextProduct = getMockProductContext("reserva-del-alto-ebro");
-    answer = `Basado en tu interés por vinos de Rioja o puntuaciones Parker, te recomiendo el ${contextProduct?.name || "Reserva del Alto Ebro"}. Es un clásico que combina la estructura de la Rioja Alta con notas complejas de crianza.`;
-    recommendedProducts.push({
-      slug: "reserva-del-alto-ebro",
-      name: contextProduct?.name || "Reserva del Alto Ebro",
-      category: "vinos",
-      reason:
-        "Por su perfil clásico y balanceado, ideal para cualquier ocasión.",
-      confidence: 0.95,
-    });
-  } else if (lowerQuery.includes("aceite") && lowerQuery.includes("aove")) {
-    intent = "recommendation";
-    const contextProduct = getMockProductContext("coupage-de-sierra");
-    answer = `Para un Aove de alta calidad, te recomiendo el ${contextProduct?.name || "Coupage de Sierra"}. Su perfil frutado y su baja acidez lo hacen perfecto para ensaladas o pescados.`;
-    recommendedProducts.push({
-      slug: "coupage-de-sierra",
-      name: contextProduct?.name || "Coupage de Sierra",
-      category: "aceites",
-      reason:
-        "Su frescura y notas herbáceas son ideales para la cocina diaria.",
-      confidence: 0.9,
-    });
-  } else if (lowerQuery.includes("regalo") || lowerQuery.includes("pack")) {
-    intent = "recommendation";
-    const contextProduct = getMockProductContext("pack-mesa-premium");
-    answer = `Para un regalo gastronómico, el ${contextProduct?.name || "Pack Mesa Premium"} es la elección perfecta. Ofrece una experiencia completa y visualmente atractiva para cualquier ocasión especial.`;
-    recommendedProducts.push({
-      slug: "pack-mesa-premium",
-      name: contextProduct?.name || "Pack Mesa Premium",
-      category: "packs",
-      reason: "Es un set curado que garantiza impacto visual y variedad.",
-      confidence: 0.9,
-    });
-  } else if (lowerQuery.includes("dulce") || lowerQuery.includes("almendra")) {
-    intent = "recommendation";
-    const contextProduct = getMockProductContext("crema-de-almendra-premium");
-    answer = `Si buscas algo dulce y con notas de almendra, te recomiendo la ${contextProduct?.name || "Crema de Almendra Premium"}. Es un complemento ideal para postres o quesos suaves.`;
-    recommendedProducts.push({
-      slug: "crema-de-almendra-premium",
-      name: contextProduct?.name || "Crema de Almendra Premium",
-      category: "gourmet",
-      reason: "Su perfil dulce y cremoso es perfecto como finalizador.",
-      confidence: 0.85,
-    });
-  } else {
-    intent = "general";
-    answer = `Entendido. Para darte una recomendación precisa, por favor especifica la ocasión o el tipo de producto (ej: "¿Qué vino para chuletón?" o "¿Aceite para ensalada?").`;
-  }
-
-  // --- Lógica de Maridaje Mock ---
-  if (lowerQuery.includes("chuletón") || lowerQuery.includes("carne")) {
-    pairings.push({
-      product: "Reserva del Alto Ebro",
-      pairing: "Carnes rojas a la parrilla",
-      reason:
-        "El tanino y la complejidad se equilibran perfectamente con el hierro de la carne.",
-    });
-  } else if (
-    lowerQuery.includes("ensalada") ||
-    lowerQuery.includes("pescado")
-  ) {
-    pairings.push({
-      product: "Coupage de Sierra",
-      pairing: "Ensaladas o pescados blancos",
-      reason: "Su frescura y notas herbáceas cortan la grasa del pescado.",
-    });
-  }
+function resultForProduct(
+  product: ProductPremium,
+  reason: string,
+  confidence: number,
+): MockResult {
+  const pairingEntry =
+    product.pairing.length > 0
+      ? {
+          product: product.name,
+          pairing: product.pairing.slice(0, 3).join(", "),
+          reason: "Recomendación basada en el perfil del producto.",
+        }
+      : undefined;
 
   return {
-    answer: answer,
-    intent: intent,
-    recommendedProducts: recommendedProducts,
-    pairings: pairings,
-    confidence: 0.95, // Alta confianza en el mock
-    warnings: warnings,
-    nextQuestions: [
-      "¿Qué tipo de comida tienes?",
-      "¿Buscas un vino para ocasión especial?",
-      "¿Quieres comparar dos productos?",
+    answer: "",
+    recommendations: [
+      {
+        slug: product.slug,
+        name: product.name,
+        category: product.category,
+        reason,
+        confidence,
+      },
     ],
+    pairings: pairingEntry ? [pairingEntry] : [],
+    confidence,
   };
+}
+
+function fallback(): MockResult {
+  const categories = [
+    { name: "vinos", icon: "🍷", label: "vinos" },
+    { name: "aceites", icon: "🫒", label: "aceites de oliva" },
+    { name: "mieles", icon: "🍯", label: "mieles artesanales" },
+    { name: "gourmet", icon: "🧀", label: "productos gourmet" },
+    { name: "packs", icon: "🎁", label: "packs regalo" },
+  ];
+
+  return {
+    answer: `No encuentro una recomendación exacta en el catálogo actual para esa consulta. Aquí tienes las categorías que puedes explorar:\n\n${categories.map((c) => `${c.icon} ${c.label}`).join("\n")}\n\n¿Te gustaría que te recomiende algo de alguna de ellas?`,
+    recommendations: [],
+    pairings: [],
+    confidence: 0.3,
+  };
+}
+
+export function generateMockResponse(query: string): MockResult {
+  const lower = query.toLowerCase().trim();
+
+  // --- CASE 1: Red meat wine ---
+  if (
+    (lower.includes("vino") &&
+      (lower.includes("carne") ||
+        lower.includes("chuletón") ||
+        lower.includes("cordero") ||
+        lower.includes("ternera") ||
+        lower.includes("cerdo"))) ||
+    lower.includes("vino para carnes") ||
+    lower.includes("vino tinto para")
+  ) {
+    const slug = pick(WINE_RED_MEAT_SLUGS);
+    const product = getProductBySlug(slug);
+    if (!product) return fallback();
+    const rating = formatRating(product);
+    const answer = `Te recomiendo ${product.name}. ${product.shortDescription}${rating ? `\n\nPuntuación: ${rating}` : ""}\n\nSus notas de ${product.specs["Variedad"] || "tanninos equilibrados"} y su crianza de ${product.specs["Crianza"] || "larga barrica"} lo hacen ideal para carnes rojas.`;
+    return {
+      answer,
+      recommendations: [
+        {
+          slug: product.slug,
+          name: product.name,
+          category: product.category,
+          reason: "Perfecto para carnes rojas y platos contundentes.",
+          confidence: 0.92,
+        },
+      ],
+      pairings: product.pairing.slice(0, 3).map((p) => ({
+        product: product.name,
+        pairing: p,
+        reason: `La estructura de ${product.name} armoniza con este plato.`,
+      })),
+      confidence: 0.92,
+    };
+  }
+
+  // --- CASE 2: Cheese ---
+  if (lower.includes("queso") || lower.includes("quesos")) {
+    const products = getProductsByCategory("vinos").filter((p) =>
+      p.pairing.some((pa) => pa.toLowerCase().includes("queso")),
+    );
+    if (products.length === 0) return fallback();
+    const product = pick(products);
+    const rating = formatRating(product);
+    const answer = `Para acompañar quesos, te sugiero ${product.name}.${rating ? `\n\nPuntuación: ${rating}` : ""}\n\n${product.shortDescription}`;
+    return {
+      answer,
+      recommendations: [
+        {
+          slug: product.slug,
+          name: product.name,
+          category: product.category,
+          reason: "Marida excepcionalmente con quesos curados y semicurados.",
+          confidence: 0.88,
+        },
+      ],
+      pairings: product.pairing
+        .filter((p) => p.toLowerCase().includes("queso"))
+        .map((p) => ({
+          product: product.name,
+          pairing: p,
+          reason: `${product.name} complementa los sabores intensos del queso.`,
+        })),
+      confidence: 0.88,
+    };
+  }
+
+  // --- CASE 3: Olive oil ---
+  if (lower.includes("aceite") || lower.includes("aove")) {
+    const products = getProductsByCategory("aceites");
+    if (products.length === 0) return fallback();
+    const product = pick(products);
+    const answer = `Te recomiendo ${product.name} de ${product.producer}. ${product.shortDescription}\n\nAcidez: ${product.specs["Acidez"] || "muy baja"} · Variedad: ${product.specs["Variedad"] || product.specs["Variedades"] || "selección premium"}`;
+    return resultForProduct(product, "Ideal para cocina diaria y aliños.", 0.9);
+  }
+
+  // --- CASE 4: Honey ---
+  if (lower.includes("miel") || lower.includes("mieles")) {
+    const products = getProductsByCategory("mieles");
+    if (products.length === 0) return fallback();
+    const product = pick(products);
+    const answer = `Para los amantes de la miel, recomiendo ${product.name}. ${product.shortDescription}\n\nIntensidad: ${product.specs["Intensidad"] || "media"} · Textura: ${product.specs["Textura"] || "cremosa"}`;
+    return resultForProduct(
+      product,
+      "Perfecta para desayunos, postres o maridajes.",
+      0.9,
+    );
+  }
+
+  // --- CASE 5: Gift / packs ---
+  if (
+    lower.includes("regalo") ||
+    lower.includes("pack") ||
+    lower.includes("caja")
+  ) {
+    const products = getProductsByCategory("packs");
+    if (products.length === 0) return fallback();
+    const product = pick(products);
+    const answer = `Para un regalo especial, ${product.name} es la elección perfecta. ${product.shortDescription}\n\nContenido: ${product.specs["Contenido"] || "selección premium"} · Formato: ${product.specs["Formato"] || "estuche"}`;
+    return resultForProduct(
+      product,
+      "Un regalo gastronómico completo y elegante.",
+      0.95,
+    );
+  }
+
+  // --- CASE 6: Unknown ---
+  return fallback();
 }
