@@ -1,10 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Section from '../../components/ui/Section.astro';
-import Container from '../../components/ui/Container.astro';
-import Card from '../../components/ui/Card.astro';
-import Badge from '../../components/ui/Badge.astro';
 import SommelierChat from '../../components/sommelier/SommelierChat.tsx';
+
+const quickPrompts = [
+  { icon: '🍷', label: 'Vino para carnes rojas', query: '¿Qué vino recomiendas para carnes rojas?' },
+  { icon: '🧀', label: 'Maridaje para quesos curados', query: 'Busco un maridaje para quesos curados' },
+  { icon: '🎁', label: 'Regalo gastronómico premium', query: '¿Qué me recomiendas para un regalo gastronómico premium?' },
+  { icon: '🍯', label: 'Mejor miel para desayuno', query: '¿Cuál es la mejor miel para el desayuno?' },
+  { icon: '🫒', label: 'Aceite premium para cocina diaria', query: 'Recomiéndame un aceite premium para cocina diaria' },
+];
 ---
 
 <Layout
@@ -12,79 +16,80 @@ import SommelierChat from '../../components/sommelier/SommelierChat.tsx';
   description="Sommelier AI v2 es el asistente inteligente conversacional de LabrazaHome Labs. Recomendaciones, maridajes y explicaciones basadas en el Catálogo Premium v2."
   canonical="/sommelier"
 >
-  <Section>
-    <Container width="narrow">
-      <div class="flex flex-col items-center text-center">
-        <Badge variant="warning">En fase de integración</Badge>
-        <h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">
-          Sommelier AI <span class="gradient-text">v2</span>
-        </h1>
-        <p class="mt-4 max-w-2xl text-lg text-muted">
-          Asistente inteligente para recomendar, explicar y maridar productos del Catálogo Premium v2.
-        </p>
+  <!-- Background particles -->
+  <div class="particles-bg" aria-hidden="true">
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+
+  <!-- Hero Premium -->
+  <section class="relative z-10 flex flex-col items-center px-4 pt-20 pb-16 text-center sm:pt-28 sm:pb-20">
+    <div class="animate-blur-in">
+      <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium tracking-wide text-zinc-400 uppercase">
+        <span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span>
+        Laboratorio UX
+      </span>
+    </div>
+
+    <h1 class="mt-8 animate-blur-in" style="animation-delay: 150ms">
+      <span class="block text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+        <span class="inline-block animate-fade-in-up" style="animation-delay: 200ms">Tu</span>{' '}
+        <span class="inline-block animate-fade-in-up" style="animation-delay: 300ms">sumiller</span>{' '}
+        <span class="inline-block animate-fade-in-up" style="animation-delay: 400ms">personal</span>
+      </span>
+      <span class="mt-2 block text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+        <span class="inline-block animate-fade-in-up" style="animation-delay: 500ms">con</span>{' '}
+        <span class="inline-block animate-fade-in-up gradient-text" style="animation-delay: 600ms">inteligencia</span>{' '}
+        <span class="inline-block animate-fade-in-up" style="animation-delay: 700ms">artificial</span>
+      </span>
+    </h1>
+
+    <p class="mt-6 max-w-2xl text-lg text-zinc-400 sm:text-xl animate-fade-in-up" style="animation-delay: 800ms">
+      Explora, aprende y descubre los mejores productos del Catálogo Premium v2
+      <br class="hidden sm:inline" />
+      con la guía de un sommelier experto impulsado por IA.
+    </p>
+  </section>
+
+  <!-- Quick Prompts Premium -->
+  <section class="relative z-10 px-4 pb-16">
+    <div class="mx-auto max-w-4xl">
+      <p class="mb-6 text-center text-sm font-medium tracking-wide text-zinc-500 uppercase">
+        Prueba estas sugerencias
+      </p>
+      <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+        {quickPrompts.map((prompt, i) => (
+          <button
+            key={i}
+            onclick={`document.querySelector('input[placeholder*="Pregunta"]').value = ${JSON.stringify(prompt.query)}; document.querySelector('input[placeholder*="Pregunta"]').form?.requestSubmit?.()`}
+            class="group relative overflow-hidden rounded-xl border border-white/10 bg-white/5 px-4 py-4 text-center transition-all duration-300 hover:border-indigo-500/50 hover:bg-white/10 hover:shadow-[0_0_30px_-5px_rgba(99,102,241,0.3)]"
+            style={`animation: fade-in-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; animation-delay: ${900 + i * 100}ms`}
+          >
+            <div class="mb-2 text-2xl transition-transform duration-300 group-hover:scale-110">{prompt.icon}</div>
+            <div class="text-xs font-medium leading-tight text-zinc-300 transition-colors duration-300 group-hover:text-white">
+              {prompt.label}
+            </div>
+          </button>
+        ))}
       </div>
-    </Container>
-  </Section>
+    </div>
+  </section>
 
-  <Section background="muted">
-    <Container>
-      <div class="grid gap-8 md:grid-cols-3">
-        <Card>
-          <div class="mb-4 text-4xl">🍷</div>
-          <h3 class="text-lg font-semibold">Maridaje Inteligente</h3>
-          <p class="mt-2 text-sm text-muted">
-            Recomendaciones de vino según tu comida, con explicaciones de por qué cada
-            variedad armoniza con cada plato.
-          </p>
-        </Card>
-
-        <Card>
-          <div class="mb-4 text-4xl">🎯</div>
-          <h3 class="text-lg font-semibold">Recomendación Personalizada</h3>
-          <p class="mt-2 text-sm text-muted">
-            Encuentra el producto ideal para cada ocasión: cena romántica, regalo
-            corporativo, celebración familiar.
-          </p>
-        </Card>
-
-        <Card>
-          <div class="mb-4 text-4xl">📖</div>
-          <h3 class="text-lg font-semibold">Explicación de Producto</h3>
-          <p class="mt-2 text-sm text-muted">
-            Conoce la historia, las notas de cata, los maridajes y el origen de cada
-            producto con profundidad editorial.
-          </p>
-        </Card>
+  <!-- Chat Premium -->
+  <section class="relative z-10 px-4 pb-24">
+    <div class="mx-auto max-w-4xl">
+      <div
+        class="overflow-hidden rounded-2xl border border-white/10 transition-shadow duration-500 hover:shadow-[0_0_60px_-15px_rgba(99,102,241,0.15)]"
+        style="background: rgba(9, 9, 11, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);"
+      >
+        <SommelierChat client:load />
       </div>
-    </Container>
-  </Section>
-
-  <Section>
-    <Container width="narrow">
-      <div class="rounded-xl border border-border bg-card p-4 md:p-8 dark:border-border-dark dark:bg-card-dark">
-        <div class="mb-6">
-          <h2 class="text-2xl font-bold">Chat Sommelier AI</h2>
-          <p class="text-muted">Interactúa con nuestro asistente inteligente para descubrir productos.</p>
-        </div>
-        
-        <div class="relative">
-          <SommelierChat client:load />
-        </div>
-      </div>
-    </Container>
-  </Section>
-
-  <Section background="muted">
-    <Container width="narrow">
-      <div class="rounded-xl border border-border bg-card p-8 text-center dark:border-border-dark dark:bg-card-dark">
-        <Badge variant="warning">Modo laboratorio</Badge>
-        <p class="mt-4 text-sm text-muted">
-          Esta interfaz es un prototipo de UX. Las respuestas son simuladas para validación de diseño.
-        </p>
-        <p class="mt-2 text-sm text-muted">
-          Mientras tanto, puedes explorar el <a href="/catalogo" class="text-primary underline">Catálogo Premium v2</a>.
-        </p>
-      </div>
-    </Container>
-  </Section>
+      <p class="mt-4 text-center text-xs text-zinc-600">
+        Modo laboratorio — Las respuestas son simuladas para validación de diseño.{' '}
+        <a href="/catalogo" class="text-indigo-400 underline transition-colors hover:text-indigo-300">Explorar Catálogo Premium</a>
+      </p>
+    </div>
+  </section>
 </Layout>

@@ -7,19 +7,28 @@ interface Props {
 const PairingSuggestion: React.FC<Props> = ({ pairings }) => {
   return (
     <div className="space-y-4">
-      <h3 className="text-xl font-semibold text-zinc-900 dark:text-zinc-100">
+      <h3 className="text-base font-semibold text-white">
         Maridajes Sugeridos
       </h3>
       {pairings.map((p, index) => (
         <div
           key={index}
-          className="border p-4 rounded-lg bg-zinc-950/80 border-white/10"
+          className="rounded-xl border border-white/10 bg-zinc-900/60 p-5 transition-all duration-300 hover:border-indigo-500/30"
         >
-          <h4 className="text-lg font-semibold text-indigo-500">{p.product}</h4>
-          <p className="mt-1 text-zinc-400 dark:text-zinc-300">
-            Ideal para: {p.pairing}
-          </p>
-          <p className="text-sm mt-2 italic border-l-4 border-indigo-500 pl-3 text-zinc-200">
+          <div className="mb-3 flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-500/10 text-lg">
+              🍽️
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold text-indigo-400">
+                {p.product}
+              </h4>
+              <span className="text-xs text-zinc-500">
+                Ideal para: {p.pairing}
+              </span>
+            </div>
+          </div>
+          <p className="text-sm leading-relaxed text-zinc-400 italic border-l-2 border-indigo-500/50 pl-3">
             {p.reason}
           </p>
         </div>

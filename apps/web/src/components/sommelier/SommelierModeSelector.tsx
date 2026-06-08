@@ -6,10 +6,10 @@ interface SommelierModeSelectorProps {
   onSelectProfile: (profile: Profile) => void;
 }
 
-const modes: { label: string; value: Profile | "admin" }[] = [
-  { label: "Cliente Privado", value: "private" },
-  { label: "Cliente B2B", value: "b2b" },
-  { label: "Proveedor/Bodega", value: "supplier" },
+const modes: { label: string; value: Profile; icon: string }[] = [
+  { label: "Cliente Privado", value: "private", icon: "👤" },
+  { label: "Cliente B2B", value: "b2b", icon: "🏢" },
+  { label: "Proveedor", value: "supplier", icon: "🏭" },
 ];
 
 const SommelierModeSelector: React.FC<SommelierModeSelectorProps> = ({
@@ -17,21 +17,19 @@ const SommelierModeSelector: React.FC<SommelierModeSelectorProps> = ({
   onSelectProfile,
 }) => {
   return (
-    <div className="flex flex-col gap-2 p-4 border rounded-lg bg-zinc-900/80 border-white/10">
-      <h3 className="text-sm font-semibold text-muted dark:text-muted-dark">
-        Seleccionar Perfil de Usuario
-      </h3>
+    <div className="flex items-center gap-1 rounded-lg border border-white/10 bg-zinc-950/80 p-1">
       {modes.map((mode) => (
         <button
           key={mode.value}
           onClick={() => onSelectProfile(mode.value)}
-          className={`w-full py-2 px-4 text-sm rounded-lg transition ${
+          className={`flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium transition-all duration-200 ${
             selectedProfile === mode.value
-              ? "bg-indigo-600 text-white shadow-md"
-              : "bg-black/20 border-white/10 hover:bg-zinc-50 dark:hover:bg-zinc-700/20"
+              ? "bg-indigo-500/20 text-indigo-300 shadow-sm"
+              : "text-zinc-500 hover:text-zinc-300"
           }`}
         >
-          {mode.label}
+          <span className="text-sm">{mode.icon}</span>
+          <span className="hidden sm:inline">{mode.label}</span>
         </button>
       ))}
     </div>

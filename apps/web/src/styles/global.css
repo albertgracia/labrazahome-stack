@@ -53,3 +53,216 @@ html {
 ::selection {
   background-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
 }
+
+/* === Premium Motion Utilities === */
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes blur-in {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 20px
+      color-mix(in srgb, var(--color-primary) 15%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 40px
+      color-mix(in srgb, var(--color-primary) 25%, transparent);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  50% {
+    transform: translateY(-10px) translateX(-5px);
+  }
+  75% {
+    transform: translateY(-25px) translateX(15px);
+  }
+}
+
+@keyframes particle-drift {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+@utility animate-fade-in-up {
+  animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility animate-fade-in {
+  animation: fade-in 0.5s ease-out both;
+}
+
+@utility animate-blur-in {
+  animation: blur-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility animate-stagger-1 {
+  animation-delay: 100ms;
+}
+@utility animate-stagger-2 {
+  animation-delay: 200ms;
+}
+@utility animate-stagger-3 {
+  animation-delay: 300ms;
+}
+@utility animate-stagger-4 {
+  animation-delay: 400ms;
+}
+@utility animate-stagger-5 {
+  animation-delay: 500ms;
+}
+@utility animate-stagger-6 {
+  animation-delay: 600ms;
+}
+
+@utility glass-panel {
+  background: rgba(9, 9, 11, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@utility glass-panel-light {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Background particles */
+.particles-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--color-primary-light);
+  border-radius: 50%;
+  opacity: 0;
+  animation: particle-drift linear infinite;
+}
+
+.particle:nth-child(1) {
+  left: 10%;
+  animation-duration: 18s;
+  animation-delay: 0s;
+  width: 2px;
+  height: 2px;
+}
+.particle:nth-child(2) {
+  left: 20%;
+  animation-duration: 22s;
+  animation-delay: 2s;
+  width: 4px;
+  height: 4px;
+}
+.particle:nth-child(3) {
+  left: 35%;
+  animation-duration: 16s;
+  animation-delay: 4s;
+  width: 2px;
+  height: 2px;
+}
+.particle:nth-child(4) {
+  left: 50%;
+  animation-duration: 20s;
+  animation-delay: 1s;
+  width: 3px;
+  height: 3px;
+}
+.particle:nth-child(5) {
+  left: 65%;
+  animation-duration: 24s;
+  animation-delay: 3s;
+  width: 2px;
+  height: 2px;
+}
+.particle:nth-child(6) {
+  left: 75%;
+  animation-duration: 19s;
+  animation-delay: 5s;
+  width: 4px;
+  height: 4px;
+}
+.particle:nth-child(7) {
+  left: 85%;
+  animation-duration: 17s;
+  animation-delay: 6s;
+  width: 2px;
+  height: 2px;
+}
+.particle:nth-child(8) {
+  left: 45%;
+  animation-duration: 21s;
+  animation-delay: 7s;
+  width: 3px;
+  height: 3px;
+}
+.particle:nth-child(9) {
+  left: 15%;
+  animation-duration: 23s;
+  animation-delay: 8s;
+  width: 2px;
+  height: 2px;
+}
+.particle:nth-child(10) {
+  left: 90%;
+  animation-duration: 15s;
+  animation-delay: 9s;
+  width: 3px;
+  height: 3px;
+}

@@ -7,21 +7,28 @@ interface Props {
 
 const ProductContextPanel: React.FC<Props> = ({ product }) => {
   return (
-    <div className="p-6 border rounded-xl bg-zinc-900/80 border-white/10 dark:bg-surface-elevated">
-      <h3 className="text-2xl font-bold text-zinc-300">{product.name}</h3>
-      <p className="text-lg text-zinc-400 mt-1">{product.producer}</p>
-      <div className="mt-4 space-y-3">
-        <div>
-          <h4 className="font-semibold text-muted dark:text-muted-dark">
-            Origen:
-          </h4>
-          <p>{product.region}</p>
+    <div className="overflow-hidden rounded-xl border border-indigo-500/20 bg-gradient-to-br from-zinc-900/90 to-zinc-950/90 p-5">
+      <div className="mb-4 flex items-center gap-3">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 text-xl">
+          🍷
         </div>
         <div>
-          <h4 className="font-semibold text-muted dark:text-muted-dark">
-            Categoría:
-          </h4>
-          <p>{product.category}</p>
+          <h3 className="text-lg font-bold text-white">{product.name}</h3>
+          <p className="text-sm text-indigo-400">{product.producer}</p>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <span className="text-xs font-medium text-zinc-500 uppercase tracking-wide">
+            Origen
+          </span>
+          <p className="mt-0.5 text-sm text-zinc-300">{product.region}</p>
+        </div>
+        <div>
+          <span className="text-xs font-medium text-zinc-500 uppercase tracking-wide">
+            Categoría
+          </span>
+          <p className="mt-0.5 text-sm text-zinc-300">{product.category}</p>
         </div>
       </div>
     </div>

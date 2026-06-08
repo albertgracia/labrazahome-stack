@@ -49,7 +49,6 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
     setInput("");
     setIsTyping(true);
 
-    // Simulación de respuesta de IA (Fase 4: Mock responses)
     setTimeout(() => {
       const assistantMessage: ChatMessageType = {
         role: "assistant",
@@ -63,40 +62,75 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
   };
 
   return (
-    <div className="min-h-[520px] md:min-h-[640px] w-full max-w-4xl mx-auto border rounded-2xl bg-zinc-950/80 shadow-2xl">
+    <div className="min-h-[520px] md:min-h-[640px] w-full flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b bg-zinc-900/80 border-white/10">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
-            <h2 className="font-bold text-zinc-900 dark:text-zinc-100">
-              Sommelier AI&nbsp;
-              <span className="text-xs font-normal opacity-60">(Lab Mode)</span>
-            </h2>
+      <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <div className="w-3 h-3 rounded-full bg-emerald-500" />
+            <div className="absolute inset-0 w-3 h-3 rounded-full bg-emerald-500 animate-ping opacity-30" />
           </div>
-          <SommelierModeSelector
-            selectedProfile={profile}
-            onSelectProfile={setProfile}
-          />
+          <div>
+            <h2 className="text-sm font-bold text-white">Sommelier AI</h2>
+            <p className="text-[11px] text-zinc-500 tracking-wide uppercase">
+              {profile === "private"
+                ? "Cliente Privado"
+                : profile === "b2b"
+                  ? "Cliente B2B"
+                  : "Proveedor"}
+            </p>
+          </div>
         </div>
+        <SommelierModeSelector
+          selectedProfile={profile}
+          onSelectProfile={setProfile}
+        />
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-black/20">
+      <div
+        className="flex-1 overflow-y-auto p-5 space-y-5"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(9,9,11,0.95) 0%, rgba(24,24,27,0.9) 100%)",
+        }}
+      >
         {initialProduct && (
-          <div className="mb-6 animate-in fade-in slide-in-from-top-4 duration-500">
+          <div className="animate-fade-in-up">
             <ProductContextPanel product={initialProduct} />
           </div>
         )}
 
         {messages.map((msg, idx) => (
-          <ChatMessage key={idx} message={msg} />
+          <div
+            key={idx}
+            className="animate-fade-in-up"
+            style={{ animationDelay: `${idx * 100}ms` }}
+          >
+            <ChatMessage message={msg} />
+          </div>
         ))}
 
         {isTyping && (
-          <div className="flex justify-start mb-4">
-            <div className="bg-card p-3 rounded-xl shadow-sm animate-pulse text-sm text-muted">
-              El sumiller está pensando...
+          <div className="flex justify-start">
+            <div className="flex items-center gap-2 px-4 py-3 rounded-xl glass-panel-light">
+              <div className="flex gap-1">
+                <span
+                  className="w-2 h-2 rounded-full bg-indigo-400 animate-bounce"
+                  style={{ animationDelay: "0ms" }}
+                />
+                <span
+                  className="w-2 h-2 rounded-full bg-indigo-400 animate-bounce"
+                  style={{ animationDelay: "150ms" }}
+                />
+                <span
+                  className="w-2 h-2 rounded-full bg-indigo-400 animate-bounce"
+                  style={{ animationDelay: "300ms" }}
+                />
+              </div>
+              <span className="text-sm text-zinc-400">
+                Analizando tu consulta...
+              </span>
             </div>
           </div>
         )}
@@ -108,24 +142,21 @@ const SommelierChat: React.FC<Props> = ({ initialProduct }) => {
         onSubmit={handleSend}
         className="border-t border-white/10 bg-zinc-950/90 p-4"
       >
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Pregunta algo (ej: ¿Qué vino para carnes rojas?)"
-            className="flex-1 p-3 rounded-xl border border-white/10 bg-zinc-950 text-white placeholder:text-zinc-500 focus:border-indigo-500"
+            className="flex-1 rounded-xl border border-white/10 bg-zinc-950 px-4 py-3 text-sm text-white placeholder:text-zinc-500 transition-colors focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
           />
           <button
             type="submit"
-            className="bg-indigo-500 hover:bg-indigo-400 text-white"
+            className="rounded-xl bg-indigo-500 px-5 py-3 text-sm font-semibold text-white transition-all hover:bg-indigo-400 hover:shadow-[0_0_20px_-5px_rgba(99,102,241,0.5)]"
           >
             Enviar
           </button>
         </div>
-        <p className="mt-2 text-center text-xs text-zinc-500">
-          Modo Laboratorio: Los datos son simulados para fines de UX.
-        </p>
       </form>
     </div>
   );
