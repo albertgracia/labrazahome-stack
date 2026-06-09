@@ -32,3 +32,36 @@ export interface B2BSelectionSummary {
 }
 
 export const SELECTION_STORAGE_KEY = "labrazahome:b2b-selection";
+
+// --- Document Center types ---
+
+export type B2BDocumentType =
+  | "Ficha técnica"
+  | "Catálogo"
+  | "Argumentario"
+  | "Maridaje"
+  | "Certificación"
+  | "Pack";
+
+export type B2BDocumentStatus = "Disponible" | "En preparación" | "Futuro";
+
+export type B2BDocumentProfile =
+  | "Restaurante"
+  | "Tienda gourmet"
+  | "Hotel"
+  | "Distribuidor"
+  | "Empresa";
+
+export interface B2BDocumentMock {
+  id: string;
+  title: string;
+  type: B2BDocumentType;
+  category: string;
+  profile: B2BDocumentProfile[];
+  status: B2BDocumentStatus;
+  productSlug: string | null;
+  productName: string | null;
+  description: string;
+  professionalUse: string;
+  mockContent: string;
+}

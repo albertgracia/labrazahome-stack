@@ -1,0 +1,120 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import Card from '../../components/ui/Card.astro';
+import DocumentCenterHero from '../../components/b2b/documents/DocumentCenterHero.astro';
+import DocumentStats from '../../components/b2b/documents/DocumentStats.astro';
+import FeaturedDocuments from '../../components/b2b/documents/FeaturedDocuments';
+import ProductDocuments from '../../components/b2b/documents/ProductDocuments.astro';
+import DocumentLabNotice from '../../components/b2b/documents/DocumentLabNotice.astro';
+import {
+  documentStats,
+  featuredDocuments,
+  productDocuments,
+  documentCategories,
+  documentProfiles,
+  documentStatuses,
+} from '../../data/b2b/documentCenter';
+
+const productGroups = [
+  {
+    category: "Vinos",
+    icon: "🍷",
+    documents: productDocuments.filter((d) => d.category === "Vinos"),
+  },
+  {
+    category: "Aceites",
+    icon: "",
+    documents: productDocuments.filter((d) => d.category === "Aceites"),
+  },
+  {
+    category: "Mieles",
+    icon: "🍯",
+    documents: productDocuments.filter((d) => d.category === "Mieles"),
+  },
+  {
+    category: "Packs",
+    icon: "🎁",
+    documents: productDocuments.filter((d) => d.category === "Packs"),
+  },
+];
+---
+
+<Layout
+  title="Centro de Documentos B2B | LabrazaHome Labs"
+  description="Fichas técnicas, argumentarios y recursos comerciales para compradores profesionales B2B."
+  canonical="/b2b/documentos/"
+>
+  <!-- HERO -->
+  <Section background="muted">
+    <Container>
+      <DocumentCenterHero />
+    </Container>
+  </Section>
+
+  <!-- KPI STRIP -->
+  <Section>
+    <Container>
+      <DocumentStats stats={documentStats} />
+    </Container>
+  </Section>
+
+  <!-- FEATURED DOCUMENTS + FILTERS -->
+  <Section background="muted">
+    <Container>
+      <FeaturedDocuments
+        documents={featuredDocuments}
+        categories={documentCategories}
+        profiles={documentProfiles}
+        statuses={documentStatuses}
+        client:load
+      />
+    </Container>
+  </Section>
+
+  <!-- DOCUMENTOS POR PRODUCTO -->
+  <Section>
+    <Container>
+      <h2 class="mb-6 text-2xl font-bold tracking-tight">Documentos por producto</h2>
+      <ProductDocuments groups={productGroups} />
+    </Container>
+  </Section>
+
+  <!-- CTA LINKS -->
+  <Section background="muted">
+    <Container>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <a
+          href="/b2b/workspace"
+          class="flex items-center gap-4 rounded-xl border border-border bg-card p-6 transition hover:shadow-md dark:border-border-dark dark:bg-card-dark"
+        >
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-xl">👤</span>
+          <div>
+            <h3 class="font-semibold">Ir a Workspace B2B</h3>
+            <p class="text-sm text-muted dark:text-muted-dark">Gestiona selecciones, presupuestos y perfiles</p>
+          </div>
+          <span class="ml-auto shrink-0 text-lg text-muted dark:text-muted-dark">→</span>
+        </a>
+        <a
+          href="/sommelier"
+          class="flex items-center gap-4 rounded-xl border border-border bg-card p-6 transition hover:shadow-md dark:border-border-dark dark:bg-card-dark"
+        >
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-xl">🍷</span>
+          <div>
+            <h3 class="font-semibold">Consultar Sommelier B2B</h3>
+            <p class="text-sm text-muted dark:text-muted-dark">Recomendaciones profesionales y maridajes</p>
+          </div>
+          <span class="ml-auto shrink-0 text-lg text-muted dark:text-muted-dark">→</span>
+        </a>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- AVISO LABORATORIO -->
+  <Section>
+    <Container>
+      <DocumentLabNotice />
+    </Container>
+  </Section>
+</Layout>

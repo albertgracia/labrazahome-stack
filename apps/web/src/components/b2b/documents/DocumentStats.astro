@@ -1,0 +1,17 @@
+---
+import type { DocumentStat } from '../../../data/b2b/documentCenter';
+import MetricCard from '../../ui/MetricCard.astro';
+
+export interface Props {
+  stats: DocumentStat[];
+}
+const { stats } = Astro.props;
+---
+
+<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+  {stats.map((stat) => (
+    <MetricCard label={stat.label} value={stat.value} icon={stat.icon} trend="neutral">
+      <span slot="trend">{stat.description}</span>
+    </MetricCard>
+  ))}
+</div>

@@ -1,0 +1,47 @@
+---
+import type { B2BDocumentMock } from '../../../types/b2b';
+
+export interface Props {
+  groups: Array<{
+    category: string;
+    icon: string;
+    documents: B2BDocumentMock[];
+  }>;
+}
+const { groups } = Astro.props;
+
+const statusColors: Record<string, string> = {
+  "Disponible": "border-emerald-500/20 bg-emerald-500/10 text-emerald-400",
+  "En preparación": "border-amber-500/20 bg-amber-500/10 text-amber-400",
+  "Futuro": "border-zinc-500/20 bg-zinc-500/10 text-zinc-400",
+};
+---
+
+<div class="space-y-8">
+  {groups.map((group) => (
+    <div>
+      <h3 class="mb-4 flex items-center gap-2 text-lg font-semibold">
+        <span>{group.icon}</span>
+        {group.category}
+      </h3>
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {group.documents.map((doc) => {
+          const sc = statusColors[doc.status] || "border-zinc-500/20 bg-zinc-500/10 text-zinc-400";
+          return (
+            <div class="rounded-xl border border-border bg-card p-4 transition hover:shadow-md dark:border-border-dark dark:bg-card-dark">
+              <div class="flex items-start justify-between gap-2">
+                <span class="rounded-md bg-primary/10 px-2 py-0.5 text-[11px] font-medium text-primary">{doc.type}</span>
+                <span class={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-medium ${sc}`}>{doc.status}</span>
+              </div>
+              <h4 class="mt-2 text-sm font-medium leading-snug">{doc.title}</h4>
+              <p class="mt-1 text-xs text-muted dark:text-muted-dark">{doc.description}</p>
+              {doc.productName && (
+                <p class="mt-2 text-[11px] text-primary">{doc.productName}</p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  ))}
+</div>
