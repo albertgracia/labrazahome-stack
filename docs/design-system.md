@@ -1,5 +1,9 @@
 # Design System — LabrazaHome Labs
 
+> **Referencia obligatoria**: `docs/design/impeccable-design-gate.md` — compuerta de calidad visual con reglas vinculantes de color, tipografía, layout, motion, interacción y copy. Todo código frontend debe pasar por esta compuerta antes de darse por terminado.
+>
+> **Regla operativa para agentes**: `docs/agent-rules/impeccable-design-rule.md`
+
 ## Filosofía
 
 Premium, tecnológico, elegante. Inspirado en Vercel, Linear, Stripe y Raycast, pero adaptado a la identidad de LabrazaHome Labs.
