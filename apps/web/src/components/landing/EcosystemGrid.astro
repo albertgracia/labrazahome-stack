@@ -6,7 +6,7 @@ export interface Product {
   icon: string;
   title: string;
   description: string;
-  status: 'base' | 'completed' | 'development' | 'architecture' | 'design' | 'future';
+  status: 'base' | 'completed' | 'development' | 'architecture' | 'design' | 'demo' | 'future';
 }
 
 export interface Props {
@@ -19,6 +19,7 @@ const statusConfig = {
   development: { badge: 'En desarrollo', variant: 'warning' as const },
   architecture: { badge: 'Arquitectura completa', variant: 'success' as const },
   design: { badge: 'En diseño', variant: 'default' as const },
+  demo: { badge: 'Mock Dashboard + Quote Flow', variant: 'warning' as const },
   future: { badge: 'Futuro', variant: 'default' as const },
 };
 

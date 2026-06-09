@@ -10,24 +10,28 @@ FASE 1 — FUNDACIÓN
   ✅ Landing LabrazaHome Labs
   ✅ Design System
 
-FASE 2 — PRODUCTOS CORE
+FASE 2 — CATÁLOGO PREMIUM v2
   ✅ Catálogo Premium v2 (11 productos, 5 categorías, fichas, ratings, knowledge)
+
+FASE 3 — SOMMELIER AI v2
   ✅ Sommelier AI v2
-      ✅ Arquitectura
       ✅ UI conversacional premium
       ✅ Mock engine con 6 intents
       ✅ Base de conocimiento enriquecida
       ✅ Flujos conversacionales guiados (vino, aceite, miel, regalo)
 
-FASE 3 — CAPA PROFESIONAL
-  🟢 Portal B2B v2
+FASE 4 — PORTAL B2B v2
+  🟢 Mock Dashboard + Quote Flow
       ✅ Arquitectura completa
-      ✅ 7 perfiles definidos
-      ✅ 14 módulos diseñados
-      ✅ 17 rutas planificadas
-      ✅ Placeholder informativo
-      ⏳ Implementación pendiente
-  🟢 Backoffice Admin v2
+      ✅ Dashboard profesional mock (3 columnas, KPIs, perfiles, actividad)
+      ✅ Flujo de selección interactivo (catálogo, cantidades, uso)
+      ✅ Flujo de presupuesto mock (vista previa modal)
+      ✅ Persistencia local (localStorage)
+      ✅ Componentes reutilizables (Hero, KpiStrip, ProfileSelector, etc.)
+      ✅ Navegación funcional /b2b/
+
+FASE 5 — BACKOFFICE ADMIN v2
+  🟡 Placeholder avanzado
       ✅ Arquitectura completa
       ✅ 8 perfiles definidos
       ✅ 20 módulos diseñados
@@ -35,12 +39,15 @@ FASE 3 — CAPA PROFESIONAL
       ✅ Placeholder informativo
       ⏳ Implementación pendiente
 
-FASE 4 — IA REAL
-  ⏳ Integración LM Studio (modelos locales)
-  ⏳ Integración AI-LAB Gateway
-  ⏳ Evaluación y validación de respuestas reales
+FASE 6 — IA REAL
+  🟡 LM Studio preparado
+      ✅ Proveedor LM Studio implementado
+      ✅ Parser JSON robusto (fences + balanced brackets)
+      ⏳ Modelo fiable ≥7B params pendiente
+      ⏳ Integración AI-LAB Gateway
+      ⏳ Evaluación y validación de respuestas reales
 
-FASE 5 — INTEGRACIÓN PRODUCCIÓN
+FASE 7 — INTEGRACIÓN PRODUCCIÓN
   ⏳ Integración controlada con Rioja Marketplace
   ⏳ Read-only inicial
   ⏳ Runbook de integración
@@ -52,7 +59,8 @@ FASE 5 — INTEGRACIÓN PRODUCCIÓN
 | Símbolo | Significado                                       |
 | ------- | ------------------------------------------------- |
 | ✅      | Completado                                        |
-| 🟢      | Arquitectura completada, pendiente implementación |
+| 🟢      | Funcional con datos mock                          |
+| 🟡      | Arquitectura completada, implementación pendiente |
 | ⏳      | Planificado, no iniciado                          |
 
 ## Dependencias
@@ -80,17 +88,19 @@ Backoffice Admin v2 ────────────────────
 
 ## Prioridades
 
-1. Completar implementación de Portal B2B v2 (dashboard + catálogo profesional)
-2. Completar implementación de Backoffice Admin v2 (gestión de catálogo)
-3. Integración de IA real con LM Studio / AI-LAB
-4. Integración controlada con Rioja Marketplace
+1. Completar Dashboard B2B con datos mock (✅ completado)
+2. Completar flujo de selección y presupuesto B2B (✅ completado)
+3. Implementar Backoffice Admin v2 (CRUD productos)
+4. Evaluar modelos ≥7B params para IA real en Sommelier
+5. Integración controlada con Rioja Marketplace
 
 ## Próximos hitos
 
-| Hito                                | Fase | Dependencia              |
-| ----------------------------------- | ---- | ------------------------ |
-| Placeholder B2B + Admin funcionales | F3   | —                        |
-| Dashboard B2B con datos mock        | F3   | Placeholder B2B          |
-| CRUD productos en Backoffice        | F3   | Placeholder Admin        |
-| IA real en Sommelier                | F4   | LM Studio / AI-LAB       |
-| Integración Rioja Marketplace       | F5   | F3 completo, IA validada |
+| Hito                             | Fase | Dependencia            |
+| -------------------------------- | ---- | ---------------------- |
+| Dashboard B2B con datos mock     | F4   | ✅ Completado          |
+| Flujo de selección y presupuesto | F4   | ✅ Completado          |
+| Vercel smoke B2B Quote Flow      | F4   | Dashboard B2B          |
+| CRUD productos en Backoffice     | F5   | Placeholder Admin      |
+| IA real en Sommelier             | F6   | LM Studio ≥7B / AI-LAB |
+| Integración Rioja Marketplace    | F7   | F4+F5+F6 completo      |
