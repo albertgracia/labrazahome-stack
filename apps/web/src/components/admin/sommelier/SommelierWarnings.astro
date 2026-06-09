@@ -1,0 +1,32 @@
+---
+import type { WarningDistributionItem } from '../../../types/admin';
+import Card from '../../ui/Card.astro';
+
+export interface Props {
+  warnings: WarningDistributionItem[];
+}
+const { warnings } = Astro.props;
+
+const totalWarnings = warnings.reduce((acc, w) => acc + w.count, 0);
+---
+
+<Card>
+  <h3 class="text-base font-semibold">Distribución de warnings</h3>
+  <p class="mt-1 text-xs text-muted dark:text-muted-dark">{totalWarnings} advertencia(s) activa(s) en respuestas.</p>
+  <div class="mt-4 space-y-3">
+    {warnings.map((w) => {
+      const pct = totalWarnings > 0 ? Math.round((w.count / totalWarnings) * 100) : 0;
+      return (
+        <div>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-zinc-700 dark:text-zinc-300">{w.type}</span>
+            <span class="text-xs font-medium text-muted dark:text-muted-dark">{w.count}</span>
+          </div>
+          <div class="mt-1 h-2 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
+            <div class={`h-full rounded-full ${w.color} transition-all`} style={`width: ${pct}%`} />
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</Card>

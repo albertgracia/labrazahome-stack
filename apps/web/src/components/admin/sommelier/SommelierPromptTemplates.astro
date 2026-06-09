@@ -1,0 +1,48 @@
+---
+import type { PromptTemplate } from '../../../types/admin';
+import Card from '../../ui/Card.astro';
+import Badge from '../../ui/Badge.astro';
+
+export interface Props {
+  templates: PromptTemplate[];
+}
+const { templates } = Astro.props;
+
+const statusBadgeVariant: Record<string, 'success' | 'warning' | 'default'> = {
+  active: 'success',
+  draft: 'warning',
+  archived: 'default',
+};
+---
+
+<Card>
+  <div class="flex items-center justify-between gap-3">
+    <div>
+      <h3 class="text-base font-semibold">Prompt Templates</h3>
+      <p class="mt-1 text-xs text-muted dark:text-muted-dark">Templates activos que definen el tono y comportamiento del Sommelier.</p>
+    </div>
+    <button class="rounded-md px-3 py-1.5 text-xs font-medium text-primary hover:bg-primary/10 transition-colors" type="button">+ Nuevo prompt</button>
+  </div>
+  <div class="mt-4 space-y-3">
+    {templates.map((tpl) => (
+      <div class="rounded-lg border border-border bg-surface/50 p-3 dark:border-border-dark dark:bg-surface-dark/50">
+        <div class="flex items-center justify-between gap-3">
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-mono text-muted dark:text-muted-dark">{tpl.key}</span>
+              <Badge variant={statusBadgeVariant[tpl.status]}>{tpl.status}</Badge>
+            </div>
+            <p class="mt-1 text-sm font-medium text-zinc-900 dark:text-zinc-100">{tpl.name}</p>
+            <p class="mt-0.5 text-xs text-muted dark:text-muted-dark leading-relaxed line-clamp-2">{tpl.content}</p>
+          </div>
+          <span class="shrink-0 text-[10px] text-muted dark:text-muted-dark">v{tpl.version}</span>
+        </div>
+        <div class="mt-2 flex gap-2 border-t border-border pt-2 dark:border-border-dark">
+          <button class="rounded-md px-2 py-1 text-[10px] font-medium text-primary hover:bg-primary/10 transition-colors" type="button">Editar</button>
+          <button class="rounded-md px-2 py-1 text-[10px] font-medium text-primary hover:bg-primary/10 transition-colors" type="button">Duplicar</button>
+          <button class="rounded-md px-2 py-1 text-[10px] font-medium text-red-500 hover:bg-red-500/10 transition-colors" type="button">Archivar</button>
+        </div>
+      </div>
+    ))}
+  </div>
+</Card>

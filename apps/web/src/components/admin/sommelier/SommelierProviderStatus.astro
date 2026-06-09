@@ -1,0 +1,32 @@
+---
+import type { ProviderStatusItem } from '../../../types/admin';
+import Card from '../../ui/Card.astro';
+import Badge from '../../ui/Badge.astro';
+
+export interface Props {
+  items: ProviderStatusItem[];
+}
+const { items } = Astro.props;
+
+const statusBadgeVariant: Record<string, 'success' | 'warning' | 'default'> = {
+  emerald: 'success',
+  amber: 'warning',
+  indigo: 'default',
+};
+---
+
+<Card>
+  <h3 class="text-base font-semibold">Estado de proveedores</h3>
+  <p class="mt-1 text-xs text-muted dark:text-muted-dark">Providers disponibles para el Sommelier.</p>
+  <div class="mt-4 space-y-3">
+    {items.map((item) => (
+      <div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-surface/50 p-3 dark:border-border-dark dark:bg-surface-dark/50">
+        <div class="min-w-0 flex-1">
+          <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100">{item.name}</p>
+          <p class="text-xs text-muted dark:text-muted-dark">{item.description}</p>
+        </div>
+        <Badge variant={statusBadgeVariant[item.statusColor] || 'default'}>{item.status}</Badge>
+      </div>
+    ))}
+  </div>
+</Card>

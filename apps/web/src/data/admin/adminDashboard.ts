@@ -265,6 +265,6 @@ export const adminRoadmapData: AdminRoadmapItem[] = [
   { phase: "Placeholder", status: "completed" },
   { phase: "Real Dashboard Mock", status: "active" },
   { phase: "Content Manager", status: "active" },
-  { phase: "Sommelier Governance", status: "pending" },
+  { phase: "Sommelier Governance Mock", status: "active" },
   { phase: "Marketplace Integration", status: "pending" },
 ];

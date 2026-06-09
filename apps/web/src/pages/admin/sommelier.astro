@@ -1,0 +1,95 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import SommelierHero from '../../components/admin/sommelier/SommelierHero.astro';
+import SommelierKpiStrip from '../../components/admin/sommelier/SommelierKpiStrip.astro';
+import SommelierPromptTemplates from '../../components/admin/sommelier/SommelierPromptTemplates.astro';
+import SommelierInteractions from '../../components/admin/sommelier/SommelierInteractions.astro';
+import SommelierProviderStatus from '../../components/admin/sommelier/SommelierProviderStatus.astro';
+import SommelierWarnings from '../../components/admin/sommelier/SommelierWarnings.astro';
+import SommelierBlockedProducts from '../../components/admin/sommelier/SommelierBlockedProducts.astro';
+import SommelierGuardrails from '../../components/admin/sommelier/SommelierGuardrails.astro';
+import SommelierQuickActions from '../../components/admin/sommelier/SommelierQuickActions.astro';
+import SommelierLabNotice from '../../components/admin/sommelier/SommelierLabNotice.astro';
+import {
+  sommelierKpis,
+  promptTemplates,
+  recentInteractions,
+  providerStatusItems,
+  warningDistribution,
+  blockedProducts,
+  guardrailsConfig,
+} from '../../data/admin/sommelierGovernance';
+---
+
+<Layout
+  title="Sommelier Governance — Supervisión AI mock | LabrazaHome Labs"
+  description="Panel de supervisión y configuración mock del Sommelier AI. Prompts, proveedores, bloqueos y guardrails."
+  canonical="/admin/sommelier/"
+>
+  <Section background="muted" class="pb-0">
+    <Container>
+      <div class="mb-4">
+        <a
+          href="/admin"
+          class="inline-flex items-center gap-1 text-xs font-medium text-muted transition hover:text-primary"
+        >
+          ← Volver al dashboard
+        </a>
+      </div>
+      <SommelierLabNotice />
+      <div class="mt-4">
+        <SommelierHero />
+      </div>
+    </Container>
+  </Section>
+
+  <Section class="pt-6">
+    <Container>
+      <SommelierKpiStrip kpis={sommelierKpis} />
+    </Container>
+  </Section>
+
+  <Section background="muted">
+    <Container>
+      <div class="grid gap-6 lg:grid-cols-3">
+        <div class="lg:col-span-2 space-y-6">
+          <SommelierPromptTemplates templates={promptTemplates} />
+          <SommelierInteractions interactions={recentInteractions} />
+        </div>
+        <div class="space-y-6">
+          <SommelierProviderStatus items={providerStatusItems} />
+          <SommelierWarnings warnings={warningDistribution} />
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section>
+    <Container>
+      <div class="grid gap-6 lg:grid-cols-3">
+        <div class="lg:col-span-2 space-y-6">
+          <SommelierBlockedProducts products={blockedProducts} />
+          <SommelierGuardrails config={guardrailsConfig} />
+        </div>
+        <div class="space-y-6">
+          <SommelierQuickActions />
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section background="muted">
+    <Container>
+      <div class="flex justify-center">
+        <a
+          href="/admin"
+          class="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-5 py-3 text-sm font-medium transition hover:shadow-md dark:border-border-dark dark:bg-card-dark"
+        >
+          ← Volver al dashboard principal
+        </a>
+      </div>
+    </Container>
+  </Section>
+</Layout>

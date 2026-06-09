@@ -6,19 +6,19 @@ Convertir /admin desde placeholder avanzado a primer dashboard operativo mock de
 
 ## Componentes creados (11)
 
-| Componente | Archivo | Propósito |
-|---|---|---|
-| AdminDashboardHero | `components/admin/AdminDashboardHero.astro` | Hero con badges (Mock Dashboard, Lab Mode, Sin datos reales, Impeccable Gate) |
-| AdminKpiStrip | `components/admin/AdminKpiStrip.astro` | 6 KPIs operativos usando MetricCard |
-| AdminOperationalOverview | `components/admin/AdminOperationalOverview.astro` | Layout dashboard 3 columnas (main + sidebar) |
-| AdminCatalogReview | `components/admin/AdminCatalogReview.astro` | Revisión de catálogo con 6 productos y estados |
-| AdminB2BPipeline | `components/admin/AdminB2BPipeline.astro` | Pipeline B2B: solicitudes, selecciones, documentos, actividad |
-| AdminSommelierGovernance | `components/admin/AdminSommelierGovernance.astro` | Métricas de supervisión del Sommelier |
-| AdminIntegrationsStatus | `components/admin/AdminIntegrationsStatus.astro` | Estado de 6 integraciones del ecosistema |
-| AdminAlerts | `components/admin/AdminAlerts.astro` | 5 alertas mock no alarmistas |
-| AdminRecentActivity | `components/admin/AdminRecentActivity.astro` | Timeline con 6 eventos recientes |
-| AdminRoadmap | `components/admin/AdminRoadmap.astro` | Progreso del Backoffice (6 fases) |
-| AdminLabNotice | `components/admin/AdminLabNotice.astro` | Aviso: "Modo laboratorio. No contiene datos reales" |
+| Componente               | Archivo                                           | Propósito                                                                     |
+| ------------------------ | ------------------------------------------------- | ----------------------------------------------------------------------------- |
+| AdminDashboardHero       | `components/admin/AdminDashboardHero.astro`       | Hero con badges (Mock Dashboard, Lab Mode, Sin datos reales, Impeccable Gate) |
+| AdminKpiStrip            | `components/admin/AdminKpiStrip.astro`            | 6 KPIs operativos usando MetricCard                                           |
+| AdminOperationalOverview | `components/admin/AdminOperationalOverview.astro` | Layout dashboard 3 columnas (main + sidebar)                                  |
+| AdminCatalogReview       | `components/admin/AdminCatalogReview.astro`       | Revisión de catálogo con 6 productos y estados                                |
+| AdminB2BPipeline         | `components/admin/AdminB2BPipeline.astro`         | Pipeline B2B: solicitudes, selecciones, documentos, actividad                 |
+| AdminSommelierGovernance | `components/admin/AdminSommelierGovernance.astro` | Métricas de supervisión del Sommelier                                         |
+| AdminIntegrationsStatus  | `components/admin/AdminIntegrationsStatus.astro`  | Estado de 6 integraciones del ecosistema                                      |
+| AdminAlerts              | `components/admin/AdminAlerts.astro`              | 5 alertas mock no alarmistas                                                  |
+| AdminRecentActivity      | `components/admin/AdminRecentActivity.astro`      | Timeline con 6 eventos recientes                                              |
+| AdminRoadmap             | `components/admin/AdminRoadmap.astro`             | Progreso del Backoffice (6 fases)                                             |
+| AdminLabNotice           | `components/admin/AdminLabNotice.astro`           | Aviso: "Modo laboratorio. No contiene datos reales"                           |
 
 ## Datos mock creados
 

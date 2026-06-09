@@ -1,0 +1,39 @@
+---
+import type { SommelierInteraction } from '../../../types/admin';
+import Card from '../../ui/Card.astro';
+
+export interface Props {
+  interactions: SommelierInteraction[];
+}
+const { interactions } = Astro.props;
+
+const ratingIcon: Record<string, string> = {
+  helpful: '👍',
+  unhelpful: '👎',
+  flagged: '🚩',
+};
+---
+
+<Card>
+  <h3 class="text-base font-semibold">Interacciones recientes</h3>
+  <p class="mt-1 text-xs text-muted dark:text-muted-dark">Últimas consultas al Sommelier con valoración y confianza.</p>
+  <div class="mt-4 space-y-3">
+    {interactions.map((item) => (
+      <div class="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border bg-surface/50 p-3 dark:border-border-dark dark:bg-surface-dark/50">
+        <div class="min-w-0 flex-1">
+          <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">{item.query}</p>
+          <div class="mt-0.5 flex items-center gap-2">
+            <span class="rounded-full border border-border px-1.5 py-0.5 text-[10px] font-medium text-muted dark:border-border-dark">{item.profile}</span>
+            <span class="text-xs text-muted dark:text-muted-dark">{item.time}</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-mono text-muted dark:text-muted-dark">{(item.confidence * 100).toFixed(0)}%</span>
+          {item.userRating && (
+            <span class="text-sm" title={item.userRating}>{ratingIcon[item.userRating]}</span>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</Card>

@@ -1,0 +1,25 @@
+---
+import type { GuardrailsConfig } from '../../../types/admin';
+import Card from '../../ui/Card.astro';
+
+export interface Props {
+  config: GuardrailsConfig[];
+}
+const { config } = Astro.props;
+---
+
+<Card>
+  <h3 class="text-base font-semibold">Guardrails de seguridad</h3>
+  <p class="mt-1 text-xs text-muted dark:text-muted-dark">Límites y protecciones activas en el Sommelier.</p>
+  <div class="mt-4 grid gap-3 sm:grid-cols-2">
+    {config.map((item) => (
+      <div class="rounded-lg border border-border bg-surface/50 p-3 dark:border-border-dark dark:bg-surface-dark/50">
+        <div class="flex items-center gap-2">
+          <span class="text-sm">{item.icon}</span>
+          <span class="text-xs text-muted dark:text-muted-dark">{item.label}</span>
+        </div>
+        <p class="mt-1 text-sm font-medium text-zinc-900 dark:text-zinc-100">{item.value}</p>
+      </div>
+    ))}
+  </div>
+</Card>
