@@ -7,19 +7,15 @@ import Badge from '../../components/ui/Badge.astro';
 import B2BDashboardHero from '../../components/b2b/B2BDashboardHero.astro';
 import B2BKpiStrip from '../../components/b2b/B2BKpiStrip.astro';
 import B2BProfileSelector from '../../components/b2b/B2BProfileSelector.astro';
-import B2BProductCard from '../../components/b2b/B2BProductCard.astro';
-import B2BSelectionTable from '../../components/b2b/B2BSelectionTable.astro';
-import B2BQuoteSummary from '../../components/b2b/B2BQuoteSummary.astro';
 import B2BSommelierHints from '../../components/b2b/B2BSommelierHints.astro';
 import B2BDocumentCards from '../../components/b2b/B2BDocumentCards.astro';
 import B2BActivityFeed from '../../components/b2b/B2BActivityFeed.astro';
+import B2BSelectionManager from '../../components/b2b/B2BSelectionManager';
 
 import {
   b2bKpis,
   professionalProfiles,
   recommendedProducts,
-  currentSelection,
-  quoteSummary,
   documents,
   recentActivity,
   sommelierHints,
@@ -60,7 +56,7 @@ import {
     <Container>
       <div class="grid gap-6 lg:grid-cols-3">
 
-        <!-- COLUMNA IZQUIERDA: Resumen cuenta + Actividad -->
+        <!-- COLUMNA IZQUIERDA (2/3): Resumen cuenta + Actividad + Catálogo/Selección interactivo -->
         <div class="space-y-6 lg:col-span-2">
           <!-- Resumen cuenta mock -->
           <Card variant="default">
@@ -83,20 +79,12 @@ import {
             <B2BActivityFeed activities={recentActivity} />
           </Card>
 
-          <!-- Catálogo profesional -->
-          <B2BProductCard products={recommendedProducts} />
+          <!-- Catálogo + Selección interactivo (React) -->
+          <B2BSelectionManager products={recommendedProducts} client:load />
         </div>
 
-        <!-- COLUMNA DERECHA: Selección + Sommelier + Documentos -->
+        <!-- COLUMNA DERECHA (1/3): Sommelier + Documentos -->
         <div class="space-y-6">
-          <!-- Selección actual -->
-          <Card variant="default">
-            <B2BSelectionTable items={currentSelection} />
-          </Card>
-
-          <!-- Solicitud presupuesto -->
-          <B2BQuoteSummary summary={quoteSummary} />
-
           <!-- Sommelier B2B -->
           <Card variant="default">
             <B2BSommelierHints hints={sommelierHints} />

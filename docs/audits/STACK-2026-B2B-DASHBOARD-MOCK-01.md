@@ -8,23 +8,23 @@ Convertir `/b2b` de placeholder informativo avanzado a **primer dashboard mock p
 
 ### Archivos Creados
 
-| Archivo | Descripción |
-|---|---|
-| `apps/web/src/data/b2b/mockDashboard.ts` | Datos mock: KPIs, perfiles, productos, selección, presupuesto, documentos, actividad |
-| `apps/web/src/components/b2b/B2BDashboardHero.astro` | Hero con badges laboratorio |
-| `apps/web/src/components/b2b/B2BKpiStrip.astro` | 6 KPIs mock (128 productos, 6 selecciones, 12 presupuestos, etc.) |
-| `apps/web/src/components/b2b/B2BProfileSelector.astro` | 5 perfiles profesionales (Restaurante, Tienda, Distribuidor, Hotel, Empresa) |
-| `apps/web/src/components/b2b/B2BProductCard.astro` | 6 productos del catálogo con MOQ mock y CTA |
-| `apps/web/src/components/b2b/B2BSelectionTable.astro` | Tabla de selección actual (4 items) |
-| `apps/web/src/components/b2b/B2BQuoteSummary.astro` | Resumen de solicitud de presupuesto |
-| `apps/web/src/components/b2b/B2BActivityFeed.astro` | Feed de actividad reciente (4 eventos) |
-| `apps/web/src/components/b2b/B2BSommelierHints.astro` | 3 recomendaciones profesionales Sommelier |
-| `apps/web/src/components/b2b/B2BDocumentCards.astro` | 4 documentos mock (ficha técnica, PDF futuro, argumentario, maridajes) |
+| Archivo                                                | Descripción                                                                          |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `apps/web/src/data/b2b/mockDashboard.ts`               | Datos mock: KPIs, perfiles, productos, selección, presupuesto, documentos, actividad |
+| `apps/web/src/components/b2b/B2BDashboardHero.astro`   | Hero con badges laboratorio                                                          |
+| `apps/web/src/components/b2b/B2BKpiStrip.astro`        | 6 KPIs mock (128 productos, 6 selecciones, 12 presupuestos, etc.)                    |
+| `apps/web/src/components/b2b/B2BProfileSelector.astro` | 5 perfiles profesionales (Restaurante, Tienda, Distribuidor, Hotel, Empresa)         |
+| `apps/web/src/components/b2b/B2BProductCard.astro`     | 6 productos del catálogo con MOQ mock y CTA                                          |
+| `apps/web/src/components/b2b/B2BSelectionTable.astro`  | Tabla de selección actual (4 items)                                                  |
+| `apps/web/src/components/b2b/B2BQuoteSummary.astro`    | Resumen de solicitud de presupuesto                                                  |
+| `apps/web/src/components/b2b/B2BActivityFeed.astro`    | Feed de actividad reciente (4 eventos)                                               |
+| `apps/web/src/components/b2b/B2BSommelierHints.astro`  | 3 recomendaciones profesionales Sommelier                                            |
+| `apps/web/src/components/b2b/B2BDocumentCards.astro`   | 4 documentos mock (ficha técnica, PDF futuro, argumentario, maridajes)               |
 
 ### Archivos Modificados
 
-| Archivo | Cambio |
-|---|---|
+| Archivo                              | Cambio                                                       |
+| ------------------------------------ | ------------------------------------------------------------ |
 | `apps/web/src/pages/b2b/index.astro` | Reescrito: de placeholder informativo a dashboard 3 columnas |
 
 ### Secciones del Dashboard
@@ -39,14 +39,14 @@ Convertir `/b2b` de placeholder informativo avanzado a **primer dashboard mock p
 
 ### KPIs Mock
 
-| KPI | Valor | Descripción |
-|---|---|---|
-| Productos profesionales | 128 | Catálogo completo con capa B2B |
-| Selecciones activas | 6 | Listas guardadas por clientes mock |
-| Presupuestos simulados | 12 | Solicitudes de presupuesto de prueba |
-| Recompras previstas | 4 | Pedidos recurrentes planificados |
-| Fichas descargables | 38 | Documentos técnicos disponibles |
-| Sommelier B2B | Activo Mock | Recomendaciones profesionales simuladas |
+| KPI                     | Valor       | Descripción                             |
+| ----------------------- | ----------- | --------------------------------------- |
+| Productos profesionales | 128         | Catálogo completo con capa B2B          |
+| Selecciones activas     | 6           | Listas guardadas por clientes mock      |
+| Presupuestos simulados  | 12          | Solicitudes de presupuesto de prueba    |
+| Recompras previstas     | 4           | Pedidos recurrentes planificados        |
+| Fichas descargables     | 38          | Documentos técnicos disponibles         |
+| Sommelier B2B           | Activo Mock | Recomendaciones profesionales simuladas |
 
 ### Datos Mock
 
