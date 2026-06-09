@@ -1,0 +1,25 @@
+---
+import type { ContentPipelineStage } from '../../../types/admin';
+
+export interface Props {
+  stages: ContentPipelineStage[];
+}
+const { stages } = Astro.props;
+---
+
+<div class="rounded-xl border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark">
+  <h3 class="text-base font-semibold">Content Pipeline</h3>
+  <p class="mt-1 text-xs text-muted dark:text-muted-dark">Estado editorial de los productos del catálogo.</p>
+  <div class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+    {stages.map((stage) => (
+      <div class="rounded-lg border border-border bg-surface/50 p-3 dark:border-border-dark dark:bg-surface-dark/50">
+        <div class="flex items-center justify-between gap-2">
+          <span class={`h-2.5 w-2.5 shrink-0 rounded-full ${stage.color}`} />
+          <span class="text-lg font-bold text-zinc-900 dark:text-zinc-100">{stage.count}</span>
+        </div>
+        <p class="mt-1 text-sm font-medium text-zinc-900 dark:text-zinc-100">{stage.stage}</p>
+        <p class="mt-0.5 text-xs text-muted dark:text-muted-dark line-clamp-2">{stage.products.slice(0, 3).join(", ")}{stage.products.length > 3 ? "..." : ""}</p>
+      </div>
+    ))}
+  </div>
+</div>

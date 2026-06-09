@@ -34,7 +34,7 @@ FASE 4 — PORTAL B2B v2
       ✅ Vercel smoke PASS (Dashboard, Quote Flow, Workspace, Document Center)
 
 FASE 5 — BACKOFFICE ADMIN v2
-  🟢 Real Dashboard Mock
+  🟢 Real Dashboard + Content Manager Mock
       ✅ Arquitectura completa
       ✅ 8 perfiles definidos
       ✅ 20 módulos diseñados
@@ -44,6 +44,11 @@ FASE 5 — BACKOFFICE ADMIN v2
       ✅ 11 componentes admin (hero, kpis, overview, catálogo, pipeline, governance, integraciones, alertas, actividad, roadmap, lab notice)
       ✅ Operational overview con layout dashboard (main + sidebar) responsive
       ✅ Navegación /admin funcional con dashboard real
+      ✅ Ruta /admin/contenido con Content Manager mock
+      ✅ Content pipeline con 6 estados editoriales
+      ✅ Product review board interactivo con selección y detalle
+      ✅ Checklist editorial, SEO preview, Sommelier readiness, B2B readiness
+      ✅ 6 KPIs de contenido (revisados, pendientes, fichas, imágenes, SEO, B2B)
 
 FASE 6 — IA REAL
   🟡 LM Studio preparado
@@ -97,8 +102,8 @@ Backoffice Admin v2 ────────────────────
 1. Completar Dashboard B2B con datos mock (✅ completado)
 2. Completar flujo de selección y presupuesto B2B (✅ completado)
 3. Customer Workspace + Document Center mock (✅ completado)
-4. Backoffice Real Dashboard Mock (✅ completado)
-5. Content Manager mock en Backoffice
+4. Backoffice Real Dashboard + Content Manager Mock (✅ completado)
+5. Sommelier Governance mock en Backoffice
 6. Evaluar modelos ≥7B params para IA real en Sommelier
 7. Integración controlada con Rioja Marketplace
 
@@ -111,6 +116,7 @@ Backoffice Admin v2 ────────────────────
 | Customer Workspace + Document Center | F4   | ✅ Completado          |
 | Vercel smoke B2B completo            | F4   | ✅ Completado          |
 | Backoffice Real Dashboard Mock       | F5   | ✅ Completado          |
-| Content Manager mock                 | F5   | Backoffice Dashboard   |
+| Content Manager mock                 | F5   | ✅ Completado          |
+| Sommelier Governance mock            | F5   | Content Manager        |
 | IA real en Sommelier                 | F6   | LM Studio ≥7B / AI-LAB |
 | Integración Rioja Marketplace        | F7   | F4+F5+F6 completo      |

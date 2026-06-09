@@ -906,7 +906,19 @@ Rioja Marketplace (producción)
 - 11 componentes Astro reutilizables
 - Layout responsive 3/2/1 columnas
 
-### Fase 3 — Gestión de catálogo
+### Fase 4 — Content Manager Mock (completada)
+
+- Ruta /admin/contenido con gestor editorial mock
+- Content pipeline con 6 estados (Draft, En revisión, Necesita media, SEO pendiente, Listo B2B, Publicado)
+- Product review board interactivo con cards y detalle expandible
+- Checklist editorial con 12 campos y progreso
+- SEO preview panel con title, meta, slug, canonical
+- Sommelier readiness con 5 indicadores
+- B2B readiness con 5 indicadores
+- 6 KPIs de contenido mock
+- 4 componentes Astro + 6 React (interactivos)
+
+### Fase 5 — Gestión de catálogo (pendiente)
 
 - CRUD de productos (mock)
 - Estados y workflow
@@ -914,20 +926,20 @@ Rioja Marketplace (producción)
 - Fichas técnicas
 - Media upload
 
-### Fase 4 — Gestión B2B
+### Fase 6 — Gestión B2B (pendiente)
 
 - Cuentas B2B
 - Presupuestos
 - Condiciones comerciales
 - MOQ
 
-### Fase 5 — Sommelier governance + Documentos
+### Fase 7 — Sommelier governance + Documentos (pendiente)
 
 - Editor de prompts
 - Supervisión de respuestas
 - Gestión documental
 
-### Fase 6 — Integraciones + Analytics
+### Fase 8 — Integraciones + Analytics (pendiente)
 
 - Dashboard ejecutivo con KPIs reales
 - Integración con Rioja Marketplace (read-only)

@@ -1,0 +1,75 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Section from '../../components/ui/Section.astro';
+import Container from '../../components/ui/Container.astro';
+import ContentManagerHero from '../../components/admin/content/ContentManagerHero.astro';
+import ContentKpiStrip from '../../components/admin/content/ContentKpiStrip.astro';
+import ContentPipeline from '../../components/admin/content/ContentPipeline.astro';
+import ContentLabNotice from '../../components/admin/content/ContentLabNotice.astro';
+import ContentReviewBoard from '../../components/admin/content/ContentReviewBoard';
+import {
+  contentKpis,
+  contentPipeline,
+  contentReviewProducts,
+} from '../../data/admin/contentManager';
+---
+
+<Layout
+  title="Content Manager — Gestión editorial mock | LabrazaHome Labs"
+  description="Gestión editorial mock para catálogo, storytelling, SEO y preparación B2B del Backoffice Admin v2."
+  canonical="/admin/contenido/"
+>
+  <Section background="muted" class="pb-0">
+    <Container>
+      <div class="mb-4">
+        <a
+          href="/admin"
+          class="inline-flex items-center gap-1 text-xs font-medium text-muted transition hover:text-primary"
+        >
+          ← Volver al dashboard
+        </a>
+      </div>
+      <ContentLabNotice />
+      <div class="mt-4">
+        <ContentManagerHero />
+      </div>
+    </Container>
+  </Section>
+
+  <Section class="pt-6">
+    <Container>
+      <ContentKpiStrip kpis={contentKpis} />
+    </Container>
+  </Section>
+
+  <Section background="muted">
+    <Container>
+      <ContentPipeline stages={contentPipeline} />
+    </Container>
+  </Section>
+
+  <Section>
+    <Container>
+      <h2 class="text-lg font-semibold">Product Review Board</h2>
+      <p class="mt-1 text-xs text-muted dark:text-muted-dark">
+        Selecciona un producto para ver su detalle editorial completo.
+      </p>
+      <div class="mt-4">
+        <ContentReviewBoard products={contentReviewProducts} client:load />
+      </div>
+    </Container>
+  </Section>
+
+  <Section background="muted">
+    <Container>
+      <div class="flex justify-center">
+        <a
+          href="/admin"
+          class="inline-flex items-center gap-2 rounded-lg border border-border bg-card px-5 py-3 text-sm font-medium transition hover:shadow-md dark:border-border-dark dark:bg-card-dark"
+        >
+          ← Volver al dashboard principal
+        </a>
+      </div>
+    </Container>
+  </Section>
+</Layout>

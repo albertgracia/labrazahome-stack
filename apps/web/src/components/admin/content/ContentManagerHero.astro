@@ -1,0 +1,19 @@
+---
+import Badge from '../../ui/Badge.astro';
+---
+
+<div class="relative overflow-hidden rounded-2xl border border-border bg-gradient-to-br from-card to-card/80 p-8 dark:border-border-dark dark:from-card-dark dark:to-card-dark/80">
+  <div class="absolute right-0 top-0 h-64 w-64 translate-x-16 -translate-y-16 rounded-full bg-primary/[0.03] blur-3xl" />
+  <div class="relative">
+    <div class="flex flex-wrap items-center gap-2">
+      <Badge variant="warning">Mock Tool</Badge>
+      <Badge variant="warning">Lab Mode</Badge>
+      <span class="inline-flex items-center rounded-full border border-amber-500/20 bg-amber-500/5 px-2.5 py-0.5 text-xs font-medium text-amber-400">Sin datos reales</span>
+      <span class="inline-flex items-center rounded-full border border-indigo-500/20 bg-indigo-500/5 px-2.5 py-0.5 text-xs font-medium text-indigo-400">Impeccable Gate</span>
+    </div>
+    <h1 class="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">Content Manager</h1>
+    <p class="mt-2 max-w-2xl text-sm text-muted dark:text-muted-dark">
+      Gestión editorial mock para catálogo, storytelling, SEO y preparación B2B.
+    </p>
+  </div>
+</div>
