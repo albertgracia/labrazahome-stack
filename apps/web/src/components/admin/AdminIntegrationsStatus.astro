@@ -1,0 +1,35 @@
+---
+import type { IntegrationStatusItem } from '../../types/admin';
+import Card from '../ui/Card.astro';
+
+export interface Props {
+  items: IntegrationStatusItem[];
+}
+const { items } = Astro.props;
+
+const statusColors: Record<string, string> = {
+  emerald: 'border-emerald-500/20 bg-emerald-500/5 text-emerald-400',
+  amber: 'border-amber-500/20 bg-amber-500/5 text-amber-400',
+  indigo: 'border-indigo-500/20 bg-indigo-500/5 text-indigo-400',
+  zinc: 'border-zinc-500/20 bg-zinc-500/5 text-zinc-400',
+};
+---
+
+<Card>
+  <h3 class="text-base font-semibold">Estado de integraciones</h3>
+  <p class="mt-1 text-xs text-muted dark:text-muted-dark">Conexiones del ecosistema y su estado actual en el laboratorio.</p>
+  <div class="mt-4 space-y-3">
+    {items.map((item) => (
+      <div class="flex items-start gap-3">
+        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm">{item.icon}</span>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2">
+            <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100">{item.name}</p>
+            <span class={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-medium ${statusColors[item.statusColor] || statusColors.zinc}`}>{item.status}</span>
+          </div>
+          <p class="mt-0.5 text-xs text-muted dark:text-muted-dark">{item.description}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</Card>

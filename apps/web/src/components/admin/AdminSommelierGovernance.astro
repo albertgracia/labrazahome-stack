@@ -1,0 +1,37 @@
+---
+import type { SommelierGovernanceMetric } from '../../types/admin';
+import Card from '../ui/Card.astro';
+import Badge from '../ui/Badge.astro';
+
+export interface Props {
+  metrics: SommelierGovernanceMetric[];
+}
+const { metrics } = Astro.props;
+---
+
+<Card>
+  <div class="flex items-center justify-between gap-3">
+    <div>
+      <h3 class="text-base font-semibold">Sommelier Governance</h3>
+      <p class="mt-1 text-xs text-muted dark:text-muted-dark">Métricas de supervisión del asistente AI.</p>
+    </div>
+    <Badge variant="warning">Provider: Mock</Badge>
+  </div>
+  <div class="mt-4 grid gap-3 sm:grid-cols-2">
+    {metrics.map((metric) => (
+      <div class="rounded-lg border border-border bg-surface/50 p-3 dark:border-border-dark dark:bg-surface-dark/50">
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-muted dark:text-muted-dark">{metric.label}</span>
+          <span class="text-sm">{metric.icon}</span>
+        </div>
+        <p class="mt-1 text-lg font-bold text-zinc-900 dark:text-zinc-100">{metric.value}</p>
+        <p class="mt-0.5 text-xs text-muted dark:text-muted-dark">{metric.trend}</p>
+      </div>
+    ))}
+  </div>
+  <div class="mt-4 flex flex-wrap gap-2 border-t border-border pt-4 dark:border-border-dark">
+    <button class="rounded-md px-3 py-1.5 text-xs font-medium text-primary hover:bg-primary/10 transition-colors" type="button">Revisar prompt</button>
+    <button class="rounded-md px-3 py-1.5 text-xs font-medium text-primary hover:bg-primary/10 transition-colors" type="button">Revisar recomendación</button>
+    <button class="rounded-md px-3 py-1.5 text-xs font-medium text-primary hover:bg-primary/10 transition-colors" type="button">Validar catálogo</button>
+  </div>
+</Card>

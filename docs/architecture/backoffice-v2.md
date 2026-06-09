@@ -893,6 +893,19 @@ Rioja Marketplace (producción)
 - Enlace en navegación global
 - KPIs mock en dashboard
 
+### Fase 3 — Real Dashboard Mock (completada)
+
+- Dashboard operativo con 6 KPIs mock
+- Revisión de catálogo con 6 productos y estados
+- Pipeline B2B con 4 métricas
+- Sommelier governance con 4 indicadores
+- Estado de 6 integraciones del ecosistema
+- 5 alertas no alarmistas
+- Timeline de actividad reciente
+- Roadmap interno del Backoffice
+- 11 componentes Astro reutilizables
+- Layout responsive 3/2/1 columnas
+
 ### Fase 3 — Gestión de catálogo
 
 - CRUD de productos (mock)

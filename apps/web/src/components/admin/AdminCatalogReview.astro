@@ -1,0 +1,42 @@
+---
+import type { CatalogReviewItem } from '../../types/admin';
+import Card from '../ui/Card.astro';
+import Badge from '../ui/Badge.astro';
+
+export interface Props {
+  items: CatalogReviewItem[];
+}
+const { items } = Astro.props;
+
+const statusBadgeVariant = {
+  emerald: 'success' as const,
+  amber: 'warning' as const,
+  red: 'warning' as const,
+  indigo: 'default' as const,
+};
+---
+
+<Card>
+  <h3 class="text-base font-semibold">Revisión de catálogo</h3>
+  <p class="mt-1 text-xs text-muted dark:text-muted-dark">Productos y su estado actual en el flujo de publicación.</p>
+  <div class="mt-4 space-y-3">
+    {items.map((item) => (
+      <div class="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border bg-surface/50 p-3 dark:border-border-dark dark:bg-surface-dark/50">
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-medium text-muted dark:text-muted-dark">{item.category}</span>
+          </div>
+          <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100">{item.name}</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <Badge variant={statusBadgeVariant[item.statusColor] || 'default'}>{item.status}</Badge>
+          <div class="hidden sm:flex items-center gap-2">
+            {item.actions.map((action) => (
+              <button class="rounded-md px-2.5 py-1 text-xs font-medium text-primary hover:bg-primary/10 transition-colors" type="button">{action}</button>
+            ))}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</Card>

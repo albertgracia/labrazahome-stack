@@ -1,0 +1,30 @@
+---
+import type { AdminActivityItem } from '../../types/admin';
+
+export interface Props {
+  items: AdminActivityItem[];
+}
+const { items } = Astro.props;
+---
+
+<div class="rounded-xl border border-border bg-card p-6 dark:border-border-dark dark:bg-card-dark">
+  <h3 class="text-base font-semibold">Actividad reciente</h3>
+  <p class="mt-1 text-xs text-muted dark:text-muted-dark">Últimos eventos del laboratorio.</p>
+  <div class="mt-4 space-y-0">
+    <div class="relative">
+      <div class="absolute left-[11px] top-3 h-[calc(100%-24px)] w-0.5 bg-border dark:bg-border-dark" />
+      {items.map((item) => (
+        <div class="relative flex gap-4 pb-5 last:pb-0">
+          <div class="z-10 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-surface bg-card text-xs dark:border-surface-dark dark:bg-card-dark">
+            {item.icon}
+          </div>
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100">{item.action}</p>
+            <p class="text-xs text-muted dark:text-muted-dark">{item.detail}</p>
+          </div>
+          <span class="shrink-0 text-xs text-muted dark:text-muted-dark">{item.time}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

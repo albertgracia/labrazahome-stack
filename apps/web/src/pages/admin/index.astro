@@ -2,260 +2,74 @@
 import Layout from '../../layouts/Layout.astro';
 import Section from '../../components/ui/Section.astro';
 import Container from '../../components/ui/Container.astro';
-import Card from '../../components/ui/Card.astro';
-import MetricCard from '../../components/ui/MetricCard.astro';
-import Badge from '../../components/ui/Badge.astro';
-
-const kpis = [
-  { label: "Productos", value: "128", icon: "📦", trend: "up" as const, trendText: "+12 este mes" },
-  { label: "Cuentas B2B", value: "24", icon: "🏢", trend: "up" as const, trendText: "+3 este mes" },
-  { label: "Presupuestos", value: "12", icon: "📋", trend: "neutral" as const, trendText: "4 pendientes" },
-  { label: "Revisiones Sommelier", value: "8", icon: "🍷", trend: "up" as const, trendText: "+2 esta semana" },
-  { label: "Publicaciones pendientes", value: "5", icon: "📝", trend: "neutral" as const, trendText: "3 productos, 2 docs" },
-  { label: "Integraciones", value: "2", icon: "🔗", trend: "up" as const, trendText: "Activas" },
-];
-
-const modules = [
-  { icon: "📦", title: "Catálogo", desc: "Productos, categorías, fichas técnicas y productores", status: "architecture" as const },
-  { icon: "🏢", title: "B2B", desc: "Cuentas, condiciones, presupuestos y MOQ", status: "architecture" as const },
-  { icon: "🍷", title: "Sommelier AI", desc: "Prompts, supervisión, tono y bloqueo de productos", status: "architecture" as const },
-  { icon: "📊", title: "Analytics", desc: "KPIs, métricas de producto y rendimiento B2B", status: "planned" as const },
-  { icon: "📄", title: "Documentos", desc: "Fichas técnicas, comerciales y certificaciones", status: "planned" as const },
-  { icon: "🔗", title: "Integraciones", desc: "Conexiones con Rioja Marketplace y sistemas externos", status: "future" as const },
-  { icon: "👥", title: "Usuarios", desc: "Gestión de administradores y perfiles internos", status: "planned" as const },
-  { icon: "🔐", title: "Roles", desc: "RBAC, permisos granulares y asignación de roles", status: "architecture" as const },
-  { icon: "🔍", title: "SEO", desc: "Optimización de productos y categorías para buscadores", status: "planned" as const },
-  { icon: "🖼️", title: "Media", desc: "Gestor de imágenes, hero, galería y fichas técnicas", status: "future" as const },
-];
-
-const profiles = [
-  { title: "Super Admin", desc: "Control total del sistema, configuración global e integraciones", level: "total" as const },
-  { title: "Admin Comercial", desc: "Cuentas B2B, condiciones comerciales y presupuestos", level: "alto" as const },
-  { title: "Gestor Catálogo", desc: "Productos, categorías, fichas técnicas y media", level: "alto" as const },
-  { title: "Gestor B2B", desc: "Operativa diaria B2B, MOQ y documentos", level: "medio" as const },
-  { title: "Gestor Contenido", desc: "Storytelling, descripciones y contenido editorial", level: "medio" as const },
-  { title: "Operador Soporte", desc: "Consulta de cuentas y presupuestos en solo lectura", level: "basico" as const },
-  { title: "AI Operator", desc: "Gestión de prompts, supervisión y métricas del Sommelier", level: "alto" as const },
-  { title: "Auditor", desc: "Visibilidad completa del sistema en modo solo lectura", level: "basico" as const },
-];
-
-const workflows = [
-  { step: "1", title: "Producto", items: ["Crear", "Revisar", "Publicar"], color: "indigo" },
-  { step: "2", title: "B2B", items: ["Solicitud", "Condiciones", "Aprobación"], color: "emerald" },
-  { step: "3", title: "Sommelier", items: ["Prompt", "Supervisión", "Activar"], color: "amber" },
-];
-
-const workflowDotColors = {
-  indigo: "bg-indigo-500",
-  emerald: "bg-emerald-500",
-  amber: "bg-amber-500",
-};
-
-const workflowLineColors = {
-  indigo: "bg-indigo-500/20",
-  emerald: "bg-emerald-500/20",
-  amber: "bg-amber-500/20",
-};
-
-const integrations = [
-  { name: "Catálogo Premium v2", icon: "📦", desc: "Origen operativo del catálogo: creación, edición y publicación de productos con workflow completo.", status: "Activa" as const },
-  { name: "Sommelier AI v2", icon: "🍷", desc: "Edición de prompts, supervisión de respuestas y configuración de tono por perfil.", status: "Activa" as const },
-  { name: "Portal B2B v2", icon: "🏢", desc: "Gestión de cuentas, condiciones comerciales, presupuestos y reglas MOQ.", status: "Activa" as const },
-  { name: "Rioja Marketplace", icon: "🏠", desc: "Integración futura controlada: read-only inicial con runbook obligatorio.", status: "Futura" as const },
-];
-
-const moduleStatusLabel = {
-  architecture: { label: "Arquitectura", class: "text-indigo-400 border-indigo-500/20 bg-indigo-500/5" },
-  planned: { label: "Planificado", class: "text-amber-400 border-amber-500/20 bg-amber-500/5" },
-  future: { label: "Futuro", class: "text-zinc-500 border-zinc-500/20 bg-zinc-500/5" },
-};
-
-const levelColors = {
-  total: "text-purple-400",
-  alto: "text-indigo-400",
-  medio: "text-amber-400",
-  basico: "text-zinc-400",
-};
-
-const roadmapItems = [
-  { label: "Arquitectura", done: true },
-  { label: "Placeholder", done: true },
-  { label: "Implementación", done: false },
-  { label: "Producción", done: false },
-];
+import AdminDashboardHero from '../../components/admin/AdminDashboardHero.astro';
+import AdminKpiStrip from '../../components/admin/AdminKpiStrip.astro';
+import AdminOperationalOverview from '../../components/admin/AdminOperationalOverview.astro';
+import AdminCatalogReview from '../../components/admin/AdminCatalogReview.astro';
+import AdminB2BPipeline from '../../components/admin/AdminB2BPipeline.astro';
+import AdminSommelierGovernance from '../../components/admin/AdminSommelierGovernance.astro';
+import AdminIntegrationsStatus from '../../components/admin/AdminIntegrationsStatus.astro';
+import AdminAlerts from '../../components/admin/AdminAlerts.astro';
+import AdminRecentActivity from '../../components/admin/AdminRecentActivity.astro';
+import AdminRoadmap from '../../components/admin/AdminRoadmap.astro';
+import AdminLabNotice from '../../components/admin/AdminLabNotice.astro';
+import {
+  adminKpis,
+  catalogReviewItems,
+  b2bPipelineItems,
+  sommelierGovernanceMetrics,
+  integrationStatusItems,
+  adminAlerts,
+  adminRecentActivity,
+  adminRoadmapData,
+} from '../../data/admin/adminDashboard';
 ---
 
 <Layout
-  title="Backoffice Admin v2 — Panel de gestión | LabrazaHome Labs"
-  description="Panel de gestión interna del ecosistema LabrazaHome Labs. Centro operativo para administrar el catálogo, cuentas B2B, Sommelier AI e integraciones."
+  title="Backoffice Admin v2 — Dashboard operativo | LabrazaHome Labs"
+  description="Centro operativo mock del Backoffice Admin v2. KPIs, revisión de catálogo, pipeline B2B, governance Sommelier y estado de integraciones."
   canonical="/admin/"
 >
-  <!-- 1. HERO -->
+  <Section background="muted" class="pb-0">
+    <Container>
+      <AdminLabNotice />
+      <div class="mt-4">
+        <AdminDashboardHero />
+      </div>
+    </Container>
+  </Section>
+
+  <Section class="pt-6">
+    <Container>
+      <AdminKpiStrip kpis={adminKpis} />
+    </Container>
+  </Section>
+
   <Section background="muted">
     <Container>
-      <div class="flex flex-wrap items-center gap-3">
-        <Badge variant="warning">Laboratorio</Badge>
-        <Badge variant="success">Arquitectura completada</Badge>
-        <span class="inline-flex items-center rounded-full border border-amber-500/20 bg-amber-500/5 px-2.5 py-0.5 text-xs font-medium text-amber-400">
-          Implementación pendiente
-        </span>
-      </div>
-      <h1 class="mt-6 text-4xl font-bold tracking-tight sm:text-5xl">Backoffice Admin v2</h1>
-      <p class="mt-3 max-w-2xl text-lg text-muted dark:text-muted-dark">
-        Centro operativo de LabrazaHome Labs. Gestiona el catálogo, las cuentas B2B, el Sommelier AI y las integraciones con Rioja Marketplace desde un panel profesional.
-      </p>
-    </Container>
-  </Section>
-
-  <!-- 2. KPI STRIP -->
-  <Section>
-    <Container>
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-        {kpis.map((kpi) => (
-          <MetricCard label={kpi.label} value={kpi.value} icon={kpi.icon} trend={kpi.trend}>
-            <span slot="trend">{kpi.trendText}</span>
-          </MetricCard>
-        ))}
-      </div>
-    </Container>
-  </Section>
-
-  <!-- 3. MÓDULOS -->
-  <Section background="muted">
-    <Container>
-      <div class="mb-8">
-        <h2 class="text-2xl font-bold tracking-tight">Módulos</h2>
-        <p class="mt-1 text-sm text-muted dark:text-muted-dark">20 módulos diseñados en la arquitectura. 10 visibles en esta vista previa.</p>
-      </div>
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {modules.map((mod) => {
-          const s = moduleStatusLabel[mod.status];
-          return (
-            <Card variant="elevated">
-              <div class="flex items-start gap-4">
-                <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-lg">{mod.icon}</span>
-                <div class="min-w-0 flex-1">
-                  <div class="flex items-center justify-between gap-2">
-                    <h3 class="font-semibold">{mod.title}</h3>
-                    <span class={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-medium ${s.class}`}>{s.label}</span>
-                  </div>
-                  <p class="mt-1 text-xs leading-relaxed text-muted dark:text-muted-dark">{mod.desc}</p>
-                </div>
-              </div>
-            </Card>
-          );
-        })}
-      </div>
-    </Container>
-  </Section>
-
-  <!-- 4. WORKFLOWS -->
-  <Section>
-    <Container>
-      <div class="mb-8">
-        <h2 class="text-2xl font-bold tracking-tight">Flujos operativos</h2>
-        <p class="mt-1 text-sm text-muted dark:text-muted-dark">12 flujos documentados en la arquitectura. 3 representados aquí.</p>
-      </div>
-      <div class="grid gap-8 sm:grid-cols-3">
-        {workflows.map((wf) => (
-          <div class="relative">
-            <div class="mb-4 flex items-center gap-3">
-              <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10 text-sm font-bold text-primary">{wf.step}</span>
-              <h3 class="font-semibold">{wf.title}</h3>
-            </div>
-            <div class="relative space-y-0">
-              <div class={`absolute left-[15px] top-3 h-[calc(100%-24px)] w-0.5 ${workflowLineColors[wf.color]}`} />
-              {wf.items.map((item) => (
-                <div class="relative flex items-center gap-4 pb-6 last:pb-0">
-                  <div class={`z-10 h-3 w-3 rounded-full border-2 border-surface ${workflowDotColors[wf.color]} dark:border-surface-dark`} />
-                  <span class="text-sm text-muted dark:text-muted-dark">{item}</span>
-                </div>
-              ))}
-            </div>
+      <AdminOperationalOverview>
+        <div slot="main">
+          <AdminCatalogReview items={catalogReviewItems} />
+          <div class="mt-6">
+            <AdminB2BPipeline items={b2bPipelineItems} />
           </div>
-        ))}
-      </div>
-    </Container>
-  </Section>
-
-  <!-- 5. RBAC -->
-  <Section background="muted">
-    <Container>
-      <div class="mb-8">
-        <h2 class="text-2xl font-bold tracking-tight">Perfiles internos</h2>
-        <p class="mt-1 text-sm text-muted dark:text-muted-dark">8 perfiles definidos con permisos granulares en la arquitectura RBAC.</p>
-      </div>
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {profiles.map((p) => (
-          <Card>
-            <div class="flex items-start justify-between gap-3">
-              <div class="min-w-0 flex-1">
-                <h3 class="font-semibold">{p.title}</h3>
-                <p class="mt-1 text-xs leading-relaxed text-muted dark:text-muted-dark">{p.desc}</p>
-              </div>
-              <span class={`shrink-0 text-[10px] font-medium uppercase tracking-wider ${levelColors[p.level]}`}>{p.level}</span>
-            </div>
-          </Card>
-        ))}
-      </div>
-    </Container>
-  </Section>
-
-  <!-- 6. INTEGRACIONES -->
-  <Section>
-    <Container>
-      <div class="mb-8">
-        <h2 class="text-2xl font-bold tracking-tight">Integraciones</h2>
-        <p class="mt-1 text-sm text-muted dark:text-muted-dark">Relación del backoffice con el resto del ecosistema LabrazaHome Labs.</p>
-      </div>
-      <div class="grid gap-4 sm:grid-cols-2">
-        {integrations.map((int) => (
-          <Card variant={int.status === "Activa" ? "elevated" : "default"}>
-            <div class="flex items-start gap-4">
-              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-lg">{int.icon}</span>
-              <div class="min-w-0 flex-1">
-                <div class="flex items-center justify-between gap-2">
-                  <h3 class="font-semibold">{int.name}</h3>
-                  <span class={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-medium ${
-                    int.status === "Activa"
-                      ? "border-emerald-500/20 bg-emerald-500/5 text-emerald-400"
-                      : "border-zinc-500/20 bg-zinc-500/5 text-zinc-400"
-                  }`}>{int.status}</span>
-                </div>
-                <p class="mt-1 text-xs leading-relaxed text-muted dark:text-muted-dark">{int.desc}</p>
-              </div>
-            </div>
-          </Card>
-        ))}
-      </div>
-    </Container>
-  </Section>
-
-  <!-- 7. ROADMAP -->
-  <Section background="muted">
-    <Container>
-      <div class="mb-8">
-        <h2 class="text-2xl font-bold tracking-tight">Roadmap</h2>
-        <p class="mt-1 text-sm text-muted dark:text-muted-dark">Estado actual del Backoffice Admin v2 en el laboratorio.</p>
-      </div>
-      <div class="mx-auto max-w-2xl">
-        <div class="relative space-y-0">
-          <div class="absolute left-[15px] top-3 h-[calc(100%-24px)] w-0.5 bg-border dark:bg-border-dark" />
-          {roadmapItems.map((item) => (
-            <div class="relative flex items-center gap-4 pb-10 last:pb-0">
-              <div class={`z-10 h-4 w-4 rounded-full border-2 border-surface ${item.done ? 'bg-emerald-500' : 'bg-border'} dark:border-surface-dark`} />
-              <div class="flex items-center gap-3">
-                <span class="text-sm font-medium text-zinc-900 dark:text-zinc-100">{item.label}</span>
-                {item.done ? (
-                  <span class="text-xs text-emerald-500 font-medium">✅</span>
-                ) : (
-                  <span class="text-xs text-zinc-500">⏳</span>
-                )}
-              </div>
-            </div>
-          ))}
+          <div class="mt-6">
+            <AdminSommelierGovernance metrics={sommelierGovernanceMetrics} />
+          </div>
+          <div class="mt-6">
+            <AdminRecentActivity items={adminRecentActivity} />
+          </div>
         </div>
-      </div>
+        <div slot="sidebar">
+          <AdminAlerts alerts={adminAlerts} />
+          <div class="mt-6">
+            <AdminRoadmap items={adminRoadmapData} />
+          </div>
+          <div class="mt-6">
+            <AdminIntegrationsStatus items={integrationStatusItems} />
+          </div>
+        </div>
+      </AdminOperationalOverview>
     </Container>
   </Section>
 </Layout>

@@ -1,0 +1,12 @@
+---
+import Card from '../ui/Card.astro';
+---
+
+<div class="grid gap-6 lg:grid-cols-3">
+  <div class="lg:col-span-2 space-y-6">
+    <slot name="main" />
+  </div>
+  <div class="space-y-6">
+    <slot name="sidebar" />
+  </div>
+</div>

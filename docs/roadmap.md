@@ -34,13 +34,16 @@ FASE 4 — PORTAL B2B v2
       ✅ Vercel smoke PASS (Dashboard, Quote Flow, Workspace, Document Center)
 
 FASE 5 — BACKOFFICE ADMIN v2
-  🟡 Placeholder avanzado
+  🟢 Real Dashboard Mock
       ✅ Arquitectura completa
       ✅ 8 perfiles definidos
       ✅ 20 módulos diseñados
       ✅ 36 rutas planificadas
       ✅ Placeholder informativo
-      ⏳ Implementación pendiente
+      ✅ Dashboard operativo mock (KPIs, catálogo, pipeline B2B, Sommelier governance, alertas, actividad)
+      ✅ 11 componentes admin (hero, kpis, overview, catálogo, pipeline, governance, integraciones, alertas, actividad, roadmap, lab notice)
+      ✅ Operational overview con layout dashboard (main + sidebar) responsive
+      ✅ Navegación /admin funcional con dashboard real
 
 FASE 6 — IA REAL
   🟡 LM Studio preparado
@@ -94,9 +97,10 @@ Backoffice Admin v2 ────────────────────
 1. Completar Dashboard B2B con datos mock (✅ completado)
 2. Completar flujo de selección y presupuesto B2B (✅ completado)
 3. Customer Workspace + Document Center mock (✅ completado)
-4. Implementar Backoffice Admin v2 (CRUD productos)
-5. Evaluar modelos ≥7B params para IA real en Sommelier
-6. Integración controlada con Rioja Marketplace
+4. Backoffice Real Dashboard Mock (✅ completado)
+5. Content Manager mock en Backoffice
+6. Evaluar modelos ≥7B params para IA real en Sommelier
+7. Integración controlada con Rioja Marketplace
 
 ## Próximos hitos
 
@@ -106,6 +110,7 @@ Backoffice Admin v2 ────────────────────
 | Flujo de selección y presupuesto     | F4   | ✅ Completado          |
 | Customer Workspace + Document Center | F4   | ✅ Completado          |
 | Vercel smoke B2B completo            | F4   | ✅ Completado          |
-| CRUD productos en Backoffice         | F5   | Placeholder Admin      |
+| Backoffice Real Dashboard Mock       | F5   | ✅ Completado          |
+| Content Manager mock                 | F5   | Backoffice Dashboard   |
 | IA real en Sommelier                 | F6   | LM Studio ≥7B / AI-LAB |
 | Integración Rioja Marketplace        | F7   | F4+F5+F6 completo      |

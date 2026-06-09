@@ -1,0 +1,36 @@
+---
+import type { B2BPipelineItem } from '../../types/admin';
+import Card from '../ui/Card.astro';
+
+export interface Props {
+  items: B2BPipelineItem[];
+}
+const { items } = Astro.props;
+
+const dotColors: Record<string, string> = {
+  emerald: 'bg-emerald-500',
+  amber: 'bg-amber-500',
+  indigo: 'bg-indigo-500',
+  red: 'bg-red-500',
+};
+---
+
+<Card>
+  <h3 class="text-base font-semibold">Pipeline B2B</h3>
+  <p class="mt-1 text-xs text-muted dark:text-muted-dark">Estado de solicitudes, selecciones y actividad comercial.</p>
+  <div class="mt-4 space-y-4">
+    {items.map((item) => (
+      <div class="flex items-start gap-3">
+        <div class={`mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full ${dotColors[item.statusColor] || 'bg-zinc-400'}`} />
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between gap-2">
+            <p class="text-sm font-medium text-zinc-900 dark:text-zinc-100">{item.label}</p>
+            <span class="shrink-0 text-lg font-bold text-zinc-900 dark:text-zinc-100">{item.value}</span>
+          </div>
+          <p class="mt-0.5 text-xs text-muted dark:text-muted-dark">{item.detail}</p>
+          <p class="mt-0.5 text-xs font-medium text-muted dark:text-muted-dark">{item.status}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</Card>
