@@ -303,28 +303,36 @@ SOMMELIER_PROVIDER=mock|lmstudio|ailab
 LMSTUDIO_BASE_URL=http://192.168.1.250:1234/v1
 LMSTUDIO_MODEL=llama-3.2-1b-instruct
 
+# Tuning (opcional, solo para LM Studio)
+LMSTUDIO_MAX_TOKENS=1024
+LMSTUDIO_TEMPERATURE=0.7
+LMSTUDIO_TOP_P=1.0
+LMSTUDIO_CONTEXT_MAX_PRODUCTS=5
+LMSTUDIO_COMPACT_PROMPT=false
+
 # Timeouts
 SOMMELIER_TIMEOUT_MS=30000
-SOMMELIER_MAX_TOKENS=2048
-
-# Temperature (hardcoded 0.7 in provider)
-SOMMELIER_TEMPERATURE=0.7
 ```
 
 Variables definidas en `.env.example` con valores seguros por defecto (`mock`).
 
 ## Matriz de Modelos Probados (LM Studio)
 
-| Modelo                  | Health | Latencia | JSON Válido         | Calidad                     | Recomendado         |
-| ----------------------- | ------ | -------- | ------------------- | --------------------------- | ------------------- |
-| `llama-3.2-1b-instruct` | ✅ OK  | 22ms     | ❌ FAIL             | Texto plano, sin estructura | ❌ No               |
-| `google/gemma-4-e4b`    | ✅ OK  | 22ms     | ✅ PASS (parser OK) | Parcial, alucina catálogo   | ⚠️ Modelo ≥7B mejor |
+| Modelo                         | Health | Latencia | JSON Válido         | Calidad                     | Recomendado     |
+| ------------------------------ | ------ | -------- | ------------------- | --------------------------- | --------------- |
+| `llama-3.2-1b-instruct`        | ✅ OK  | 22ms     | ❌ FAIL             | Texto plano, sin estructura | ❌ No           |
+| `google/gemma-4-e4b`           | ✅ OK  | 22ms     | ✅ PASS (parser OK) | Parcial, alucina catálogo   | ⚠️ Modelo ≥7B   |
+| `qwen3.5-9b-deepseek-v4-flash` | ✅ OK  | 54ms     | ✅ PASS (tuneado)   | ✅ Buena, 0 alucinaciones   | ⚠️ Lento (~45s) |
+
+> **Qwen 3.5 9B** tiene la mejor calidad factual (0 alucinaciones en 15 tests) pero requiere ~45s de latencia incluso optimizado. Apto para batch/backoffice, no para tiempo real. Ver `docs/audits/STACK-2026-QWEN35-9B-LATENCY-TUNING-01.md`.
 
 Detalles en:
 
 - `docs/audits/STACK-2026-LMSTUDIO-PROVIDER-IMPLEMENTATION-01.md` (llama-3.2-1b)
 - `docs/audits/STACK-2026-LMSTUDIO-GEMMA-MODEL-SMOKE-01.md` (gemma-4-e4b)
 - `docs/audits/STACK-2026-LMSTUDIO-JSON-PARSER-HARDENING-01.md` (parser hardening)
+- `docs/audits/STACK-2026-QWEN35-9B-SOMMELIER-SMOKE-01.md` (qwen smoke)
+- `docs/audits/STACK-2026-QWEN35-9B-LATENCY-TUNING-01.md` (qwen latency tuning)
 
 ## Parser JSON Hardening (STACK-2026-LMSTUDIO-JSON-PARSER-HARDENING-01)
 

@@ -42,4 +42,8 @@ export interface ProviderConfig {
   timeoutMs?: number;
   retryCount?: number;
   model?: string;
+  maxTokens?: number;
+  temperature?: number;
+  topP?: number;
+  contextMaxProducts?: number;
 }

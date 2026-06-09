@@ -57,10 +57,14 @@ interface LLMResponseStructure {
 
 function buildSystemPrompt(
   catalogContext: ChatInput["catalogContext"],
+  maxProducts?: number,
+  compact?: boolean,
 ): string {
+  const limit = maxProducts ?? 5;
+  const context = catalogContext.slice(0, limit);
   const catalogText =
-    catalogContext.length > 0
-      ? catalogContext
+    context.length > 0
+      ? context
           .map(
             (p) =>
               `- ${p.name} (${p.category}): ${p.shortDescription} | Productor: ${p.producer} | Tags: ${p.tags.join(", ")} | Maridajes: ${p.pairings.join(", ")}`,
@@ -68,9 +72,32 @@ function buildSystemPrompt(
           .join("\n")
       : "No hay productos disponibles en el catálogo para esta consulta.";
 
+  if (compact) {
+    return `Eres sumiller experto en productos gourmet españoles. Responde SIEMPRE en español.
+
+CATÁLOGO (máximo ${limit} productos):
+${catalogText}
+
+REGLAS:
+1. Usa SOLO el catálogo. No inventes productos.
+2. No menciones precios, stock ni disponibilidad.
+3. Recomendaciones deben incluir slug exacto.
+
+RESPONDE SOLO CON JSON:
+{
+  "answer": "texto",
+  "intent": "pairing|recommendation|product_explanation|general",
+  "recommendations": [{"slug":"slug","name":"Nombre","category":"cat","reason":"razón","confidence":0.95}],
+  "pairings": [{"product":"Nombre","pairing":"sugerencia","reason":"razón"}],
+  "confidence": 0.85,
+  "warnings": [],
+  "sources": []
+}`;
+  }
+
   return `Eres un sumiller experto en productos gourmet españoles. Responde SIEMPRE en español, con tono premium y cercano.
 
-CATÁLOGO DISPONIBLE (máximo 5 productos relevantes):
+CATÁLOGO DISPONIBLE (máximo ${limit} productos relevantes):
 ${catalogText}
 
 REGLAS ESTRICTAS:
@@ -208,6 +235,11 @@ export class LMStudioSommelierProvider implements SommelierProvider {
   private baseUrl: string;
   private model: string;
   private timeoutMs: number;
+  private maxTokens: number;
+  private temperature: number;
+  private topP: number;
+  private contextMaxProducts: number;
+  private compactPrompt: boolean;
 
   constructor(private config: ProviderConfig = {}) {
     this.baseUrl =
@@ -219,6 +251,17 @@ export class LMStudioSommelierProvider implements SommelierProvider {
     this.timeoutMs =
       config.timeoutMs ??
       parseInt(process.env.SOMMELIER_TIMEOUT_MS ?? "30000", 10);
+    this.maxTokens =
+      config.maxTokens ??
+      parseInt(process.env.LMSTUDIO_MAX_TOKENS ?? "1024", 10);
+    this.temperature =
+      config.temperature ??
+      parseFloat(process.env.LMSTUDIO_TEMPERATURE ?? "0.7");
+    this.topP = config.topP ?? parseFloat(process.env.LMSTUDIO_TOP_P ?? "1.0");
+    this.contextMaxProducts =
+      config.contextMaxProducts ??
+      parseInt(process.env.LMSTUDIO_CONTEXT_MAX_PRODUCTS ?? "5", 10);
+    this.compactPrompt = process.env.LMSTUDIO_COMPACT_PROMPT === "true";
   }
 
   async chat(input: ChatInput): Promise<SommelierProviderResponse> {
@@ -226,17 +269,22 @@ export class LMStudioSommelierProvider implements SommelierProvider {
     const timeoutId = setTimeout(() => controller.abort(), this.timeoutMs);
 
     try {
-      const systemPrompt = buildSystemPrompt(input.catalogContext);
+      const systemPrompt = buildSystemPrompt(
+        input.catalogContext,
+        this.contextMaxProducts,
+        this.compactPrompt,
+      );
       const userPrompt = buildUserPrompt(input);
 
-      const body = {
+      const body: Record<string, unknown> = {
         model: this.model,
         messages: [
           { role: "system" as const, content: systemPrompt },
           { role: "user" as const, content: userPrompt },
         ],
-        temperature: 0.7,
-        max_tokens: 1024,
+        temperature: this.temperature,
+        max_tokens: this.maxTokens,
+        top_p: this.topP,
         stream: false,
       };
 
