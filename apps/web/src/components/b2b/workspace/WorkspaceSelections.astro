@@ -1,0 +1,54 @@
+---
+import type { WorkspaceSelection } from '../../../data/b2b/workspaceMock';
+
+export interface Props {
+  selections: WorkspaceSelection[];
+}
+const { selections } = Astro.props;
+---
+
+<div>
+  <h2 class="mb-4 text-lg font-semibold">Mis selecciones</h2>
+  <div class="space-y-3">
+    {selections.map((sel) => (
+      <div class="rounded-xl border border-border bg-card p-5 dark:border-border-dark dark:bg-card-dark">
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2">
+              <h3 class="font-medium text-sm">Selección {sel.useCase}</h3>
+              <span
+                class={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium ${
+                  sel.status === "listo para presupuesto"
+                    ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
+                    : "border-amber-500/20 bg-amber-500/10 text-amber-400"
+                }`}
+              >
+                {sel.status}
+              </span>
+            </div>
+            <p class="mt-1 text-xs text-muted dark:text-muted-dark">Creada: {sel.createdAt}</p>
+            <div class="mt-2 flex flex-wrap gap-1.5">
+              {sel.products.map((p) => (
+                <span class="rounded-full border border-zinc-500/20 bg-zinc-500/5 px-2 py-0.5 text-[10px] text-zinc-400">
+                  {p.name} ({p.quantity})
+                </span>
+              ))}
+            </div>
+          </div>
+          <a
+            href="/b2b/"
+            class="shrink-0 rounded-lg border border-border bg-card px-3 py-1.5 text-[11px] font-medium text-muted hover:bg-gray-50 dark:border-border-dark dark:bg-card-dark dark:hover:bg-gray-800 transition"
+          >
+            Ir a selección
+          </a>
+        </div>
+      </div>
+    ))}
+  </div>
+  {selections.length === 0 && (
+    <div class="rounded-xl border border-dashed border-border bg-card/50 p-8 text-center dark:border-border-dark dark:bg-card-dark/50">
+      <span class="text-2xl">📋</span>
+      <p class="mt-2 text-sm text-muted dark:text-muted-dark">No hay selecciones guardadas todavía.</p>
+    </div>
+  )}
+</div>

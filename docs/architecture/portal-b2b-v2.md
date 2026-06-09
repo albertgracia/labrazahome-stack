@@ -1,7 +1,10 @@
 # Portal B2B v2 — Arquitectura
 
-> **Estado:** Dashboard mock implementado (STACK-2026-B2B-DASHBOARD-MOCK-01).
-> El dashboard incluye hero profesional, KPIs B2B, selector de perfiles, catálogo mock con MOQ, selección actual, resumen de presupuesto, actividad reciente, Sommelier B2B hints y documentos. Todo en layout 3 columnas con datos simulados.
+> **Estado:** Dashboard mock + Quote flow + Workspace profesional implementados.
+>
+> - Dashboard B2B (STACK-2026-B2B-DASHBOARD-MOCK-01): hero profesional, KPIs B2B, selector de perfiles, catálogo mock con MOQ, selección actual, resumen de presupuesto, actividad reciente, Sommelier B2B hints y documentos.
+> - Quote flow (STACK-2026-B2B-QUOTE-FLOW-MOCK-01): selección interactiva con persistencia localStorage, quantity steppers, selector de uso profesional, quote preview modal.
+> - Workspace profesional (STACK-2026-B2B-CUSTOMER-WORKSPACE-MOCK-01): perfil profesional, selecciones, presupuestos mock, documentos, Sommelier B2B, timeline, próximos pasos. Ruta `/b2b/workspace`.
 
 ## Visión
 

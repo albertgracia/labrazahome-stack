@@ -1,0 +1,50 @@
+---
+import type { WorkspaceSommelierRecommendation } from '../../../data/b2b/workspaceMock';
+
+export interface Props {
+  recommendations: WorkspaceSommelierRecommendation[];
+}
+const { recommendations } = Astro.props;
+
+const typeLabel: Record<string, string> = {
+  upselling: "Upselling",
+  "cross-selling": "Cross-selling",
+  surtido: "Surtido",
+};
+const typeColor: Record<string, string> = {
+  upselling: "border-blue-500/20 bg-blue-500/10 text-blue-400",
+  "cross-selling": "border-purple-500/20 bg-purple-500/10 text-purple-400",
+  surtido: "border-emerald-500/20 bg-emerald-500/10 text-emerald-400",
+};
+---
+
+<div>
+  <h2 class="mb-4 text-lg font-semibold">Sommelier B2B</h2>
+  <p class="mb-4 text-xs text-muted dark:text-muted-dark">Recomendaciones profesionales basadas en tu perfil y selección actual.</p>
+  <div class="space-y-3">
+    {recommendations.map((r) => (
+      <div class="rounded-xl border border-border bg-card p-4 dark:border-border-dark dark:bg-card-dark">
+        <div class="flex items-start gap-3">
+          <span class="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm">🍷</span>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm font-medium">{r.title}</h3>
+              <span class={`inline-flex items-center rounded-full border px-2 py-0.5 text-[9px] font-medium uppercase tracking-wider ${typeColor[r.type]}`}>
+                {typeLabel[r.type]}
+              </span>
+            </div>
+            <p class="mt-1 text-xs text-muted dark:text-muted-dark leading-relaxed">{r.description}</p>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+  <div class="mt-4">
+    <a
+      href="/sommelier"
+      class="inline-flex w-full items-center justify-center rounded-lg border border-border bg-card px-4 py-2.5 text-xs font-medium text-muted hover:bg-gray-50 dark:border-border-dark dark:bg-card-dark dark:hover:bg-gray-800 transition"
+    >
+      Ir al Sommelier completo →
+    </a>
+  </div>
+</div>

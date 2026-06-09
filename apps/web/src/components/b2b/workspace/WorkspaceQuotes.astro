@@ -1,0 +1,36 @@
+---
+import type { WorkspaceQuote } from '../../../data/b2b/workspaceMock';
+
+export interface Props {
+  quotes: WorkspaceQuote[];
+}
+const { quotes } = Astro.props;
+
+const statusStyle: Record<string, string> = {
+  "En preparación": "border-amber-500/20 bg-amber-500/10 text-amber-400",
+  Simulado: "border-emerald-500/20 bg-emerald-500/10 text-emerald-400",
+  "Pendiente revisión": "border-purple-500/20 bg-purple-500/10 text-purple-400",
+};
+---
+
+<div>
+  <h2 class="mb-4 text-lg font-semibold">Mis presupuestos</h2>
+  <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+    {quotes.map((q) => (
+      <div class="rounded-xl border border-border bg-card p-5 dark:border-border-dark dark:bg-card-dark">
+        <div class="flex items-start justify-between gap-3">
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2">
+              <h3 class="font-medium text-sm">{q.reference}</h3>
+              <span class={`inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium ${statusStyle[q.status]}`}>
+                {q.status}
+              </span>
+            </div>
+            <p class="mt-1 text-xs text-muted dark:text-muted-dark">{q.productCount} productos · {q.totalUnits}</p>
+            <p class="text-xs text-muted dark:text-muted-dark">Creado: {q.createdAt}</p>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

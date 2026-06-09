@@ -1,0 +1,26 @@
+---
+import type { WorkspaceDoc } from '../../../data/b2b/workspaceMock';
+
+export interface Props {
+  documents: WorkspaceDoc[];
+}
+const { documents } = Astro.props;
+---
+
+<div>
+  <h2 class="mb-4 text-lg font-semibold">Mis documentos</h2>
+  <div class="space-y-2">
+    {documents.map((d) => (
+      <div class="flex items-center gap-3 rounded-xl border border-border bg-card p-4 dark:border-border-dark dark:bg-card-dark">
+        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-lg">{d.icon}</span>
+        <div class="min-w-0 flex-1">
+          <h3 class="text-sm font-medium">{d.title}</h3>
+          <p class="text-xs text-muted dark:text-muted-dark">{d.description}</p>
+        </div>
+        <span class="inline-flex items-center rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-400">
+          {d.available ? "Disponible" : "Próximamente"}
+        </span>
+      </div>
+    ))}
+  </div>
+</div>

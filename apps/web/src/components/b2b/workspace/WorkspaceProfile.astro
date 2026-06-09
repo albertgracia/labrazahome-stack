@@ -1,0 +1,35 @@
+---
+import type { WorkspaceProfile } from '../../../data/b2b/workspaceMock';
+
+export interface Props {
+  profiles: WorkspaceProfile[];
+  active: WorkspaceProfile;
+}
+const { profiles, active } = Astro.props;
+---
+
+<div>
+  <h2 class="mb-4 text-lg font-semibold">Mi perfil profesional</h2>
+  <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+    {profiles.map((p) => (
+      <div
+        class={`rounded-xl p-5 transition border ${
+          p.active
+            ? "border-primary/40 bg-primary/[0.04]"
+            : "border-border bg-card dark:border-border-dark dark:bg-card-dark hover:border-primary/30"
+        }`}
+      >
+        <div class="flex flex-col items-center text-center">
+          <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-2xl">{p.icon}</span>
+          <h3 class="mt-3 text-sm font-semibold">{p.name}</h3>
+          <p class="mt-1 text-xs text-muted dark:text-muted-dark leading-relaxed">{p.description}</p>
+          {p.active && (
+            <span class="mt-2 inline-flex items-center rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-400">
+              Perfil activo
+            </span>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
