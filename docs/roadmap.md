@@ -21,14 +21,17 @@ FASE 3 — SOMMELIER AI v2
       ✅ Flujos conversacionales guiados (vino, aceite, miel, regalo)
 
 FASE 4 — PORTAL B2B v2
-  🟢 Mock Dashboard + Quote Flow
+  🟢 Professional Platform Mock
       ✅ Arquitectura completa
       ✅ Dashboard profesional mock (3 columnas, KPIs, perfiles, actividad)
       ✅ Flujo de selección interactivo (catálogo, cantidades, uso)
       ✅ Flujo de presupuesto mock (vista previa modal)
+      ✅ Customer Workspace mock (perfiles, selecciones, presupuestos, docs, sommelier, timeline)
+      ✅ Document Center mock (fichas, catálogos, argumentarios, maridajes, filtros, detalle)
       ✅ Persistencia local (localStorage)
       ✅ Componentes reutilizables (Hero, KpiStrip, ProfileSelector, etc.)
-      ✅ Navegación funcional /b2b/
+      ✅ Navegación funcional /b2b/, /b2b/workspace, /b2b/documentos
+      ✅ Vercel smoke PASS (Dashboard, Quote Flow, Workspace, Document Center)
 
 FASE 5 — BACKOFFICE ADMIN v2
   🟡 Placeholder avanzado
@@ -90,17 +93,19 @@ Backoffice Admin v2 ────────────────────
 
 1. Completar Dashboard B2B con datos mock (✅ completado)
 2. Completar flujo de selección y presupuesto B2B (✅ completado)
-3. Implementar Backoffice Admin v2 (CRUD productos)
-4. Evaluar modelos ≥7B params para IA real en Sommelier
-5. Integración controlada con Rioja Marketplace
+3. Customer Workspace + Document Center mock (✅ completado)
+4. Implementar Backoffice Admin v2 (CRUD productos)
+5. Evaluar modelos ≥7B params para IA real en Sommelier
+6. Integración controlada con Rioja Marketplace
 
 ## Próximos hitos
 
-| Hito                             | Fase | Dependencia            |
-| -------------------------------- | ---- | ---------------------- |
-| Dashboard B2B con datos mock     | F4   | ✅ Completado          |
-| Flujo de selección y presupuesto | F4   | ✅ Completado          |
-| Vercel smoke B2B Quote Flow      | F4   | Dashboard B2B          |
-| CRUD productos en Backoffice     | F5   | Placeholder Admin      |
-| IA real en Sommelier             | F6   | LM Studio ≥7B / AI-LAB |
-| Integración Rioja Marketplace    | F7   | F4+F5+F6 completo      |
+| Hito                                 | Fase | Dependencia            |
+| ------------------------------------ | ---- | ---------------------- |
+| Dashboard B2B con datos mock         | F4   | ✅ Completado          |
+| Flujo de selección y presupuesto     | F4   | ✅ Completado          |
+| Customer Workspace + Document Center | F4   | ✅ Completado          |
+| Vercel smoke B2B completo            | F4   | ✅ Completado          |
+| CRUD productos en Backoffice         | F5   | Placeholder Admin      |
+| IA real en Sommelier                 | F6   | LM Studio ≥7B / AI-LAB |
+| Integración Rioja Marketplace        | F7   | F4+F5+F6 completo      |
