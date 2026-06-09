@@ -1,0 +1,95 @@
+---
+import type { AdminAIGeneratedSample } from "../../types/admin";
+
+interface Props {
+  samples: AdminAIGeneratedSample[];
+}
+
+export interface GeneratedSampleViewerProps extends Props {}
+
+const sample = Astro.props.samples[0];
+const sample2 = Astro.props.samples[1];
+---
+
+<div class="rounded-xl border border-border bg-card p-5 dark:border-border-dark dark:bg-card-dark">
+  <div class="flex items-center justify-between">
+    <h3 class="text-sm font-semibold">Muestras generadas</h3>
+    <span class="rounded-full bg-indigo-100 px-2.5 py-0.5 text-[11px] font-medium text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300">
+      Mock IA
+    </span>
+  </div>
+
+  <div class="mt-4 flex gap-2 border-b border-border pb-2 dark:border-border-dark">
+    <button
+      class="tab-btn rounded-md px-3 py-1.5 text-xs font-medium transition data-[active=true]:bg-indigo-100 data-[active=true]:text-indigo-700 dark:data-[active=true]:bg-indigo-900/40 dark:data-[active=true]:text-indigo-300"
+      data-tab="reserva-del-alto-ebro"
+      data-active="true"
+    >
+      Reserva del Alto Ebro
+    </button>
+    <button
+      class="tab-btn rounded-md px-3 py-1.5 text-xs font-medium transition data-[active=true]:bg-indigo-100 data-[active=true]:text-indigo-700 dark:data-[active=true]:bg-indigo-900/40 dark:data-[active=true]:text-indigo-300"
+      data-tab="coupage-de-sierra"
+    >
+      Coupage de Sierra
+    </button>
+  </div>
+
+  <div class="mt-4 space-y-4">
+    {sample.fields.map((field) => (
+      <div class="sample-field" data-product={sample.productSlug}>
+        <div class="flex items-center gap-1.5">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-muted dark:text-muted-dark">
+            {field.label}
+          </span>
+          <span class="rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">
+            Mock
+          </span>
+        </div>
+        <p class="mt-1 text-xs leading-relaxed text-secondary dark:text-secondary-dark">
+          {field.value}
+        </p>
+      </div>
+    ))}
+  </div>
+
+  <div class="sample-field hidden" data-product={sample2.productSlug}>
+    {sample2.fields.map((field) => (
+      <div class="mt-4 space-y-4">
+        <div class="flex items-center gap-1.5">
+          <span class="text-[11px] font-semibold uppercase tracking-wider text-muted dark:text-muted-dark">
+            {field.label}
+          </span>
+          <span class="rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300">
+            Mock
+          </span>
+        </div>
+        <p class="mt-1 text-xs leading-relaxed text-secondary dark:text-secondary-dark">
+          {field.value}
+        </p>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>(".tab-btn");
+  const fields = document.querySelectorAll<HTMLDivElement>(".sample-field");
+
+  function showTab(slug: string) {
+    tabs.forEach((t) => (t.dataset.active = t.dataset.tab === slug ? "true" : "false"));
+    fields.forEach((f) => {
+      if (f.dataset.product === slug) {
+        f.classList.remove("hidden");
+        f.classList.add("mt-4", "space-y-4");
+      } else {
+        f.classList.add("hidden");
+        f.classList.remove("mt-4", "space-y-4");
+      }
+    });
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => showTab(tab.dataset.tab!));
+  });
+</script>

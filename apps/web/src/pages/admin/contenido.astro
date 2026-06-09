@@ -7,11 +7,19 @@ import ContentKpiStrip from '../../components/admin/content/ContentKpiStrip.astr
 import ContentPipeline from '../../components/admin/content/ContentPipeline.astro';
 import ContentLabNotice from '../../components/admin/content/ContentLabNotice.astro';
 import ContentReviewBoard from '../../components/admin/content/ContentReviewBoard';
+import AIEditorialAssistant from '../../components/admin/content/AIEditorialAssistant.astro';
 import {
   contentKpis,
   contentPipeline,
   contentReviewProducts,
 } from '../../data/admin/contentManager';
+import {
+  aiBatchStats,
+  aiCapabilities,
+  aiGeneratedSamples,
+  aiReviewWorkflow,
+  aiWarnings,
+} from '../../data/admin/aiAssistantMock';
 ---
 
 <Layout
@@ -56,6 +64,24 @@ import {
       </p>
       <div class="mt-4">
         <ContentReviewBoard products={contentReviewProducts} client:load />
+      </div>
+    </Container>
+  </Section>
+
+  <Section background="muted">
+    <Container>
+      <h2 class="text-lg font-semibold">AI Editorial Assistant</h2>
+      <p class="mt-1 text-xs text-muted dark:text-muted-dark">
+        Generación batch de contenido editorial asistida por IA para el catálogo.
+      </p>
+      <div class="mt-4">
+        <AIEditorialAssistant
+          stats={aiBatchStats}
+          capabilities={aiCapabilities}
+          samples={aiGeneratedSamples}
+          workflow={aiReviewWorkflow}
+          warnings={aiWarnings}
+        />
       </div>
     </Container>
   </Section>

@@ -106,3 +106,95 @@ export interface ReadinessItem {
   ready: boolean;
   note: string;
 }
+
+// --- Sommelier Governance types ---
+
+export interface SommelierKpi {
+  label: string;
+  value: string;
+  icon: string;
+  description: string;
+}
+
+export interface PromptTemplate {
+  key: string;
+  name: string;
+  version: number;
+  status: "active" | "draft" | "archived";
+  content: string;
+}
+
+export interface SommelierInteraction {
+  sessionId: string;
+  query: string;
+  profile: string;
+  confidence: number;
+  userRating: "helpful" | "unhelpful" | "flagged" | null;
+  time: string;
+}
+
+export interface ProviderStatusItem {
+  name: string;
+  status: string;
+  statusColor: string;
+  description: string;
+}
+
+export interface WarningDistributionItem {
+  type: string;
+  count: number;
+  color: string;
+}
+
+export interface BlockedProductItem {
+  name: string;
+  reason: string;
+}
+
+export interface GuardrailsConfig {
+  label: string;
+  value: string;
+  icon: string;
+}
+
+// --- AI Assistant types ---
+
+export interface AdminAIBatchStats {
+  productsProcessed: number;
+  fieldsGenerated: number;
+  jsonValid: number;
+  timeouts: number;
+  hallucinations: number;
+  avgQuality: number;
+  avgB2B: number;
+  avgSEO: number;
+}
+
+export interface AdminAICapability {
+  id: string;
+  label: string;
+  description: string;
+  icon: string;
+}
+
+export interface AdminAIGeneratedField {
+  label: string;
+  value: string;
+}
+
+export interface AdminAIGeneratedSample {
+  productSlug: string;
+  productName: string;
+  productCategory: string;
+  fields: AdminAIGeneratedField[];
+}
+
+export interface AdminAIReviewStep {
+  step: string;
+  status: "done" | "current" | "pending";
+}
+
+export interface AdminAIWarning {
+  type: "info" | "warning" | "critical";
+  message: string;
+}

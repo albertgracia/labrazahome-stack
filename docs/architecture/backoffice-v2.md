@@ -939,7 +939,7 @@ Rioja Marketplace (producción)
 - Editorial / storytelling
 - Fichas técnicas
 - Media upload
-- **AI Batch Assistant** — generación asíncrona de contenido editorial vía Qwen 3.5 (batch): storytelling, notas sensoriales, maridajes, argumentario B2B, SEO title, meta description, tags editoriales. Ver `docs/audits/STACK-2026-LMSTUDIO-BACKOFFICE-BATCH-USE-CASE-01.md`.
+- **AI Editorial Assistant** — panel mock de generación batch en `/admin/contenido`. Capacidades: storytelling, notas sensoriales, maridajes, argumentario B2B, SEO, tags. Basado en Qwen 3.5. Ver `docs/audits/STACK-2026-BACKOFFICE-AI-ASSISTANT-MOCK-01.md`.
 
 ### Fase 7 — Gestión B2B (pendiente)
 
