@@ -918,29 +918,39 @@ Rioja Marketplace (producción)
 - 6 KPIs de contenido mock
 - 4 componentes Astro + 6 React (interactivos)
 
-### Fase 5 — Gestión de catálogo (pendiente)
+### Fase 5 — Sommelier Governance Mock (completada)
+
+- Ruta /admin/sommelier con panel de supervisión y configuración mock
+- 6 KPIs de governance (prompts activos, respuestas, warnings, fallback, provider, bloqueos)
+- Prompt templates con 4 prompts (system, b2b, private, producer) y versiones
+- Timeline de interacciones recientes (7 consultas con valoración y confianza)
+- Estado de proveedores (Mock, LM Studio, AI-LAB) con indicadores
+- Distribución de warnings con barras de progreso
+- Productos bloqueados con razón y opción de desbloqueo
+- Guardrails de seguridad con 6 configuraciones activas
+- Acciones rápidas para operaciones frecuentes
+- 9 componentes Astro reutilizables
+- Layout responsive 3/2/1 columnas
+
+### Fase 6 — Gestión de catálogo (pendiente)
 
 - CRUD de productos (mock)
 - Estados y workflow
 - Editorial / storytelling
 - Fichas técnicas
 - Media upload
+- **AI Batch Assistant** — generación asíncrona de contenido editorial vía Qwen 3.5 (batch): storytelling, notas sensoriales, maridajes, argumentario B2B, SEO title, meta description, tags editoriales. Ver `docs/audits/STACK-2026-LMSTUDIO-BACKOFFICE-BATCH-USE-CASE-01.md`.
 
-### Fase 6 — Gestión B2B (pendiente)
+### Fase 7 — Gestión B2B (pendiente)
 
 - Cuentas B2B
 - Presupuestos
 - Condiciones comerciales
 - MOQ
 
-### Fase 7 — Sommelier governance + Documentos (pendiente)
+### Fase 8 — Documentos + Analytics (pendiente)
 
-- Editor de prompts
-- Supervisión de respuestas
 - Gestión documental
-
-### Fase 8 — Integraciones + Analytics (pendiente)
-
 - Dashboard ejecutivo con KPIs reales
 - Integración con Rioja Marketplace (read-only)
 - Audit logs completos

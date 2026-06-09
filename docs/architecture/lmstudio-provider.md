@@ -318,13 +318,19 @@ Variables definidas en `.env.example` con valores seguros por defecto (`mock`).
 
 ## Matriz de Modelos Probados (LM Studio)
 
-| Modelo                         | Health | Latencia | JSON Válido         | Calidad                     | Recomendado     |
-| ------------------------------ | ------ | -------- | ------------------- | --------------------------- | --------------- |
-| `llama-3.2-1b-instruct`        | ✅ OK  | 22ms     | ❌ FAIL             | Texto plano, sin estructura | ❌ No           |
-| `google/gemma-4-e4b`           | ✅ OK  | 22ms     | ✅ PASS (parser OK) | Parcial, alucina catálogo   | ⚠️ Modelo ≥7B   |
-| `qwen3.5-9b-deepseek-v4-flash` | ✅ OK  | 54ms     | ✅ PASS (tuneado)   | ✅ Buena, 0 alucinaciones   | ⚠️ Lento (~45s) |
+| Modelo                                  | Health | Latencia | JSON Válido         | Calidad                      | Recomendado     |
+| --------------------------------------- | ------ | -------- | ------------------- | ---------------------------- | --------------- |
+| `llama-3.2-1b-instruct`                 | ✅ OK  | 22ms     | ❌ FAIL             | Texto plano, sin estructura  | ❌ No           |
+| `google/gemma-4-e4b`                    | ✅ OK  | 22ms     | ✅ PASS (parser OK) | Parcial, alucina catálogo    | ⚠️ Modelo ≥7B   |
+| `qwen3.5-9b-deepseek-v4-flash`          | ✅ OK  | 54ms     | ✅ PASS (tuneado)   | ✅ Buena, 0 alucinaciones    | ⚠️ Lento (~45s) |
+| `qwen-2.5-sommelier-descriptors-topics` | ✅ OK  | 5ms      | ⚠️ 4/5 (truncado)   | ❌ Mínima (25 chars avg)     | ❌ No apto      |
+| `chefgpt`                               | ✅ OK  | 5ms      | ✅ 5/5              | ❌ Errática, 8 alucinaciones | ❌ No apto      |
 
 > **Qwen 3.5 9B** tiene la mejor calidad factual (0 alucinaciones en 15 tests) pero requiere ~45s de latencia incluso optimizado. Apto para batch/backoffice, no para tiempo real. Ver `docs/audits/STACK-2026-QWEN35-9B-LATENCY-TUNING-01.md`.
+>
+> **Nota sobre DeepSeek v4 reasoning**: Este modelo genera `reasoning_content` (~1800 chars de razonamiento interno) antes del contenido visible. Esto requiere `max_tokens ≥ 2048` para output completo. El batch runner en `apps/api/src/modules/sommelier/batch/` maneja este caso combinando `content` + `reasoning_content`. Ver `docs/audits/STACK-2026-LMSTUDIO-BACKOFFICE-BATCH-USE-CASE-01.md`.
+>
+> **qwen-2.5-sommelier-descriptors-topics** y **chefgpt** no superan a Qwen 3.5 en calidad. El especializado sommelier ignora instrucciones de respuesta completa; chefgpt alucina productos y es inconsistente. Ver `docs/audits/STACK-2026-LMSTUDIO-SOMMELIER-SPECIALIZED-MODELS-SMOKE-01.md`.
 
 Detalles en:
 
@@ -333,6 +339,8 @@ Detalles en:
 - `docs/audits/STACK-2026-LMSTUDIO-JSON-PARSER-HARDENING-01.md` (parser hardening)
 - `docs/audits/STACK-2026-QWEN35-9B-SOMMELIER-SMOKE-01.md` (qwen smoke)
 - `docs/audits/STACK-2026-QWEN35-9B-LATENCY-TUNING-01.md` (qwen latency tuning)
+- `docs/audits/STACK-2026-LMSTUDIO-SOMMELIER-SPECIALIZED-MODELS-SMOKE-01.md` (especializados)
+- `docs/audits/STACK-2026-LMSTUDIO-BACKOFFICE-BATCH-USE-CASE-01.md` (batch uso backoffice)
 
 ## Parser JSON Hardening (STACK-2026-LMSTUDIO-JSON-PARSER-HARDENING-01)
 
