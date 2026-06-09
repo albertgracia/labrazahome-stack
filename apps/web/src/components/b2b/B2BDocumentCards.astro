@@ -1,0 +1,37 @@
+---
+import type { B2BDocument } from '../../data/b2b/mockDashboard';
+import Card from '../ui/Card.astro';
+
+export interface Props {
+  documents: B2BDocument[];
+}
+const { documents } = Astro.props;
+
+const statusColor: Record<string, string> = {
+  "Mock": "text-amber-400 border-amber-500/20 bg-amber-500/5",
+  "Futuro": "text-zinc-400 border-zinc-500/20 bg-zinc-500/5",
+};
+---
+
+<div>
+  <h2 class="mb-4 text-lg font-semibold">Documentos</h2>
+  <div class="space-y-3">
+    {documents.map((d) => {
+      const sc = statusColor[d.status] || "text-zinc-400 border-zinc-500/20 bg-zinc-500/5";
+      return (
+        <Card variant="elevated">
+          <div class="flex items-center gap-4">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-lg">{d.icon}</span>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center justify-between gap-2">
+                <h3 class="text-sm font-medium">{d.title}</h3>
+                <span class={`shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-medium ${sc}`}>{d.status}</span>
+              </div>
+              <p class="mt-0.5 text-xs text-muted dark:text-muted-dark">{d.description}</p>
+            </div>
+          </div>
+        </Card>
+      );
+    })}
+  </div>
+</div>

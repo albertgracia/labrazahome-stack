@@ -1,0 +1,17 @@
+---
+import type { B2BKpi } from '../../data/b2b/mockDashboard';
+import MetricCard from '../ui/MetricCard.astro';
+
+export interface Props {
+  kpis: B2BKpi[];
+}
+const { kpis } = Astro.props;
+---
+
+<div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+  {kpis.map((kpi) => (
+    <MetricCard label={kpi.label} value={kpi.value} icon={kpi.icon} trend="neutral">
+      <span slot="trend">{kpi.description}</span>
+    </MetricCard>
+  ))}
+</div>

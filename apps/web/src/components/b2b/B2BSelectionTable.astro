@@ -1,0 +1,42 @@
+---
+import type { B2BSelectionItem } from '../../data/b2b/mockDashboard';
+
+export interface Props {
+  items: B2BSelectionItem[];
+}
+const { items } = Astro.props;
+
+const statusColor: Record<string, string> = {
+  "En selección": "text-emerald-400 border-emerald-500/20 bg-emerald-500/5",
+  "Pendiente": "text-amber-400 border-amber-500/20 bg-amber-500/5",
+};
+---
+
+<div>
+  <h2 class="mb-4 text-lg font-semibold">Selección actual</h2>
+  <div class="overflow-hidden rounded-xl border border-border dark:border-border-dark">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="border-b border-border bg-muted/30 dark:border-border-dark dark:bg-muted-dark/30">
+          <th class="px-4 py-3 text-left font-medium text-muted dark:text-muted-dark">Producto</th>
+          <th class="px-4 py-3 text-left font-medium text-muted dark:text-muted-dark">Cantidad</th>
+          <th class="px-4 py-3 text-left font-medium text-muted dark:text-muted-dark">Uso</th>
+          <th class="px-4 py-3 text-left font-medium text-muted dark:text-muted-dark">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {items.map((item) => {
+          const sc = statusColor[item.status] || "text-zinc-400 border-zinc-500/20 bg-zinc-500/5";
+          return (
+            <tr class="border-b border-border last:border-0 dark:border-border-dark">
+              <td class="px-4 py-3 font-medium">{item.productName}</td>
+              <td class="px-4 py-3 text-muted dark:text-muted-dark">{item.quantity}</td>
+              <td class="px-4 py-3 text-muted dark:text-muted-dark">{item.use}</td>
+              <td class="px-4 py-3"><span class={`rounded-full border px-2 py-0.5 text-[10px] font-medium ${sc}`}>{item.status}</span></td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  </div>
+</div>

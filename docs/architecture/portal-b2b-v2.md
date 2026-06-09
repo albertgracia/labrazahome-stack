@@ -1,7 +1,7 @@
 # Portal B2B v2 — Arquitectura
 
-> **Estado:** Arquitectura completada · Placeholder visual avanzado implementado en `apps/web/src/pages/b2b/index.astro` (STACK-2026-B2B-V2-PLACEHOLDER-ENHANCEMENT-01).
-> El placeholder incluye hero, KPIs mock, perfiles B2B, módulos, flujos, integraciones, roadmap y aviso de laboratorio.
+> **Estado:** Dashboard mock implementado (STACK-2026-B2B-DASHBOARD-MOCK-01).
+> El dashboard incluye hero profesional, KPIs B2B, selector de perfiles, catálogo mock con MOQ, selección actual, resumen de presupuesto, actividad reciente, Sommelier B2B hints y documentos. Todo en layout 3 columnas con datos simulados.
 
 ## Visión
 

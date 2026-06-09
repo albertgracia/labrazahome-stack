@@ -1,0 +1,35 @@
+---
+import type { B2BProduct } from '../../data/b2b/mockDashboard';
+import Card from '../ui/Card.astro';
+import Button from '../ui/Button.astro';
+
+export interface Props {
+  products: B2BProduct[];
+}
+const { products } = Astro.props;
+---
+
+<div>
+  <h2 class="mb-4 text-lg font-semibold">Catálogo profesional</h2>
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {products.map((p) => (
+      <Card variant="elevated">
+        <div class="flex items-start gap-4">
+          <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-xl">{p.image || "📦"}</span>
+          <div class="min-w-0 flex-1">
+            <h3 class="font-semibold">{p.name}</h3>
+            <span class="text-[11px] font-medium uppercase tracking-wider text-primary/60">{p.category}</span>
+            <p class="mt-1 text-xs text-muted dark:text-muted-dark">{p.professionalUse}</p>
+            <div class="mt-2 flex items-center gap-2">
+              <span class="rounded-full border border-zinc-500/20 bg-zinc-500/5 px-2 py-0.5 text-[10px] font-medium text-zinc-400">{p.moq}</span>
+              <span class="rounded-full border border-emerald-500/20 bg-emerald-500/5 px-2 py-0.5 text-[10px] font-medium text-emerald-400">{p.status}</span>
+            </div>
+            <div class="mt-3">
+              <Button variant="secondary" size="sm">Añadir a selección</Button>
+            </div>
+          </div>
+        </div>
+      </Card>
+    ))}
+  </div>
+</div>

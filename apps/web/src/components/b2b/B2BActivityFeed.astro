@@ -1,0 +1,24 @@
+---
+import type { B2BActivity } from '../../data/b2b/mockDashboard';
+
+export interface Props {
+  activities: B2BActivity[];
+}
+const { activities } = Astro.props;
+---
+
+<div>
+  <h2 class="mb-4 text-lg font-semibold">Actividad reciente</h2>
+  <div class="space-y-0">
+    {activities.map((a) => (
+      <div class="flex items-start gap-3 border-b border-border py-3 last:border-0 dark:border-border-dark">
+        <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm">{a.icon}</span>
+        <div class="min-w-0 flex-1">
+          <p class="text-sm font-medium">{a.action}</p>
+          <p class="text-xs text-muted dark:text-muted-dark">{a.detail}</p>
+        </div>
+        <span class="shrink-0 text-xs text-muted dark:text-muted-dark">{a.time}</span>
+      </div>
+    ))}
+  </div>
+</div>

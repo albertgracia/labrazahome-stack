@@ -1,0 +1,29 @@
+---
+import Card from '../ui/Card.astro';
+import Button from '../ui/Button.astro';
+
+export interface Props {
+  hints: Array<{ title: string; description: string; cta: string }>;
+}
+const { hints } = Astro.props;
+---
+
+<div>
+  <h2 class="mb-4 text-lg font-semibold">Sommelier B2B</h2>
+  <div class="space-y-3">
+    {hints.map((h) => (
+      <Card variant="default">
+        <div class="flex items-start gap-3">
+          <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-sm">🍷</span>
+          <div class="min-w-0 flex-1">
+            <h3 class="text-sm font-medium">{h.title}</h3>
+            <p class="mt-1 text-xs leading-relaxed text-muted dark:text-muted-dark">{h.description}</p>
+            <div class="mt-2">
+              <a href="/sommelier/" class="text-xs font-medium text-primary hover:text-primary/80 transition-colors">{h.cta} →</a>
+            </div>
+          </div>
+        </div>
+      </Card>
+    ))}
+  </div>
+</div>
