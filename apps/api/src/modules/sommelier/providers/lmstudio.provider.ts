@@ -110,14 +110,45 @@ Mensaje del usuario: ${input.message}`;
 }
 
 function extractJSON(text: string): LLMResponseStructure | null {
-  const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) return null;
-  try {
-    const parsed = JSON.parse(jsonMatch[0]);
-    return parsed as LLMResponseStructure;
-  } catch {
-    return null;
+  const trimmed = text.trim();
+
+  if (trimmed.startsWith("{") && trimmed.endsWith("}")) {
+    try {
+      return JSON.parse(trimmed) as LLMResponseStructure;
+    } catch {}
   }
+
+  const fenceMatch = trimmed.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
+  if (fenceMatch) {
+    const inner = fenceMatch[1].trim();
+    try {
+      return JSON.parse(inner) as LLMResponseStructure;
+    } catch {}
+  }
+
+  let depth = 0;
+  let start = -1;
+  for (let i = 0; i < trimmed.length; i++) {
+    const ch = trimmed[i];
+    if (ch === "{") {
+      if (depth === 0) start = i;
+      depth++;
+    } else if (ch === "}") {
+      if (depth > 0) {
+        depth--;
+        if (depth === 0 && start !== -1) {
+          const candidate = trimmed.slice(start, i + 1);
+          try {
+            return JSON.parse(candidate) as LLMResponseStructure;
+          } catch {
+            start = -1;
+          }
+        }
+      }
+    }
+  }
+
+  return null;
 }
 
 const VALID_INTENTS: SommelierIntent[] = [

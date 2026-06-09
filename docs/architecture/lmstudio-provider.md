@@ -315,15 +315,29 @@ Variables definidas en `.env.example` con valores seguros por defecto (`mock`).
 
 ## Matriz de Modelos Probados (LM Studio)
 
-| Modelo                  | Health | Latencia | JSON Válido               | Calidad                     | Recomendado          |
-| ----------------------- | ------ | -------- | ------------------------- | --------------------------- | -------------------- |
-| `llama-3.2-1b-instruct` | ✅ OK  | 22ms     | ❌ FAIL                   | Texto plano, sin estructura | ❌ No                |
-| `google/gemma-4-e4b`    | ✅ OK  | 22ms     | ❌ FAIL (markdown fences) | Parcial, alucina catálogo   | ⚠️ Con ajuste parser |
+| Modelo                  | Health | Latencia | JSON Válido         | Calidad                     | Recomendado         |
+| ----------------------- | ------ | -------- | ------------------- | --------------------------- | ------------------- |
+| `llama-3.2-1b-instruct` | ✅ OK  | 22ms     | ❌ FAIL             | Texto plano, sin estructura | ❌ No               |
+| `google/gemma-4-e4b`    | ✅ OK  | 22ms     | ✅ PASS (parser OK) | Parcial, alucina catálogo   | ⚠️ Modelo ≥7B mejor |
 
 Detalles en:
 
 - `docs/audits/STACK-2026-LMSTUDIO-PROVIDER-IMPLEMENTATION-01.md` (llama-3.2-1b)
 - `docs/audits/STACK-2026-LMSTUDIO-GEMMA-MODEL-SMOKE-01.md` (gemma-4-e4b)
+- `docs/audits/STACK-2026-LMSTUDIO-JSON-PARSER-HARDENING-01.md` (parser hardening)
+
+## Parser JSON Hardening (STACK-2026-LMSTUDIO-JSON-PARSER-HARDENING-01)
+
+`extractJSON()` en `lmstudio.provider.ts` ahora soporta:
+
+1. **JSON puro** — `{"answer":"..."}`
+2. **Markdown fences `json`** — `json {...}`
+3. **Markdown fences genérico** — `{...}`
+4. **Texto libre + primer objeto balanceado** — `preámbulo {...} posdata`
+
+Estrategia: trim → probar JSON puro → buscar fence ` ```json ... ``` ` → buscar primer `{...}` balanceado → `null`.
+
+**Limitación:** Parser no corrige alucinaciones del modelo (ej. "no aceites" cuando sí hay). Eso requiere modelo mejor o RAG, no parche de parser.
 
 ## Prompt Design
 
