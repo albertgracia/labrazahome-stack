@@ -6,9 +6,9 @@ import Card from '../../components/ui/Card.astro';
 import Badge from '../../components/ui/Badge.astro';
 import Button from '../../components/ui/Button.astro';
 import ProductCategoryNav from '../../components/catalog/ProductCategoryNav.astro';
-import ProductCardPremium from '../../components/catalog/ProductCardPremium.astro';
+import ProductCardMaster from '../../components/catalog/ProductCardMaster.astro';
 import { categories } from '../../data/catalog';
-import { getFeaturedProducts, getProductsByCategory } from '../../data/catalog';
+import { getFeaturedProductMasters, getProductsByCategory } from '../../data/catalog';
 ---
 
 <Layout
@@ -45,7 +45,7 @@ import { getFeaturedProducts, getProductsByCategory } from '../../data/catalog';
         <h2 class="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">Productos destacados</h2>
       </div>
       <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {getFeaturedProducts().map(p => <ProductCardPremium product={p} />)}
+        {getFeaturedProductMasters().map(p => <ProductCardMaster product={p} />)}
       </div>
     </Container>
   </Section>

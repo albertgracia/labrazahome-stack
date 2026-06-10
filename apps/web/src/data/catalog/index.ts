@@ -5,3 +5,12 @@ export {
   getProductBySlug,
   getFeaturedProducts,
 } from "./products";
+export {
+  toProductMaster,
+  toProductMasters,
+  getProductMasterBySlug,
+  getProductMastersByCategory,
+  getFeaturedProductMasters,
+  validateProductMaster,
+  convertAndValidateAll,
+} from "./productMasterAdapter";

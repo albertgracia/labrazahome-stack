@@ -1,0 +1,47 @@
+---
+import type { ProductMaster } from '../../../../../packages/shared/src/product-master';
+import Badge from '../ui/Badge.astro';
+import Card from '../ui/Card.astro';
+
+export interface Props {
+  product: ProductMaster;
+}
+
+const { product } = Astro.props;
+
+const statusLabels: Record<string, { label: string; variant: 'default' | 'warning' }> = {
+  concept: { label: 'Concepto', variant: 'default' },
+  design: { label: 'En diseño', variant: 'default' },
+  prototype: { label: 'Prototipo', variant: 'warning' },
+  future: { label: 'Futuro', variant: 'default' },
+  published_mock: { label: 'Mock', variant: 'warning' },
+  archived_mock: { label: 'Archivado', variant: 'default' },
+};
+---
+
+<a href={`/catalogo/${product.category}/${product.slug}`} class="group block">
+  <Card class="h-full overflow-hidden p-0 transition hover:shadow-lg">
+    <div class={`h-40 bg-gradient-to-br ${product.imageGradient} flex items-center justify-center`}>
+      <span class="text-4xl opacity-70 group-hover:scale-110 transition-transform duration-300">
+        {product.category === 'vinos' && '🍷'}
+        {product.category === 'aceites' && '🫒'}
+        {product.category === 'mieles' && '🍯'}
+        {product.category === 'gourmet' && '🧀'}
+        {product.category === 'packs' && '🎁'}
+      </span>
+    </div>
+    <div class="p-5">
+      <div class="flex items-start justify-between gap-2">
+        <h3 class="font-semibold text-zinc-900 dark:text-zinc-100">{product.name}</h3>
+        <Badge variant={statusLabels[product.status]?.variant ?? 'default'}>{statusLabels[product.status]?.label ?? product.status}</Badge>
+      </div>
+      <p class="mt-1 text-xs text-muted dark:text-muted-dark">{product.producer} · {product.region}</p>
+      <p class="mt-2 text-sm leading-relaxed text-muted dark:text-muted-dark">{product.shortDescription}</p>
+      <div class="mt-3 flex flex-wrap gap-1.5">
+        {product.tags.slice(0, 3).map(tag => (
+          <span class="rounded-md bg-zinc-100 px-2 py-0.5 text-xs text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400">{tag}</span>
+        ))}
+      </div>
+    </div>
+  </Card>
+</a>
