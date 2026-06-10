@@ -6,10 +6,10 @@ Migrar las selecciones del B2B Workspace (`/b2b/workspace`) para que los nombres
 
 ## Archivos modificados
 
-| Archivo                                                       | Cambio                                                                         |
-| ------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `apps/web/src/data/b2b/workspaceMock.ts`                      | `import { getProductMasterBySlug }`; seed data con slugs; `getWorkspaceSelections()` |
-| `apps/web/src/pages/b2b/workspace.astro`                      | importa `getWorkspaceSelections` en lugar de `workspaceSelections` constante   |
+| Archivo                                  | Cambio                                                                               |
+| ---------------------------------------- | ------------------------------------------------------------------------------------ |
+| `apps/web/src/data/b2b/workspaceMock.ts` | `import { getProductMasterBySlug }`; seed data con slugs; `getWorkspaceSelections()` |
+| `apps/web/src/pages/b2b/workspace.astro` | importa `getWorkspaceSelections` en lugar de `workspaceSelections` constante         |
 
 ## Estrategia
 
@@ -21,13 +21,13 @@ Migrar las selecciones del B2B Workspace (`/b2b/workspace`) para que los nombres
 
 ## Resultado
 
-| Campo                | Antes                      | Ahora                                  |
-| -------------------- | -------------------------- | -------------------------------------- |
-| `products[].name`    | Hardcodeado en seed        | `getProductMasterBySlug(slug)?.name`   |
-| `products[].quantity`| Hardcodeado en seed        | Se mantiene en seed, sin cambios       |
-| `createdAt`          | Mock local                 | Sin cambios                            |
-| `useCase`            | Mock local                 | Sin cambios                            |
-| `status`             | Mock local                 | Sin cambios                            |
+| Campo                 | Antes               | Ahora                                |
+| --------------------- | ------------------- | ------------------------------------ |
+| `products[].name`     | Hardcodeado en seed | `getProductMasterBySlug(slug)?.name` |
+| `products[].quantity` | Hardcodeado en seed | Se mantiene en seed, sin cambios     |
+| `createdAt`           | Mock local          | Sin cambios                          |
+| `useCase`             | Mock local          | Sin cambios                          |
+| `status`              | Mock local          | Sin cambios                          |
 
 ## Slugs mapeados
 
@@ -49,23 +49,23 @@ Migrar las selecciones del B2B Workspace (`/b2b/workspace`) para que los nombres
 
 ## Validaciones
 
-| Comando                  | Resultado |
-| ------------------------ | --------- |
-| `pnpm format`            | ✅        |
-| `pnpm --filter web typecheck` | ✅   |
-| `pnpm --filter web build`     | ✅ (28p) |
-| `pnpm check`             | ✅        |
+| Comando                       | Resultado |
+| ----------------------------- | --------- |
+| `pnpm format`                 | ✅        |
+| `pnpm --filter web typecheck` | ✅        |
+| `pnpm --filter web build`     | ✅ (28p)  |
+| `pnpm check`                  | ✅        |
 
 ## Smoke local
 
-| Ruta                 | Resultado |
-| -------------------- | --------- |
-| `/b2b/workspace`     | ✅        |
-| `/b2b`               | ✅        |
-| `/b2b/documentos`    | ✅        |
-| `/sommelier`         | ✅        |
-| `/catalogo`          | ✅        |
-| `/admin`             | ✅        |
+| Ruta              | Resultado |
+| ----------------- | --------- |
+| `/b2b/workspace`  | ✅        |
+| `/b2b`            | ✅        |
+| `/b2b/documentos` | ✅        |
+| `/sommelier`      | ✅        |
+| `/catalogo`       | ✅        |
+| `/admin`          | ✅        |
 
 ## Commit
 

@@ -10,12 +10,15 @@ import ProductDocuments from '../../components/b2b/documents/ProductDocuments.as
 import DocumentLabNotice from '../../components/b2b/documents/DocumentLabNotice.astro';
 import {
   documentStats,
-  featuredDocuments,
-  productDocuments,
+  getFeaturedDocuments,
+  getProductDocuments,
   documentCategories,
   documentProfiles,
   documentStatuses,
 } from '../../data/b2b/documentCenter';
+
+const featuredDocuments = getFeaturedDocuments();
+const productDocuments = getProductDocuments();
 
 const productGroups = [
   {

@@ -4,6 +4,7 @@ import type {
   B2BDocumentStatus,
   B2BDocumentProfile,
 } from "../../types/b2b";
+import { getProductMasterBySlug } from "../catalog/index";
 
 export interface DocumentStat {
   label: string;
@@ -74,7 +75,9 @@ export const documentStats: DocumentStat[] = [
   },
 ];
 
-export const featuredDocuments: B2BDocumentMock[] = [
+type DocumentSeed = Omit<B2BDocumentMock, "productName">;
+
+const featuredDocumentSeeds: DocumentSeed[] = [
   {
     id: "doc-feat-001",
     title: "Ficha técnica — Reserva del Alto Ebro",
@@ -83,7 +86,6 @@ export const featuredDocuments: B2BDocumentMock[] = [
     profile: ["Restaurante", "Distribuidor", "Empresa"],
     status: "Disponible",
     productSlug: "reserva-del-alto-ebro",
-    productName: "Reserva del Alto Ebro",
     description:
       "Ficha técnica completa con especificaciones, notas de cata, maridaje recomendado y condiciones de conservación.",
     professionalUse:
@@ -105,7 +107,6 @@ export const featuredDocuments: B2BDocumentMock[] = [
     ],
     status: "Disponible",
     productSlug: null,
-    productName: null,
     description:
       "Catálogo comercial completo con todos los productos, condiciones B2B, perfiles profesionales y casos de uso.",
     professionalUse: "Presentación comercial para clientes B2B y prospección.",
@@ -120,7 +121,6 @@ export const featuredDocuments: B2BDocumentMock[] = [
     profile: ["Restaurante"],
     status: "Disponible",
     productSlug: null,
-    productName: null,
     description:
       "Argumentario comercial para equipos de sala: cómo presentar cada vino, maridajes sugeridos y preguntas frecuentes.",
     professionalUse: "Formación de camareros y sommeliers para venta en sala.",
@@ -135,7 +135,6 @@ export const featuredDocuments: B2BDocumentMock[] = [
     profile: ["Restaurante", "Hotel", "Tienda gourmet"],
     status: "Disponible",
     productSlug: null,
-    productName: null,
     description:
       "Guía completa de maridajes profesionales: vinos, aceites, mieles y conservas para menús de alta cocina.",
     professionalUse:
@@ -151,7 +150,6 @@ export const featuredDocuments: B2BDocumentMock[] = [
     profile: ["Empresa", "Tienda gourmet"],
     status: "Disponible",
     productSlug: "pack-mesa-premium",
-    productName: "Pack Mesa Premium",
     description:
       "Ficha comercial del pack estrella: composición, presentación, casos de uso y opciones de personalización.",
     professionalUse:
@@ -161,7 +159,19 @@ export const featuredDocuments: B2BDocumentMock[] = [
   },
 ];
 
-export const productDocuments: B2BDocumentMock[] = [
+function resolveProductName(slug: string | null): string | null {
+  if (!slug) return null;
+  return getProductMasterBySlug(slug)?.name ?? slug;
+}
+
+export function getFeaturedDocuments(): B2BDocumentMock[] {
+  return featuredDocumentSeeds.map((seed) => ({
+    ...seed,
+    productName: resolveProductName(seed.productSlug),
+  }));
+}
+
+const productDocumentSeeds: DocumentSeed[] = [
   // Vinos
   {
     id: "doc-prod-001",
@@ -171,7 +181,6 @@ export const productDocuments: B2BDocumentMock[] = [
     profile: ["Restaurante", "Distribuidor"],
     status: "Disponible",
     productSlug: "reserva-del-alto-ebro",
-    productName: "Reserva del Alto Ebro",
     description:
       "Especificaciones técnicas, cata y maridaje del tinto premium.",
     professionalUse: "Selección y compra profesional.",
@@ -186,7 +195,6 @@ export const productDocuments: B2BDocumentMock[] = [
     profile: ["Restaurante", "Tienda gourmet"],
     status: "Disponible",
     productSlug: "garnacha-de-altura",
-    productName: "Garnacha de Altura",
     description: "Ficha del vino ecológico de garnacha de altura.",
     professionalUse: "Carta de vinos ecológicos.",
     mockContent:
@@ -200,7 +208,6 @@ export const productDocuments: B2BDocumentMock[] = [
     profile: ["Restaurante", "Hotel"],
     status: "Disponible",
     productSlug: "blanco-de-viura-seleccion",
-    productName: "Blanco de Viura Selección",
     description: "Ficha del blanco con crianza para carta profesional.",
     professionalUse: "Carta de blancos con cuerpo.",
     mockContent:
@@ -215,7 +222,6 @@ export const productDocuments: B2BDocumentMock[] = [
     profile: ["Restaurante", "Tienda gourmet"],
     status: "Disponible",
     productSlug: "arbequina-temprana",
-    productName: "Arbequina Temprana",
     description: "AOVE arbequina de cosecha temprana.",
     professionalUse: "Aceite de acabado para cocina profesional.",
     mockContent:
@@ -229,7 +235,6 @@ export const productDocuments: B2BDocumentMock[] = [
     profile: ["Restaurante", "Distribuidor"],
     status: "Disponible",
     productSlug: "coupage-de-sierra",
-    productName: "Coupage de Sierra",
     description: "AOVE coupage de sierra para uso profesional versátil.",
     professionalUse: "Aceite multiuso para cocina y mesa.",
     mockContent:
@@ -244,7 +249,6 @@ export const productDocuments: B2BDocumentMock[] = [
     profile: ["Tienda gourmet", "Restaurante"],
     status: "Disponible",
     productSlug: "miel-de-brezo-atlantico",
-    productName: "Miel de Brezo Atlántico",
     description: "Miel monovarietal de brezo atlántico.",
     professionalUse: "Degustación, maridaje con queso, venta gourmet.",
     mockContent:
@@ -258,7 +262,6 @@ export const productDocuments: B2BDocumentMock[] = [
     profile: ["Hotel", "Tienda gourmet"],
     status: "Disponible",
     productSlug: "miel-de-romero-clara",
-    productName: "Miel de Romero Clara",
     description: "Miel de romero suave, ideal para desayuno buffet.",
     professionalUse: "Buffet desayuno, venta gourmet, regalo.",
     mockContent:
@@ -273,7 +276,6 @@ export const productDocuments: B2BDocumentMock[] = [
     profile: ["Empresa", "Tienda gourmet"],
     status: "Disponible",
     productSlug: "pack-descubrimiento-rioja",
-    productName: "Pack Descubrimiento Rioja",
     description:
       "Pack de iniciación a la D.O.Ca. Rioja con tres vinos emblemáticos.",
     professionalUse: "Regalo corporativo y cata profesional.",
@@ -288,10 +290,16 @@ export const productDocuments: B2BDocumentMock[] = [
     profile: ["Empresa", "Restaurante"],
     status: "Disponible",
     productSlug: "pack-mesa-premium",
-    productName: "Pack Mesa Premium",
     description: "Pack gourmet completo para regalo corporativo de alta gama.",
     professionalUse: "Regalo de empresa y cesta navideña.",
     mockContent:
       "Composición: Vino tinto + AOVE + Miel. Presentación: caja madera con asa. MOQ: 10 packs. Personalización disponible.",
   },
 ];
+
+export function getProductDocuments(): B2BDocumentMock[] {
+  return productDocumentSeeds.map((seed) => ({
+    ...seed,
+    productName: resolveProductName(seed.productSlug),
+  }));
+}
