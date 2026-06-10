@@ -570,9 +570,10 @@ packages/shared/src/
 
 ## Consolidaciones ejecutadas
 
-| Contrato           | Fase                                    | Archivo        | Estado                                                                                                |
-| ------------------ | --------------------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
-| `B2BSelectionItem` | `STACK-2026-B2B-TYPES-CONSOLIDATION-01` | `types/b2b.ts` | ✅ Consolidado — campo `status?` y `source?` añadidos, interfaz local de `mockDashboard.ts` eliminada |
+| Contrato           | Fase                                           | Archivo                                 | Estado                                                                                                |
+| ------------------ | ---------------------------------------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `B2BSelectionItem` | `STACK-2026-B2B-TYPES-CONSOLIDATION-01`        | `types/b2b.ts`                          | ✅ Consolidado — campo `status?` y `source?` añadidos, interfaz local de `mockDashboard.ts` eliminada |
+| `ProductMaster`    | `STACK-2026-CATALOG-PRODUCTMASTER-SCAFFOLD-01` | `packages/shared/src/product-master.ts` | ✅ Scaffold creado — todos los tipos compartidos exportados desde `packages/shared`                   |
 
 ## Criterios de éxito
 

@@ -32,9 +32,9 @@ Actualmente existen **4 fuentes de datos de producto independientes**:
 
 ## ProductMaster — Propuesta de Diseño
 
-### Ubicación propuesta
+### Ubicación
 
-`packages/shared/src/product-master.ts`
+`packages/shared/src/product-master.ts` (implementado)
 
 ### Estructura
 
@@ -295,6 +295,12 @@ Fase 1 (ProductMaster)
 Cada fase puede ejecutarse de forma independiente **siempre que Fase 1 esté completa**.
 
 ---
+
+## Implementación
+
+| Fase                                           | Archivo                                 | Estado                                                                    |
+| ---------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------- |
+| `STACK-2026-CATALOG-PRODUCTMASTER-SCAFFOLD-01` | `packages/shared/src/product-master.ts` | ✅ Scaffold creado — tipos compartidos exportados desde `packages/shared` |
 
 ## Criterios de Éxito
 
