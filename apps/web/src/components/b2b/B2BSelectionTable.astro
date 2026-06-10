@@ -1,5 +1,5 @@
 ---
-import type { B2BSelectionItem } from '../../data/b2b/mockDashboard';
+import type { B2BSelectionItem } from '../../types/b2b';
 
 export interface Props {
   items: B2BSelectionItem[];
@@ -7,8 +7,10 @@ export interface Props {
 const { items } = Astro.props;
 
 const statusColor: Record<string, string> = {
-  "En selección": "text-emerald-400 border-emerald-500/20 bg-emerald-500/5",
-  "Pendiente": "text-amber-400 border-amber-500/20 bg-amber-500/5",
+  "ready_for_quote": "text-emerald-400 border-emerald-500/20 bg-emerald-500/5",
+  "draft": "text-amber-400 border-amber-500/20 bg-amber-500/5",
+  "quote_prepared_mock": "text-blue-400 border-blue-500/20 bg-blue-500/5",
+  "archived_mock": "text-zinc-400 border-zinc-500/20 bg-zinc-500/5",
 };
 ---
 
@@ -26,13 +28,14 @@ const statusColor: Record<string, string> = {
       </thead>
       <tbody>
         {items.map((item) => {
-          const sc = statusColor[item.status] || "text-zinc-400 border-zinc-500/20 bg-zinc-500/5";
+          const status = item.status ?? "draft";
+          const sc = statusColor[status] || "text-zinc-400 border-zinc-500/20 bg-zinc-500/5";
           return (
             <tr class="border-b border-border last:border-0 dark:border-border-dark">
               <td class="px-4 py-3 font-medium">{item.productName}</td>
-              <td class="px-4 py-3 text-muted dark:text-muted-dark">{item.quantity}</td>
-              <td class="px-4 py-3 text-muted dark:text-muted-dark">{item.use}</td>
-              <td class="px-4 py-3"><span class={`rounded-full border px-2 py-0.5 text-[10px] font-medium ${sc}`}>{item.status}</span></td>
+              <td class="px-4 py-3 text-muted dark:text-muted-dark">{item.quantity} uds</td>
+              <td class="px-4 py-3 text-muted dark:text-muted-dark">{item.useCase || "—"}</td>
+              <td class="px-4 py-3"><span class={`rounded-full border px-2 py-0.5 text-[10px] font-medium ${sc}`}>{status}</span></td>
             </tr>
           );
         })}

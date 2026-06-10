@@ -1,3 +1,14 @@
+export type B2BSelectionStatus =
+  | "draft"
+  | "ready_for_quote"
+  | "quote_prepared_mock"
+  | "archived_mock";
+
+export type B2BSelectionSource =
+  | "dashboard_mock"
+  | "quote_flow"
+  | "workspace_mock";
+
 export interface B2BSelectionItem {
   productSlug: string;
   productName: string;
@@ -5,6 +16,8 @@ export interface B2BSelectionItem {
   quantity: number;
   useCase: B2BUseCase;
   addedAt: string;
+  status?: B2BSelectionStatus;
+  source?: B2BSelectionSource;
 }
 
 export type B2BUseCase =

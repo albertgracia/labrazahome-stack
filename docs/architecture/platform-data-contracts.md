@@ -568,6 +568,12 @@ packages/shared/src/
 
 ---
 
+## Consolidaciones ejecutadas
+
+| Contrato           | Fase                                    | Archivo        | Estado                                                                                                |
+| ------------------ | --------------------------------------- | -------------- | ----------------------------------------------------------------------------------------------------- |
+| `B2BSelectionItem` | `STACK-2026-B2B-TYPES-CONSOLIDATION-01` | `types/b2b.ts` | ✅ Consolidado — campo `status?` y `source?` añadidos, interfaz local de `mockDashboard.ts` eliminada |
+
 ## Criterios de éxito
 
 - [ ] Todos los módulos importan `ProductMaster` desde `packages/shared/`

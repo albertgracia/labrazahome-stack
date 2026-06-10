@@ -1,3 +1,5 @@
+import type { B2BSelectionItem, B2BUseCase } from "../../types/b2b";
+
 export interface B2BKpi {
   label: string;
   value: string;
@@ -21,14 +23,6 @@ export interface B2BProduct {
   image: string;
   professionalUse: string;
   moq: string;
-  status: string;
-}
-
-export interface B2BSelectionItem {
-  productName: string;
-  productSlug: string;
-  quantity: string;
-  use: string;
   status: string;
 }
 
@@ -196,30 +190,42 @@ export const currentSelection: B2BSelectionItem[] = [
   {
     productName: "Reserva del Alto Ebro",
     productSlug: "reserva-del-alto-ebro",
-    quantity: "12 botellas",
-    use: "Carta restaurante",
-    status: "En selección",
+    productCategory: "vinos",
+    quantity: 12,
+    useCase: "Carta restaurante" as B2BUseCase,
+    addedAt: "2026-06-10T10:00:00.000Z",
+    status: "ready_for_quote",
+    source: "dashboard_mock",
   },
   {
     productName: "Coupage de Sierra",
     productSlug: "coupage-de-sierra",
-    quantity: "6 botellas",
-    use: "Cocina profesional",
-    status: "En selección",
+    productCategory: "aceites",
+    quantity: 6,
+    useCase: "" as B2BUseCase,
+    addedAt: "2026-06-10T09:30:00.000Z",
+    status: "ready_for_quote",
+    source: "dashboard_mock",
   },
   {
     productName: "Miel de Romero Clara",
     productSlug: "miel-de-romero-clara",
-    quantity: "24 uds",
-    use: "Buffet desayuno",
-    status: "Pendiente",
+    productCategory: "mieles",
+    quantity: 24,
+    useCase: "" as B2BUseCase,
+    addedAt: "2026-06-09T14:00:00.000Z",
+    status: "draft",
+    source: "dashboard_mock",
   },
   {
     productName: "Pack Mesa Premium",
     productSlug: "pack-mesa-premium",
-    quantity: "10 packs",
-    use: "Regalo corporativo",
-    status: "En selección",
+    productCategory: "packs",
+    quantity: 10,
+    useCase: "Regalo corporativo" as B2BUseCase,
+    addedAt: "2026-06-08T11:00:00.000Z",
+    status: "ready_for_quote",
+    source: "dashboard_mock",
   },
 ];
 
