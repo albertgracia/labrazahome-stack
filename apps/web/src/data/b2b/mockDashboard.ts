@@ -1,4 +1,5 @@
 import type { B2BSelectionItem, B2BUseCase } from "../../types/b2b";
+import { getProductMasterBySlug } from "../catalog/index";
 
 export interface B2BKpi {
   label: string;
@@ -129,62 +130,58 @@ export const professionalProfiles: B2BProfessionalProfile[] = [
   },
 ];
 
-export const recommendedProducts: B2BProduct[] = [
-  {
-    slug: "reserva-del-alto-ebro",
-    name: "Reserva del Alto Ebro",
-    category: "vinos",
-    image: "🍷",
-    professionalUse: "Carta de tintos premium",
-    moq: "12 uds",
-    status: "En catálogo",
-  },
-  {
-    slug: "coupage-de-sierra",
-    name: "Coupage de Sierra",
-    category: "aceites",
-    image: "",
-    professionalUse: "AOVE para cocina profesional",
-    moq: "6 uds",
-    status: "En catálogo",
-  },
-  {
-    slug: "miel-de-romero-clara",
-    name: "Miel de Romero Clara",
-    category: "mieles",
-    image: "🍯",
-    professionalUse: "Desayuno buffet / tienda gourmet",
-    moq: "12 uds",
-    status: "En catálogo",
-  },
-  {
-    slug: "pack-mesa-premium",
-    name: "Pack Mesa Premium",
-    category: "packs",
-    image: "🎁",
-    professionalUse: "Regalo corporativo / cliente",
-    moq: "10 packs",
-    status: "En catálogo",
-  },
-  {
-    slug: "garnacha-de-altura",
-    name: "Garnacha de Altura",
-    category: "vinos",
-    image: "🍷",
-    professionalUse: "Carta de vinos ecológicos",
-    moq: "12 uds",
-    status: "En catálogo",
-  },
-  {
-    slug: "crema-de-almendra-premium",
-    name: "Crema de Almendra Premium",
-    category: "gourmet",
-    image: "",
-    professionalUse: "Repostería profesional / degustación",
-    moq: "6 uds",
-    status: "En catálogo",
-  },
-];
+export function getB2BRecommendedProducts(): B2BProduct[] {
+  const b2bMockMap: Record<
+    string,
+    { professionalUse: string; moq: string; image: string }
+  > = {
+    "reserva-del-alto-ebro": {
+      professionalUse: "Carta de tintos premium",
+      moq: "12 uds",
+      image: "🍷",
+    },
+    "coupage-de-sierra": {
+      professionalUse: "AOVE para cocina profesional",
+      moq: "6 uds",
+      image: "",
+    },
+    "miel-de-romero-clara": {
+      professionalUse: "Desayuno buffet / tienda gourmet",
+      moq: "12 uds",
+      image: "🍯",
+    },
+    "pack-mesa-premium": {
+      professionalUse: "Regalo corporativo / cliente",
+      moq: "10 packs",
+      image: "🎁",
+    },
+    "garnacha-de-altura": {
+      professionalUse: "Carta de vinos ecológicos",
+      moq: "12 uds",
+      image: "🍷",
+    },
+    "crema-de-almendra-premium": {
+      professionalUse: "Repostería profesional / degustación",
+      moq: "6 uds",
+      image: "",
+    },
+  };
+
+  const slugs = Object.keys(b2bMockMap);
+  return slugs.map((slug) => {
+    const product = getProductMasterBySlug(slug);
+    const mock = b2bMockMap[slug];
+    return {
+      slug: product?.slug ?? slug,
+      name: product?.name ?? slug,
+      category: product?.category ?? "unknown",
+      image: mock.image,
+      professionalUse: mock.professionalUse,
+      moq: mock.moq,
+      status: "En catálogo",
+    };
+  });
+}
 
 export const currentSelection: B2BSelectionItem[] = [
   {

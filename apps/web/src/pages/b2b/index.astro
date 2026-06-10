@@ -15,11 +15,13 @@ import B2BSelectionManager from '../../components/b2b/B2BSelectionManager';
 import {
   b2bKpis,
   professionalProfiles,
-  recommendedProducts,
+  getB2BRecommendedProducts,
   documents,
   recentActivity,
   sommelierHints,
 } from '../../data/b2b/mockDashboard';
+
+const recommendedProducts = getB2BRecommendedProducts();
 ---
 
 <Layout
