@@ -1,6 +1,9 @@
 import type { Profile } from "../../types/sommelier";
-import type { ProductPremium } from "../../types/catalog";
-import { getProductBySlug, getProductsByCategory } from "../catalog/index";
+import type { ProductMaster } from "../../../../../packages/shared/src/product-master";
+import {
+  getProductMasterBySlug,
+  getProductMastersByCategory,
+} from "../catalog/index";
 import { applyProfilePrefix } from "./profiles";
 
 const WINE_RED_MEAT_SLUGS = ["reserva-del-alto-ebro", "garnacha-de-altura"];
@@ -9,14 +12,14 @@ function pick<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function formatAllRatings(product: ProductPremium): string {
+function formatAllRatings(product: ProductMaster): string {
   if (!product.ratings || product.ratings.length === 0) return "";
   return product.ratings
     .map((r) => `${r.source} ${r.score}/${r.maxScore}`)
     .join(" · ");
 }
 
-function buildWineKnowledge(product: ProductPremium): string {
+function buildWineKnowledge(product: ProductMaster): string {
   const k = product.knowledge;
   if (!k) return "";
   const parts: string[] = [];
@@ -33,7 +36,7 @@ function buildWineKnowledge(product: ProductPremium): string {
   return "\n\n" + parts.join("\n");
 }
 
-function buildOilKnowledge(product: ProductPremium): string {
+function buildOilKnowledge(product: ProductMaster): string {
   const k = product.knowledge;
   if (!k) return "";
   const parts: string[] = [];
@@ -50,7 +53,7 @@ function buildOilKnowledge(product: ProductPremium): string {
   return "\n\n" + parts.join("\n");
 }
 
-function buildHoneyKnowledge(product: ProductPremium): string {
+function buildHoneyKnowledge(product: ProductMaster): string {
   const k = product.knowledge;
   if (!k) return "";
   const parts: string[] = [];
@@ -67,7 +70,7 @@ function buildHoneyKnowledge(product: ProductPremium): string {
   return "\n\n" + parts.join("\n");
 }
 
-function buildPackKnowledge(product: ProductPremium): string {
+function buildPackKnowledge(product: ProductMaster): string {
   const k = product.knowledge;
   if (!k) return "";
   const parts: string[] = [];
@@ -97,15 +100,15 @@ interface MockResult {
 }
 
 function resultForProduct(
-  product: ProductPremium,
+  product: ProductMaster,
   reason: string,
   confidence: number,
 ): MockResult {
   const pairingEntry =
-    product.pairing.length > 0
+    product.pairings.length > 0
       ? {
           product: product.name,
-          pairing: product.pairing.slice(0, 3).join(", "),
+          pairing: product.pairings.slice(0, 3).join(", "),
           reason: "Recomendación basada en el perfil del producto.",
         }
       : undefined;
@@ -164,7 +167,7 @@ export function generateMockResponse(
     lower.includes("vino tinto para")
   ) {
     const slug = pick(WINE_RED_MEAT_SLUGS);
-    const product = getProductBySlug(slug);
+    const product = getProductMasterBySlug(slug);
     if (!product) return fallback(profile);
     const ratings = formatAllRatings(product);
     const knowledge = buildWineKnowledge(product);
@@ -183,7 +186,7 @@ export function generateMockResponse(
           confidence: 0.92,
         },
       ],
-      pairings: product.pairing.slice(0, 4).map((p) => ({
+      pairings: product.pairings.slice(0, 4).map((p) => ({
         product: product.name,
         pairing: p,
         reason: `La estructura y cuerpo de ${product.name} armoniza perfectamente con ${p.toLowerCase()}.`,
@@ -194,8 +197,8 @@ export function generateMockResponse(
 
   // --- CASE 2: Cheese ---
   if (lower.includes("queso") || lower.includes("quesos")) {
-    const products = getProductsByCategory("vinos").filter((p) =>
-      p.pairing.some((pa) => pa.toLowerCase().includes("queso")),
+    const products = getProductMastersByCategory("vinos").filter((p) =>
+      p.pairings.some((pa) => pa.toLowerCase().includes("queso")),
     );
     if (products.length === 0) return fallback();
     const product = pick(products);
@@ -226,7 +229,7 @@ export function generateMockResponse(
           confidence: 0.88,
         },
       ],
-      pairings: product.pairing
+      pairings: product.pairings
         .filter((p) => p.toLowerCase().includes("queso"))
         .map((p) => ({
           product: product.name,
@@ -239,7 +242,7 @@ export function generateMockResponse(
 
   // --- CASE 3: Olive oil ---
   if (lower.includes("aceite") || lower.includes("aove")) {
-    const products = getProductsByCategory("aceites");
+    const products = getProductMastersByCategory("aceites");
     if (products.length === 0) return fallback();
     const product = pick(products);
     const knowledge = buildOilKnowledge(product);
@@ -258,7 +261,7 @@ export function generateMockResponse(
           confidence: 0.9,
         },
       ],
-      pairings: product.pairing.slice(0, 3).map((p) => ({
+      pairings: product.pairings.slice(0, 3).map((p) => ({
         product: product.name,
         pairing: p,
         reason: `El perfil frutado de ${product.name} realza los sabores de ${p.toLowerCase()}.`,
@@ -269,7 +272,7 @@ export function generateMockResponse(
 
   // --- CASE 4: Honey ---
   if (lower.includes("miel") || lower.includes("mieles")) {
-    const products = getProductsByCategory("mieles");
+    const products = getProductMastersByCategory("mieles");
     if (products.length === 0) return fallback();
     const product = pick(products);
     const knowledge = buildHoneyKnowledge(product);
@@ -288,7 +291,7 @@ export function generateMockResponse(
           confidence: 0.9,
         },
       ],
-      pairings: product.pairing.slice(0, 3).map((p) => ({
+      pairings: product.pairings.slice(0, 3).map((p) => ({
         product: product.name,
         pairing: p,
         reason: `${product.name} aporta un contraste dulce que realza ${p.toLowerCase()}.`,
@@ -303,7 +306,7 @@ export function generateMockResponse(
     lower.includes("pack") ||
     lower.includes("caja")
   ) {
-    const products = getProductsByCategory("packs");
+    const products = getProductMastersByCategory("packs");
     if (products.length === 0) return fallback();
     const product = pick(products);
     const knowledge = buildPackKnowledge(product);
@@ -322,7 +325,7 @@ export function generateMockResponse(
           confidence: 0.95,
         },
       ],
-      pairings: product.pairing.slice(0, 3).map((p) => ({
+      pairings: product.pairings.slice(0, 3).map((p) => ({
         product: product.name,
         pairing: p,
         reason: `${product.name} está diseñado para ${p.toLowerCase()}.`,

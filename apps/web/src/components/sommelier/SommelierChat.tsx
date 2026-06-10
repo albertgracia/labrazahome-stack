@@ -9,7 +9,7 @@ import type {
   ChatMessage as ChatMessageType,
   ConversationContext,
 } from "../../types/sommelier";
-import type { ProductPremium } from "../../types/catalog";
+import type { ProductMaster } from "../../../../../packages/shared/src/product-master";
 import {
   processConversation,
   getCategoryLabel,
@@ -26,7 +26,7 @@ import {
 } from "../../lib/sommelier/config";
 
 interface Props {
-  initialProduct?: ProductPremium;
+  initialProduct?: ProductMaster;
 }
 
 function loadProfile(): Profile {

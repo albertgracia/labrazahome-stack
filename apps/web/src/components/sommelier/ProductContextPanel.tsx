@@ -1,8 +1,8 @@
 import React from "react";
-import { ProductPremium } from "../../types/catalog";
+import type { ProductMaster } from "../../../../../packages/shared/src/product-master";
 
 interface Props {
-  product: ProductPremium;
+  product: ProductMaster;
 }
 
 const ProductContextPanel: React.FC<Props> = ({ product }) => {

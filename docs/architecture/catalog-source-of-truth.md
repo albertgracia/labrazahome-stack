@@ -305,8 +305,9 @@ Cada fase puede ejecutarse de forma independiente **siempre que Fase 1 esté com
 | `STACK-2026-CATALOG-PRODUCTMASTER-VALIDATION-01`         | `apps/web/src/data/catalog/productMasterValidation.ts` | ✅ Validación formal completada — 12/12 checks pass, 0 fallos                                 |
 | `STACK-2026-CATALOG-PRODUCTMASTER-CONSUMER-MIGRATION-01` | `apps/web/src/pages/catalogo/index.astro`              | ✅ Primer consumidor migrado — featured products usan `ProductMaster` vía `ProductCardMaster` |
 | `STACK-2026-CATALOG-PRODUCTMASTER-CATEGORY-CONSUMER-01`  | `apps/web/src/pages/catalogo/[categoria].astro`        | ✅ Consumidor de categoría migrado — `getProductMastersByCategory` + `ProductCardMaster`      |
-| `STACK-2026-CATALOG-PRODUCTMASTER-DETAIL-CONSUMER-01`   | `apps/web/src/pages/catalogo/[categoria]/[slug].astro` | ✅ Consumidor de detalle migrado — `getProductMasterBySlug` con cast en ratings               |
+| `STACK-2026-CATALOG-PRODUCTMASTER-DETAIL-CONSUMER-01`    | `apps/web/src/pages/catalogo/[categoria]/[slug].astro` | ✅ Consumidor de detalle migrado — `getProductMasterBySlug` con cast en ratings               |
 | `STACK-2026-CATALOG-PRODUCTMASTER-CATALOG-CLEANUP-01`  | `apps/web/src/data/catalog/index.ts`                   | ✅ Barrel cleanup — dead exports eliminados; `ProductCardPremium` documentado como legacy     |
+| `STACK-2026-SOMMELIER-PRODUCTMASTER-CONSUMER-01`       | `apps/web/src/data/sommelier/mockResponses.ts` etc.    | ✅ Sommelier mock consumer migrado — `ProductPremium` → `ProductMaster` en mock + componentes |
 
 ## Criterios de Éxito
 

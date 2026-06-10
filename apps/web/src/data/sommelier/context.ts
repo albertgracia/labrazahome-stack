@@ -1,10 +1,10 @@
-import { ProductPremium } from "../../types/catalog";
-import { getProductBySlug } from "../catalog/index";
+import type { ProductMaster } from "../../../../../packages/shared/src/product-master";
+import { getProductMasterBySlug } from "../catalog/index";
 
 export function getSommelierContext(slug: string): {
-  product: ProductPremium | undefined;
+  product: ProductMaster | undefined;
   contextSlug: string;
 } {
-  const product = getProductBySlug(slug);
+  const product = getProductMasterBySlug(slug);
   return { product, contextSlug: slug };
 }
