@@ -51,7 +51,7 @@ No instances of `miel-de-milflores`, `aove-cosecha-temprana`, `aove-ecologico`, 
 
 ## Minor Inconsistencies (non-blocking)
 
-- `aiAssistantMock.ts:116`: `coupage-de-sierra` has `productCategory: "Vinos"` instead of `"Aceites"` — this is mock AI-generated sample data; would be regenerated in production with real data. Not a functional bug.
+- ~~`aiAssistantMock.ts:116`: `coupage-de-sierra` has `productCategory: "Vinos"` instead of `"Aceites"` — this is mock AI-generated sample data; would be regenerated in production with real data. Not a functional bug.~~ ✅ Resolved by `STACK-2026-AI-ASSISTANT-MOCK-CATEGORY-FIX-01`
 
 ## Routes Verified
 

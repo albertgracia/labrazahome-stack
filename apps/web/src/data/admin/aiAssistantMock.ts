@@ -113,7 +113,7 @@ export const aiGeneratedSamples: AdminAIGeneratedSample[] = [
   {
     productSlug: "coupage-de-sierra",
     productName: "Coupage de Sierra",
-    productCategory: "Vinos",
+    productCategory: "Aceites",
     fields: [
       {
         label: "Storytelling",
