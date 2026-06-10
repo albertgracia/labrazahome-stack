@@ -12,7 +12,7 @@ import ProductPairing from '../../../components/catalog/ProductPairing.astro';
 import ProductTrustBadges from '../../../components/catalog/ProductTrustBadges.astro';
 import ProductAIHints from '../../../components/catalog/ProductAIHints.astro';
 import ProductRatings from '../../../components/catalog/ProductRatings.astro';
-import { products } from '../../../data/catalog';
+import { products, getProductMasterBySlug } from '../../../data/catalog';
 
 export async function getStaticPaths() {
   return products.map(p => ({
@@ -21,13 +21,22 @@ export async function getStaticPaths() {
   }));
 }
 
-const { product } = Astro.props;
+const product = getProductMasterBySlug(
+  Astro.params.slug as string,
+  Astro.params.categoria as any,
+);
 
-const statusLabels = {
+if (!product) {
+  throw new Error(`ProductMaster not found for slug: ${Astro.params.slug}`);
+}
+
+const statusLabels: Record<string, string> = {
   concept: 'Concepto',
   design: 'En diseño',
   prototype: 'Prototipo',
   future: 'Futuro',
+  published_mock: 'Mock publicado',
+  archived_mock: 'Archivado',
 };
 ---
 
@@ -76,7 +85,7 @@ const statusLabels = {
           <ProductSpecs specs={product.specs} />
         </div>
         <div>
-          <ProductPairing pairings={product.pairing} />
+          <ProductPairing pairings={product.pairings} />
         </div>
       </div>
     </Container>
@@ -85,7 +94,7 @@ const statusLabels = {
   {product.category === 'vinos' && product.ratings && product.ratings.length > 0 && (
     <Section>
       <Container>
-        <ProductRatings ratings={product.ratings} />
+        <ProductRatings ratings={product.ratings as any} />
       </Container>
     </Section>
   )}
