@@ -149,6 +149,7 @@ export interface WarningDistributionItem {
 export interface BlockedProductItem {
   name: string;
   reason: string;
+  productSlug?: string;
 }
 
 export interface GuardrailsConfig {

@@ -1,6 +1,7 @@
 # STACK-2026-SOMMELIER-BACKEND-PRODUCTMASTER-CONSUMER-01
 
 ## Goal
+
 Migrate backend Sommelier API (`apps/api`) catalog mock data from its legacy `catalog.mock.ts` to be aligned with `ProductMaster` slugs, categories, and metadata.
 
 ## Design Decisions
@@ -27,9 +28,9 @@ pnpm check          ✓ (0 errors, 0 warnings, 28 pages)
 
 ### API Endpoint Smoke Tests
 
-| Endpoint | Status | Notes |
-|---|---|---|
-| `GET /api/v1/status` | ✅ 200 | `{"service":"stack-2026-api","status":"running"}` |
-| `GET /api/v1/sommelier/health` | ✅ 200 | `{"status":"ok","provider":"mock"}` |
-| `GET /api/v1/sommelier/providers` | ✅ 200 | All 3 providers listed |
+| Endpoint                                 | Status | Notes                                                                      |
+| ---------------------------------------- | ------ | -------------------------------------------------------------------------- |
+| `GET /api/v1/status`                     | ✅ 200 | `{"service":"stack-2026-api","status":"running"}`                          |
+| `GET /api/v1/sommelier/health`           | ✅ 200 | `{"status":"ok","provider":"mock"}`                                        |
+| `GET /api/v1/sommelier/providers`        | ✅ 200 | All 3 providers listed                                                     |
 | `POST /api/v1/sommelier/catalog-context` | ✅ 200 | Returns 5 ProductMaster-aligned products; `coupage-de-sierra` in `aceites` |

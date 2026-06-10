@@ -46,6 +46,10 @@ interface ProductMaster {
 - Admin catalog review items (`adminDashboard.ts`)
 - Admin content manager products (`contentManager.ts`)
 
+### Web: Admin — Sommelier Governance
+
+- `apps/web/src/data/admin/sommelierGovernance.ts` — `getBlockedProducts()` derives blocked product names from ProductMaster by slug
+
 ### Backend: Sommelier API
 
 - `apps/api/src/modules/sommelier/data/product-master-catalog.adapter.ts` — self-contained adapter with 11 products aligned to ProductMaster slugs and categories

@@ -7,6 +7,7 @@ import type {
   BlockedProductItem,
   GuardrailsConfig,
 } from "../../types/admin";
+import { getProductMasterBySlug } from "../catalog/productMasterAdapter";
 
 export const sommelierKpis: SommelierKpi[] = [
   {
@@ -167,18 +168,32 @@ export const warningDistribution: WarningDistributionItem[] = [
   { type: "Alucinación catálogo", count: 1, color: "bg-red-500" },
 ];
 
-export const blockedProducts: BlockedProductItem[] = [
+const blockedProductSeeds: Array<{
+  productSlug: string;
+  reason: string;
+}> = [
   {
-    name: "Pack Mesa Premium",
+    productSlug: "pack-mesa-premium",
     reason:
       "Sin storytelling ni notas sensoriales. No recomendable hasta completar contenido editorial.",
   },
   {
-    name: "Crema de Almendra Premium",
+    productSlug: "crema-de-almendra-premium",
     reason:
       "Ficha incompleta (40%). Pendiente de imagen, SEO y contenido editorial.",
   },
 ];
+
+export function getBlockedProducts(): BlockedProductItem[] {
+  return blockedProductSeeds.map((seed) => {
+    const pm = getProductMasterBySlug(seed.productSlug);
+    return {
+      name: pm?.name ?? seed.productSlug,
+      reason: seed.reason,
+      productSlug: seed.productSlug,
+    };
+  });
+}
 
 export const guardrailsConfig: GuardrailsConfig[] = [
   {

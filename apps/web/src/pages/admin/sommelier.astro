@@ -18,9 +18,11 @@ import {
   recentInteractions,
   providerStatusItems,
   warningDistribution,
-  blockedProducts,
+  getBlockedProducts,
   guardrailsConfig,
 } from '../../data/admin/sommelierGovernance';
+
+const blockedProducts = getBlockedProducts();
 ---
 
 <Layout
