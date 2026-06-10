@@ -182,7 +182,7 @@ Cada módulo consumirá **solo los campos** que necesita, mediante interfaces de
 | Sommelier (web)      | `/sommelier`          | `data/catalog/products.ts` vía `getSommelierContext` | `ProductPremium`           | NO (consume catálogo)       |
 | Sommelier (API)      | API interna           | `api/.../data/catalog.mock.ts`                       | `MockProduct[]`            | SÍ — duplica slugs          |
 | B2B Dashboard        | `/b2b`                | `data/b2b/mockDashboard.ts`                          | `B2BProduct[]`             | SÍ — 6 productos duplicados |
-| B2B Workspace        | `/b2b/workspace`      | `data/b2b/workspaceMock.ts`                          | `WorkspaceSelection`       | SÍ — nombres duplicados     |
+| B2B Workspace        | `/b2b/workspace`      | `data/b2b/workspaceMock.ts`                          | `WorkspaceSelection`       | NO — names derivan de ProductMaster |
 | Document Center      | `/b2b/documentos`     | `data/b2b/documentCenter.ts`                         | `B2BDocumentMock[]`        | SÍ — productSlug duplicado  |
 | Backoffice Admin     | `/admin`              | `data/admin/adminDashboard.ts`                       | `CatalogReviewItem[]`      | SÍ — nombres duplicados     |
 | Content Manager      | `/admin/contenido`    | `data/admin/contentManager.ts`                       | `ContentReviewProduct[]`   | SÍ — 6 productos duplicados |
@@ -211,9 +211,9 @@ Cada módulo consumirá **solo los campos** que necesita, mediante interfaces de
 
 `api/src/modules/sommelier/data/catalog.mock.ts` define su propio `MockProduct` y array de 10 productos, que incluye productos que NO existen en el catálogo web (`miel-de-milflores`, `aove-cosecha-temprana`, `aove-ecologico`, `foie-gras-de-pato`, `pack-ibericos`).
 
-### 5. Workspace no consume quoteFlow selection
+### 5. Workspace producto resuelto, metadata aún mock
 
-`workspaceMock.ts` define `workspaceSelections` con estructura `{id, products: {name, quantity}[], createdAt, useCase, status}` en lugar de consumir `B2BSelectionItem[]` de `quoteFlow.ts`.
+`workspaceSelections` anidaba nombres hardcodeados dentro de `products: {name, quantity}[]`. Ahora `name` deriva de `ProductMaster` vía `getProductMasterBySlug()` (`getWorkspaceSelections()` function). La metadata de workspace (`createdAt`, `useCase`, `status`) sigue siendo mock, pero ya no hay nombres de producto duplicados.
 
 ### 6. Document Center no consume Content Manager
 
@@ -307,8 +307,9 @@ Cada fase puede ejecutarse de forma independiente **siempre que Fase 1 esté com
 | `STACK-2026-CATALOG-PRODUCTMASTER-CATEGORY-CONSUMER-01`  | `apps/web/src/pages/catalogo/[categoria].astro`        | ✅ Consumidor de categoría migrado — `getProductMastersByCategory` + `ProductCardMaster`      |
 | `STACK-2026-CATALOG-PRODUCTMASTER-DETAIL-CONSUMER-01`    | `apps/web/src/pages/catalogo/[categoria]/[slug].astro` | ✅ Consumidor de detalle migrado — `getProductMasterBySlug` con cast en ratings               |
 | `STACK-2026-CATALOG-PRODUCTMASTER-CATALOG-CLEANUP-01`    | `apps/web/src/data/catalog/index.ts`                   | ✅ Barrel cleanup — dead exports eliminados; `ProductCardPremium` documentado como legacy     |
-| `STACK-2026-SOMMELIER-PRODUCTMASTER-CONSUMER-01`       | `apps/web/src/data/sommelier/mockResponses.ts` etc.    | ✅ Sommelier mock consumer migrado — `ProductPremium` → `ProductMaster` en mock + componentes |
-| `STACK-2026-B2B-PRODUCTMASTER-CONSUMER-01`             | `apps/web/src/data/b2b/mockDashboard.ts`               | ✅ B2B recommended products derivan de `ProductMaster` vía `getB2BRecommendedProducts()`      |
+| `STACK-2026-SOMMELIER-PRODUCTMASTER-CONSUMER-01`         | `apps/web/src/data/sommelier/mockResponses.ts` etc.    | ✅ Sommelier mock consumer migrado — `ProductPremium` → `ProductMaster` en mock + componentes |
+| `STACK-2026-B2B-PRODUCTMASTER-CONSUMER-01`               | `apps/web/src/data/b2b/mockDashboard.ts`               | ✅ B2B recommended products derivan de `ProductMaster` vía `getB2BRecommendedProducts()`      |
+| `STACK-2026-B2B-WORKSPACE-PRODUCTMASTER-CONSUMER-01`     | `apps/web/src/data/b2b/workspaceMock.ts`               | ✅ Workspace selections product names derivan de `ProductMaster` vía `getWorkspaceSelections()` |
 
 ## Criterios de Éxito
 

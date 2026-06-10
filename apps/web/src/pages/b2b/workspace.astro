@@ -14,12 +14,14 @@ import WorkspaceNextSteps from '../../components/b2b/workspace/WorkspaceNextStep
 import {
   workspaceProfile,
   workspaceProfiles,
-  workspaceSelections,
+  getWorkspaceSelections,
   workspaceQuotes,
   workspaceDocuments,
   workspaceTimeline,
   workspaceSommelierRecommendations,
 } from '../../data/b2b/workspaceMock';
+
+const workspaceSelections = getWorkspaceSelections();
 ---
 
 <Layout

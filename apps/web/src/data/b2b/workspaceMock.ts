@@ -1,3 +1,5 @@
+import { getProductMasterBySlug } from "../catalog/index";
+
 export interface WorkspaceProfile {
   id: string;
   name: string;
@@ -13,6 +15,51 @@ export interface WorkspaceSelection {
   createdAt: string;
   useCase: string;
   status: "borrador" | "listo para presupuesto";
+}
+
+interface WorkspaceSelectionSeed {
+  id: string;
+  products: Array<{ slug: string; quantity: string }>;
+  createdAt: string;
+  useCase: string;
+  status: "borrador" | "listo para presupuesto";
+}
+
+const workspaceSelectionSeeds: WorkspaceSelectionSeed[] = [
+  {
+    id: "sel-001",
+    products: [
+      { slug: "reserva-del-alto-ebro", quantity: "12 uds" },
+      { slug: "coupage-de-sierra", quantity: "6 uds" },
+    ],
+    createdAt: "2026-06-08",
+    useCase: "Carta restaurante",
+    status: "listo para presupuesto",
+  },
+  {
+    id: "sel-002",
+    products: [
+      { slug: "miel-de-romero-clara", quantity: "24 uds" },
+      { slug: "pack-mesa-premium", quantity: "10 packs" },
+      { slug: "crema-de-almendra-premium", quantity: "6 uds" },
+    ],
+    createdAt: "2026-06-05",
+    useCase: "Tienda gourmet",
+    status: "borrador",
+  },
+];
+
+export function getWorkspaceSelections(): WorkspaceSelection[] {
+  return workspaceSelectionSeeds.map((seed) => ({
+    id: seed.id,
+    products: seed.products.map((p) => ({
+      name: getProductMasterBySlug(p.slug)?.name ?? p.slug,
+      quantity: p.quantity,
+    })),
+    createdAt: seed.createdAt,
+    useCase: seed.useCase,
+    status: seed.status,
+  }));
 }
 
 export interface WorkspaceQuote {
@@ -93,30 +140,6 @@ export const workspaceProfiles: WorkspaceProfile[] = [
     description: "Regalos corporativos, packs personalizados",
     typicalUse: "50-500 unidades por campaña",
     active: false,
-  },
-];
-
-export const workspaceSelections: WorkspaceSelection[] = [
-  {
-    id: "sel-001",
-    products: [
-      { name: "Reserva del Alto Ebro", quantity: "12 uds" },
-      { name: "Coupage de Sierra", quantity: "6 uds" },
-    ],
-    createdAt: "2026-06-08",
-    useCase: "Carta restaurante",
-    status: "listo para presupuesto",
-  },
-  {
-    id: "sel-002",
-    products: [
-      { name: "Miel de Romero Clara", quantity: "24 uds" },
-      { name: "Pack Mesa Premium", quantity: "10 packs" },
-      { name: "Crema de Almendra Premium", quantity: "6 uds" },
-    ],
-    createdAt: "2026-06-05",
-    useCase: "Tienda gourmet",
-    status: "borrador",
   },
 ];
 
