@@ -55,6 +55,10 @@ interface ProductMaster {
 - `apps/api/src/modules/sommelier/data/product-master-catalog.adapter.ts` — self-contained adapter with 11 products aligned to ProductMaster slugs and categories
 - `apps/api/src/modules/sommelier/data/catalog.mock.ts` — thin re-export from adapter
 
+## Status
+
+**All consumers migrated.** See `docs/audits/STACK-2026-PRODUCTMASTER-CONSUMERS-FINAL-AUDIT-01.md` for the full audit.
+
 ## Adapters & Migration
 
 ### Web Adapter
@@ -67,4 +71,4 @@ interface ProductMaster {
 
 ### Legacy
 
-`ProductPremium`, `products.ts`, `types/catalog.ts`, `ProductCardPremium.astro` remain untouched as adapter source.
+`ProductPremium`, `products.ts`, `types/catalog.ts`, `ProductCardPremium.astro`, `B2BProductCard.astro` remain untouched as adapter source or unreferenced legacy artifacts.

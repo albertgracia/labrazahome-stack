@@ -1,6 +1,7 @@
 # STACK-2026-SOMMELIER-GOVERNANCE-PRODUCTMASTER-CONSUMER-01
 
 ## Goal
+
 Migrate product references in Sommelier Governance mock data (`blockedProducts`) to derive names from ProductMaster.
 
 ## Design Decisions
@@ -23,19 +24,20 @@ Migrate product references in Sommelier Governance mock data (`blockedProducts`)
 
 ## Slugs Used
 
-| seed.productSlug          | ProductMaster.name        | Resolved OK |
-|---------------------------|---------------------------|-------------|
-| `pack-mesa-premium`       | Pack Mesa Premium         | ✅          |
+| seed.productSlug            | ProductMaster.name        | Resolved OK |
+| --------------------------- | ------------------------- | ----------- |
+| `pack-mesa-premium`         | Pack Mesa Premium         | ✅          |
 | `crema-de-almendra-premium` | Crema de Almendra Premium | ✅          |
 
 ## Validations
 
-| Command                       | Result |
-|-------------------------------|--------|
-| `pnpm format`                 | ✅     |
-| `pnpm --filter web typecheck` | ✅     |
+| Command                       | Result   |
+| ----------------------------- | -------- |
+| `pnpm format`                 | ✅       |
+| `pnpm --filter web typecheck` | ✅       |
 | `pnpm --filter web build`     | ✅ (28p) |
-| `pnpm check`                  | ✅     |
+| `pnpm check`                  | ✅       |
 
 ## UI Changed
+
 No. `SommelierBlockedProducts.astro` unchanged; renders `.name` and `.reason` as before.
