@@ -176,18 +176,18 @@ Cada módulo consumirá **solo los campos** que necesita, mediante interfaces de
 
 ## Mapa de Consumo Actual
 
-| Módulo               | Ruta                  | Fuente actual                                        | Tipo de dato               | Duplicación                         |
-| -------------------- | --------------------- | ---------------------------------------------------- | -------------------------- | ----------------------------------- |
-| Catálogo Premium     | `/catalogo`           | `data/catalog/products.ts`                           | `ProductPremium[]`         | — (source primaria)                 |
-| Sommelier (web)      | `/sommelier`          | `data/catalog/products.ts` vía `getSommelierContext` | `ProductPremium`           | NO (consume catálogo)               |
-| Sommelier (API)      | API interna           | `api/.../data/catalog.mock.ts`                       | `MockProduct[]`            | SÍ — duplica slugs                  |
-| B2B Dashboard        | `/b2b`                | `data/b2b/mockDashboard.ts`                          | `B2BProduct[]`             | SÍ — 6 productos duplicados         |
-| B2B Workspace        | `/b2b/workspace`      | `data/b2b/workspaceMock.ts`                          | `WorkspaceSelection`       | NO — names derivan de ProductMaster |
+| Módulo               | Ruta                  | Fuente actual                                        | Tipo de dato               | Duplicación                              |
+| -------------------- | --------------------- | ---------------------------------------------------- | -------------------------- | ---------------------------------------- |
+| Catálogo Premium     | `/catalogo`           | `data/catalog/products.ts`                           | `ProductPremium[]`         | — (source primaria)                      |
+| Sommelier (web)      | `/sommelier`          | `data/catalog/products.ts` vía `getSommelierContext` | `ProductPremium`           | NO (consume catálogo)                    |
+| Sommelier (API)      | API interna           | `api/.../data/catalog.mock.ts`                       | `MockProduct[]`            | SÍ — duplica slugs                       |
+| B2B Dashboard        | `/b2b`                | `data/b2b/mockDashboard.ts`                          | `B2BProduct[]`             | SÍ — 6 productos duplicados              |
+| B2B Workspace        | `/b2b/workspace`      | `data/b2b/workspaceMock.ts`                          | `WorkspaceSelection`       | NO — names derivan de ProductMaster      |
 | Document Center      | `/b2b/documentos`     | `data/b2b/documentCenter.ts`                         | `B2BDocumentMock[]`        | NO — productName deriva de ProductMaster |
-| Backoffice Admin     | `/admin`              | `data/admin/adminDashboard.ts`                       | `CatalogReviewItem[]`      | SÍ — nombres duplicados             |
-| Content Manager      | `/admin/contenido`    | `data/admin/contentManager.ts`                       | `ContentReviewProduct[]`   | SÍ — 6 productos duplicados         |
-| AI Assistant         | en `/admin/contenido` | `data/admin/aiAssistantMock.ts`                      | `AdminAIGeneratedSample[]` | SÍ — slugs duplicados               |
-| Sommelier Governance | `/admin/sommelier`    | `data/admin/sommelierGovernance.ts`                  | `BlockedProductItem[]`     | SÍ — nombres duplicados             |
+| Backoffice Admin     | `/admin`              | `data/admin/adminDashboard.ts`                       | `CatalogReviewItem[]`      | NO — name/category derivan de ProductMaster |
+| Content Manager      | `/admin/contenido`    | `data/admin/contentManager.ts`                       | `ContentReviewProduct[]`   | NO — name/category derivan de ProductMaster |
+| AI Assistant         | en `/admin/contenido` | `data/admin/aiAssistantMock.ts`                      | `AdminAIGeneratedSample[]` | SÍ — slugs duplicados                    |
+| Sommelier Governance | `/admin/sommelier`    | `data/admin/sommelierGovernance.ts`                  | `BlockedProductItem[]`     | SÍ — nombres duplicados                  |
 
 ---
 
@@ -199,9 +199,9 @@ Cada módulo consumirá **solo los campos** que necesita, mediante interfaces de
 - `data/b2b/mockDashboard.ts:27` — `productName`, `productSlug`, `quantity`, `use`, `status`
 - **Inconsistencia**: el tipo del dashboard usa `use` y `status`; el tipo real usa `useCase` y `addedAt`.
 
-### 2. Admin data no importa catálogo real
+### 2. Admin data: identidad resuelta, metadata mock
 
-`contentManager.ts` define `contentReviewProducts` con datos inline en lugar de importar `products` de `data/catalog`. Los slugs coinciden pero los datos están duplicados (completeness, editorialStatus, etc.).
+`contentReviewProducts` y `catalogReviewItems` ahora derivan `name`/`category`/`slug` de `ProductMaster`. Los campos admin mock (`editorialStatus`, `completeness`, `hasImage`, readiness, etc.) permanecen en semillas locales sin duplicar nombres de producto.
 
 ### 3. B2B data duplica productos
 
@@ -298,19 +298,20 @@ Cada fase puede ejecutarse de forma independiente **siempre que Fase 1 esté com
 
 ## Implementación
 
-| Fase                                                     | Archivo                                                | Estado                                                                                          |
-| -------------------------------------------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------- |
-| `STACK-2026-CATALOG-PRODUCTMASTER-SCAFFOLD-01`           | `packages/shared/src/product-master.ts`                | ✅ Scaffold creado — tipos compartidos exportados desde `packages/shared`                       |
-| `STACK-2026-CATALOG-PRODUCTMASTER-ADAPTER-01`            | `apps/web/src/data/catalog/productMasterAdapter.ts`    | ✅ Adapter creado — `ProductPremium` → `ProductMaster` con validación                           |
-| `STACK-2026-CATALOG-PRODUCTMASTER-VALIDATION-01`         | `apps/web/src/data/catalog/productMasterValidation.ts` | ✅ Validación formal completada — 12/12 checks pass, 0 fallos                                   |
-| `STACK-2026-CATALOG-PRODUCTMASTER-CONSUMER-MIGRATION-01` | `apps/web/src/pages/catalogo/index.astro`              | ✅ Primer consumidor migrado — featured products usan `ProductMaster` vía `ProductCardMaster`   |
-| `STACK-2026-CATALOG-PRODUCTMASTER-CATEGORY-CONSUMER-01`  | `apps/web/src/pages/catalogo/[categoria].astro`        | ✅ Consumidor de categoría migrado — `getProductMastersByCategory` + `ProductCardMaster`        |
-| `STACK-2026-CATALOG-PRODUCTMASTER-DETAIL-CONSUMER-01`    | `apps/web/src/pages/catalogo/[categoria]/[slug].astro` | ✅ Consumidor de detalle migrado — `getProductMasterBySlug` con cast en ratings                 |
-| `STACK-2026-CATALOG-PRODUCTMASTER-CATALOG-CLEANUP-01`    | `apps/web/src/data/catalog/index.ts`                   | ✅ Barrel cleanup — dead exports eliminados; `ProductCardPremium` documentado como legacy       |
-| `STACK-2026-SOMMELIER-PRODUCTMASTER-CONSUMER-01`         | `apps/web/src/data/sommelier/mockResponses.ts` etc.    | ✅ Sommelier mock consumer migrado — `ProductPremium` → `ProductMaster` en mock + componentes   |
-| `STACK-2026-B2B-PRODUCTMASTER-CONSUMER-01`               | `apps/web/src/data/b2b/mockDashboard.ts`               | ✅ B2B recommended products derivan de `ProductMaster` vía `getB2BRecommendedProducts()`        |
-| `STACK-2026-B2B-WORKSPACE-PRODUCTMASTER-CONSUMER-01`     | `apps/web/src/data/b2b/workspaceMock.ts`               | ✅ Workspace selections product names derivan de `ProductMaster` vía `getWorkspaceSelections()` |
+| Fase                                                       | Archivo                                                | Estado                                                                                                        |
+| ---------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------- |
+| `STACK-2026-CATALOG-PRODUCTMASTER-SCAFFOLD-01`             | `packages/shared/src/product-master.ts`                | ✅ Scaffold creado — tipos compartidos exportados desde `packages/shared`                                     |
+| `STACK-2026-CATALOG-PRODUCTMASTER-ADAPTER-01`              | `apps/web/src/data/catalog/productMasterAdapter.ts`    | ✅ Adapter creado — `ProductPremium` → `ProductMaster` con validación                                         |
+| `STACK-2026-CATALOG-PRODUCTMASTER-VALIDATION-01`           | `apps/web/src/data/catalog/productMasterValidation.ts` | ✅ Validación formal completada — 12/12 checks pass, 0 fallos                                                 |
+| `STACK-2026-CATALOG-PRODUCTMASTER-CONSUMER-MIGRATION-01`   | `apps/web/src/pages/catalogo/index.astro`              | ✅ Primer consumidor migrado — featured products usan `ProductMaster` vía `ProductCardMaster`                 |
+| `STACK-2026-CATALOG-PRODUCTMASTER-CATEGORY-CONSUMER-01`    | `apps/web/src/pages/catalogo/[categoria].astro`        | ✅ Consumidor de categoría migrado — `getProductMastersByCategory` + `ProductCardMaster`                      |
+| `STACK-2026-CATALOG-PRODUCTMASTER-DETAIL-CONSUMER-01`      | `apps/web/src/pages/catalogo/[categoria]/[slug].astro` | ✅ Consumidor de detalle migrado — `getProductMasterBySlug` con cast en ratings                               |
+| `STACK-2026-CATALOG-PRODUCTMASTER-CATALOG-CLEANUP-01`      | `apps/web/src/data/catalog/index.ts`                   | ✅ Barrel cleanup — dead exports eliminados; `ProductCardPremium` documentado como legacy                     |
+| `STACK-2026-SOMMELIER-PRODUCTMASTER-CONSUMER-01`           | `apps/web/src/data/sommelier/mockResponses.ts` etc.    | ✅ Sommelier mock consumer migrado — `ProductPremium` → `ProductMaster` en mock + componentes                 |
+| `STACK-2026-B2B-PRODUCTMASTER-CONSUMER-01`                 | `apps/web/src/data/b2b/mockDashboard.ts`               | ✅ B2B recommended products derivan de `ProductMaster` vía `getB2BRecommendedProducts()`                      |
+| `STACK-2026-B2B-WORKSPACE-PRODUCTMASTER-CONSUMER-01`       | `apps/web/src/data/b2b/workspaceMock.ts`               | ✅ Workspace selections product names derivan de `ProductMaster` vía `getWorkspaceSelections()`               |
 | `STACK-2026-B2B-DOCUMENT-CENTER-PRODUCTMASTER-CONSUMER-01` | `apps/web/src/data/b2b/documentCenter.ts`               | ✅ Document Center productName deriva de `ProductMaster` vía `getFeaturedDocuments()`/`getProductDocuments()` |
+| `STACK-2026-ADMIN-PRODUCTMASTER-CONSUMER-01`               | `apps/web/src/data/admin/adminDashboard.ts` + `contentManager.ts` | ✅ Admin Dashboard + Content Manager name/category derivan de `ProductMaster` |
 
 ## Criterios de Éxito
 

@@ -6,10 +6,10 @@ Migrar el B2B Document Center (`/b2b/documentos`) para que los documentos asocia
 
 ## Archivos modificados
 
-| Archivo                                             | Cambio                                                                          |
-| --------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `apps/web/src/data/b2b/documentCenter.ts`            | Import `getProductMasterBySlug`; seed arrays sin `productName`; `getFeaturedDocuments()` + `getProductDocuments()` |
-| `apps/web/src/pages/b2b/documentos.astro`            | Importa `getFeaturedDocuments`/`getProductDocuments` y las llama en frontmatter |
+| Archivo                                   | Cambio                                                                                                             |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `apps/web/src/data/b2b/documentCenter.ts` | Import `getProductMasterBySlug`; seed arrays sin `productName`; `getFeaturedDocuments()` + `getProductDocuments()` |
+| `apps/web/src/pages/b2b/documentos.astro` | Importa `getFeaturedDocuments`/`getProductDocuments` y las llama en frontmatter                                    |
 
 ## Estrategia
 
@@ -23,18 +23,18 @@ Migrar el B2B Document Center (`/b2b/documentos`) para que los documentos asocia
 
 ## Resultado
 
-| Campo         | Antes                    | Ahora                                          |
-| ------------- | ------------------------ | ---------------------------------------------- |
-| `productName` | Hardcodeado en cada doc  | `getProductMasterBySlug(slug)?.name ?? slug`   |
-| `productSlug` | Hardcodeado              | Sin cambios (seed)                             |
-| `category`    | Hardcodeado              | Sin cambios (seed, necesario para UI grouping) |
-| `title`       | Hardcodeado              | Sin cambios                                    |
-| `description` | Hardcodeado              | Sin cambios                                    |
-| `professionalUse` | Hardcodeado          | Sin cambios                                    |
-| `mockContent` | Hardcodeado              | Sin cambios                                    |
-| `status`      | Hardcodeado              | Sin cambios                                    |
-| `profile`     | Hardcodeado              | Sin cambios                                    |
-| `type`        | Hardcodeado              | Sin cambios                                    |
+| Campo             | Antes                   | Ahora                                          |
+| ----------------- | ----------------------- | ---------------------------------------------- |
+| `productName`     | Hardcodeado en cada doc | `getProductMasterBySlug(slug)?.name ?? slug`   |
+| `productSlug`     | Hardcodeado             | Sin cambios (seed)                             |
+| `category`        | Hardcodeado             | Sin cambios (seed, necesario para UI grouping) |
+| `title`           | Hardcodeado             | Sin cambios                                    |
+| `description`     | Hardcodeado             | Sin cambios                                    |
+| `professionalUse` | Hardcodeado             | Sin cambios                                    |
+| `mockContent`     | Hardcodeado             | Sin cambios                                    |
+| `status`          | Hardcodeado             | Sin cambios                                    |
+| `profile`         | Hardcodeado             | Sin cambios                                    |
+| `type`            | Hardcodeado             | Sin cambios                                    |
 
 ## Slugs resueltos en featuredDocuments
 
@@ -60,23 +60,23 @@ Todas las entries tienen `productSlug` fijo → nombre derivado de `ProductMaste
 
 ## Validaciones
 
-| Comando                  | Resultado |
-| ------------------------ | --------- |
-| `pnpm format`            | ✅        |
-| `pnpm --filter web typecheck` | ✅   |
-| `pnpm --filter web build`     | ✅ (28p) |
-| `pnpm check`             | ✅        |
+| Comando                       | Resultado |
+| ----------------------------- | --------- |
+| `pnpm format`                 | ✅        |
+| `pnpm --filter web typecheck` | ✅        |
+| `pnpm --filter web build`     | ✅ (28p)  |
+| `pnpm check`                  | ✅        |
 
 ## Smoke local
 
-| Ruta                 | Resultado |
-| -------------------- | --------- |
-| `/b2b/documentos`    | ✅        |
-| `/b2b/workspace`     | ✅        |
-| `/b2b`               | ✅        |
-| `/sommelier`         | ✅        |
-| `/catalogo`          | ✅        |
-| `/admin`             | ✅        |
+| Ruta              | Resultado |
+| ----------------- | --------- |
+| `/b2b/documentos` | ✅        |
+| `/b2b/workspace`  | ✅        |
+| `/b2b`            | ✅        |
+| `/sommelier`      | ✅        |
+| `/catalogo`       | ✅        |
+| `/admin`          | ✅        |
 
 ## Commit
 

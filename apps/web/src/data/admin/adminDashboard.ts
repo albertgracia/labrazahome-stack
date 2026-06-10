@@ -8,6 +8,7 @@ import type {
   AdminActivityItem,
   AdminRoadmapItem,
 } from "../../types/admin";
+import { getProductMasterBySlug } from "../catalog/index";
 
 export const adminKpis: AdminKpi[] = [
   {
@@ -48,50 +49,66 @@ export const adminKpis: AdminKpi[] = [
   },
 ];
 
-export const catalogReviewItems: CatalogReviewItem[] = [
+interface CatalogReviewSeed {
+  productSlug: string;
+  status: string;
+  statusColor: string;
+  actions: string[];
+}
+
+function capitalizeCategory(cat: string): string {
+  return cat.charAt(0).toUpperCase() + cat.slice(1);
+}
+
+const catalogReviewSeeds: CatalogReviewSeed[] = [
   {
-    name: "Reserva del Alto Ebro",
-    category: "Vinos",
+    productSlug: "reserva-del-alto-ebro",
     status: "Publicado",
     statusColor: "emerald",
     actions: ["Revisar ficha", "Validar contenido"],
   },
   {
-    name: "Coupage de Sierra",
-    category: "Aceites",
+    productSlug: "coupage-de-sierra",
     status: "Pendiente revisión",
     statusColor: "amber",
     actions: ["Revisar ficha", "Completar media"],
   },
   {
-    name: "Pack Mesa Premium",
-    category: "Packs",
+    productSlug: "pack-mesa-premium",
     status: "Falta imagen",
     statusColor: "red",
     actions: ["Completar media", "Validar contenido"],
   },
   {
-    name: "Miel de Romero Clara",
-    category: "Mieles",
+    productSlug: "miel-de-romero-clara",
     status: "Ficha incompleta",
     statusColor: "amber",
     actions: ["Revisar ficha", "Completar media"],
   },
   {
-    name: "Garnacha de Altura",
-    category: "Vinos",
+    productSlug: "garnacha-de-altura",
     status: "Listo para B2B",
     statusColor: "emerald",
     actions: ["Validar contenido"],
   },
   {
-    name: "Crema de Almendra Premium",
-    category: "Gourmet",
+    productSlug: "crema-de-almendra-premium",
     status: "Pendiente revisión",
     statusColor: "amber",
     actions: ["Revisar ficha", "Completar media"],
   },
 ];
+
+export function getCatalogReviewItems(): CatalogReviewItem[] {
+  return catalogReviewSeeds.map(({ productSlug, ...rest }) => {
+    const pm = getProductMasterBySlug(productSlug);
+    return {
+      name: pm?.name ?? productSlug,
+      category: pm?.category ? capitalizeCategory(pm.category) : "General",
+      ...rest,
+    };
+  });
+}
 
 export const b2bPipelineItems: B2BPipelineItem[] = [
   {

@@ -6,6 +6,7 @@ import type {
   SeoPreview,
   ReadinessItem,
 } from "../../types/admin";
+import { getProductMasterBySlug } from "../catalog/index";
 
 export const contentKpis: ContentKpi[] = [
   {
@@ -107,11 +108,15 @@ export const contentPipeline: ContentPipelineStage[] = [
   },
 ];
 
-export const contentReviewProducts: ContentReviewProduct[] = [
+type ContentReviewSeed = Omit<ContentReviewProduct, "name" | "category">;
+
+function capitalizeCategory(cat: string): string {
+  return cat.charAt(0).toUpperCase() + cat.slice(1);
+}
+
+const contentReviewSeeds: ContentReviewSeed[] = [
   {
     slug: "reserva-del-alto-ebro",
-    name: "Reserva del Alto Ebro",
-    category: "Vinos",
     editorialStatus: "Listo B2B",
     completeness: 95,
     hasImage: true,
@@ -129,8 +134,6 @@ export const contentReviewProducts: ContentReviewProduct[] = [
   },
   {
     slug: "garnacha-de-altura",
-    name: "Garnacha de Altura",
-    category: "Vinos",
     editorialStatus: "SEO pendiente",
     completeness: 80,
     hasImage: true,
@@ -147,8 +150,6 @@ export const contentReviewProducts: ContentReviewProduct[] = [
   },
   {
     slug: "coupage-de-sierra",
-    name: "Coupage de Sierra",
-    category: "Aceites",
     editorialStatus: "Necesita media",
     completeness: 60,
     hasImage: false,
@@ -166,8 +167,6 @@ export const contentReviewProducts: ContentReviewProduct[] = [
   },
   {
     slug: "miel-de-romero-clara",
-    name: "Miel de Romero Clara",
-    category: "Mieles",
     editorialStatus: "SEO pendiente",
     completeness: 70,
     hasImage: true,
@@ -184,8 +183,6 @@ export const contentReviewProducts: ContentReviewProduct[] = [
   },
   {
     slug: "pack-mesa-premium",
-    name: "Pack Mesa Premium",
-    category: "Packs",
     editorialStatus: "SEO pendiente",
     completeness: 65,
     hasImage: false,
@@ -202,8 +199,6 @@ export const contentReviewProducts: ContentReviewProduct[] = [
   },
   {
     slug: "crema-de-almendra-premium",
-    name: "Crema de Almendra Premium",
-    category: "Gourmet",
     editorialStatus: "Draft",
     completeness: 40,
     hasImage: false,
@@ -217,6 +212,17 @@ export const contentReviewProducts: ContentReviewProduct[] = [
     rating: "4.3",
   },
 ];
+
+export function getContentReviewProducts(): ContentReviewProduct[] {
+  return contentReviewSeeds.map((seed) => {
+    const pm = getProductMasterBySlug(seed.slug);
+    return {
+      ...seed,
+      name: pm?.name ?? seed.slug,
+      category: pm?.category ? capitalizeCategory(pm.category) : "General",
+    };
+  });
+}
 
 export const editorialChecklistData: EditorialChecklistItem[] = [
   { field: "Nombre producto", done: true },

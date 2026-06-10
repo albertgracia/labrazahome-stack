@@ -15,7 +15,7 @@ import AdminRoadmap from '../../components/admin/AdminRoadmap.astro';
 import AdminLabNotice from '../../components/admin/AdminLabNotice.astro';
 import {
   adminKpis,
-  catalogReviewItems,
+  getCatalogReviewItems,
   b2bPipelineItems,
   sommelierGovernanceMetrics,
   integrationStatusItems,
@@ -23,6 +23,8 @@ import {
   adminRecentActivity,
   adminRoadmapData,
 } from '../../data/admin/adminDashboard';
+
+const catalogReviewItems = getCatalogReviewItems();
 ---
 
 <Layout

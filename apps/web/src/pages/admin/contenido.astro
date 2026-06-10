@@ -11,8 +11,10 @@ import AIEditorialAssistant from '../../components/admin/content/AIEditorialAssi
 import {
   contentKpis,
   contentPipeline,
-  contentReviewProducts,
+  getContentReviewProducts,
 } from '../../data/admin/contentManager';
+
+const contentReviewProducts = getContentReviewProducts();
 import {
   aiBatchStats,
   aiCapabilities,
