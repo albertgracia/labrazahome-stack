@@ -5,9 +5,9 @@ import Container from '../../components/ui/Container.astro';
 import Badge from '../../components/ui/Badge.astro';
 import CategoryHero from '../../components/catalog/CategoryHero.astro';
 import ProductCategoryNav from '../../components/catalog/ProductCategoryNav.astro';
-import ProductCardPremium from '../../components/catalog/ProductCardPremium.astro';
+import ProductCardMaster from '../../components/catalog/ProductCardMaster.astro';
 import { categories } from '../../data/catalog';
-import { getProductsByCategory } from '../../data/catalog';
+import { getProductMastersByCategory } from '../../data/catalog';
 
 export async function getStaticPaths() {
   return categories.map(cat => ({
@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 }
 
 const { category } = Astro.props;
-const products = getProductsByCategory(category.slug);
+const products = getProductMastersByCategory(category.slug);
 ---
 
 <Layout
@@ -40,7 +40,7 @@ const products = getProductsByCategory(category.slug);
         <Badge variant="warning">Datos mock</Badge>
       </div>
       <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {products.map(p => <ProductCardPremium product={p} />)}
+        {products.map(p => <ProductCardMaster product={p} />)}
       </div>
     </Container>
   </Section>

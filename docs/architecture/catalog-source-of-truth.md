@@ -298,12 +298,13 @@ Cada fase puede ejecutarse de forma independiente **siempre que Fase 1 esté com
 
 ## Implementación
 
-| Fase                                             | Archivo                                                | Estado                                                                    |
-| ------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------------------------- |
-| `STACK-2026-CATALOG-PRODUCTMASTER-SCAFFOLD-01`   | `packages/shared/src/product-master.ts`                | ✅ Scaffold creado — tipos compartidos exportados desde `packages/shared` |
-| `STACK-2026-CATALOG-PRODUCTMASTER-ADAPTER-01`    | `apps/web/src/data/catalog/productMasterAdapter.ts`    | ✅ Adapter creado — `ProductPremium` → `ProductMaster` con validación     |
-| `STACK-2026-CATALOG-PRODUCTMASTER-VALIDATION-01` | `apps/web/src/data/catalog/productMasterValidation.ts` | ✅ Validación formal completada — 12/12 checks pass, 0 fallos |
-| `STACK-2026-CATALOG-PRODUCTMASTER-CONSUMER-MIGRATION-01` | `apps/web/src/pages/catalogo/index.astro` | ✅ Primer consumidor migrado — featured products usan `ProductMaster` vía `ProductCardMaster` |
+| Fase                                                     | Archivo                                                | Estado                                                                                        |
+| -------------------------------------------------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------- |
+| `STACK-2026-CATALOG-PRODUCTMASTER-SCAFFOLD-01`           | `packages/shared/src/product-master.ts`                | ✅ Scaffold creado — tipos compartidos exportados desde `packages/shared`                     |
+| `STACK-2026-CATALOG-PRODUCTMASTER-ADAPTER-01`            | `apps/web/src/data/catalog/productMasterAdapter.ts`    | ✅ Adapter creado — `ProductPremium` → `ProductMaster` con validación                         |
+| `STACK-2026-CATALOG-PRODUCTMASTER-VALIDATION-01`         | `apps/web/src/data/catalog/productMasterValidation.ts` | ✅ Validación formal completada — 12/12 checks pass, 0 fallos                                 |
+| `STACK-2026-CATALOG-PRODUCTMASTER-CONSUMER-MIGRATION-01` | `apps/web/src/pages/catalogo/index.astro`              | ✅ Primer consumidor migrado — featured products usan `ProductMaster` vía `ProductCardMaster` |
+| `STACK-2026-CATALOG-PRODUCTMASTER-CATEGORY-CONSUMER-01`  | `apps/web/src/pages/catalogo/[categoria].astro`        | ✅ Consumidor de categoría migrado — `getProductMastersByCategory` + `ProductCardMaster`      |
 
 ## Criterios de Éxito
 
