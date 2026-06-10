@@ -298,9 +298,10 @@ Cada fase puede ejecutarse de forma independiente **siempre que Fase 1 esté com
 
 ## Implementación
 
-| Fase                                           | Archivo                                 | Estado                                                                    |
-| ---------------------------------------------- | --------------------------------------- | ------------------------------------------------------------------------- |
-| `STACK-2026-CATALOG-PRODUCTMASTER-SCAFFOLD-01` | `packages/shared/src/product-master.ts` | ✅ Scaffold creado — tipos compartidos exportados desde `packages/shared` |
+| Fase                                           | Archivo                                             | Estado                                                                    |
+| ---------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------- |
+| `STACK-2026-CATALOG-PRODUCTMASTER-SCAFFOLD-01` | `packages/shared/src/product-master.ts`             | ✅ Scaffold creado — tipos compartidos exportados desde `packages/shared` |
+| `STACK-2026-CATALOG-PRODUCTMASTER-ADAPTER-01`  | `apps/web/src/data/catalog/productMasterAdapter.ts` | ✅ Adapter creado — `ProductPremium` → `ProductMaster` con validación     |
 
 ## Criterios de Éxito
 
